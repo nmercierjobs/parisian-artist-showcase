@@ -57,6 +57,13 @@ const Sidebar = () => {
         >
           About
         </NavLink>
+        <NavLink
+          to="/resume"
+          className="btn-pill-outline w-fit"
+          activeClassName="!bg-secondary !text-foreground"
+        >
+          Resume
+        </NavLink>
       </nav>
 
       {/* Spacer */}
