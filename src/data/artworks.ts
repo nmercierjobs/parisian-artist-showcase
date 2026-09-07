@@ -50,26 +50,6 @@ export const artworks: Artwork[] = [
     description: "A maritime scene depicting fishing boats at rest in a historic French harbor. The interplay of light on water creates a sense of peaceful nostalgia.",
     image: "https://images.unsplash.com/photo-1549289524-06cf8837ace5?w=800&q=80",
   },
-  {
-    id: "5",
-    title: "Morning in Provence",
-    slug: "morning-in-provence",
-    medium: "Oil on canvas",
-    dimensions: "90 × 110 cm",
-    year: 2023,
-    description: "Lavender fields stretching toward distant mountains under a soft morning sky. This piece celebrates the iconic beauty of the Provençal countryside.",
-    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80",
-  },
-  {
-    id: "6",
-    title: "The Reading Room",
-    slug: "the-reading-room",
-    medium: "Oil on panel",
-    dimensions: "70 × 90 cm",
-    year: 2022,
-    description: "An interior scene bathed in warm afternoon light. A figure absorbed in reading creates a timeless moment of domestic tranquility.",
-    image: "https://images.unsplash.com/photo-1577720643272-265f09367456?w=800&q=80",
-  },
 ];
 
 export const getArtworkBySlug = (slug: string): Artwork | undefined => {
