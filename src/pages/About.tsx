@@ -52,7 +52,7 @@ const About = () => {
               }}
             >
               <ImageReveal
-                src="/megan-ruth-8ZxCjA3DTrM-unsplash.jpg"
+                src={`${import.meta.env.BASE_URL}megan-ruth-8ZxCjA3DTrM-unsplash.jpg`}
                 alt="Émile Laurent in her studio"
                 className="h-full w-full object-cover"
                 style={{ minHeight: "500px", maxHeight: "700px" }}
