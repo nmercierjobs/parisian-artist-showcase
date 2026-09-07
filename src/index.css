@@ -112,69 +112,8 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
-    cursor: none;
   }
 
-  a, button {
-    cursor: none;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    font-weight: 500;
-  }
-}
-
-@layer components {
-  .font-display {
-    font-family: var(--font-display);
-  }
-
-  .font-body {
-    font-family: var(--font-body);
-  }
-
-  /* Custom Cursor */
-  .cursor {
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    mix-blend-mode: difference;
-  }
-
-  .cursor-dot {
-    width: var(--cursor-size);
-    height: var(--cursor-size);
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.15s var(--ease-out-expo),
-                width 0.4s var(--ease-out-expo),
-                height 0.4s var(--ease-out-expo);
-  }
-
-  .cursor-dot.hovering {
-    width: var(--cursor-size-hover);
-    height: var(--cursor-size-hover);
-  }
-
-  .cursor-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
-    font-weight: 500;
-    color: black;
-    opacity: 0;
-    transition: opacity 0.3s var(--ease-out-expo);
-    white-space: nowrap;
-  }
-
-  .cursor-dot.hovering .cursor-text {
-    opacity: 1;
-  }
 
   /* Pill button style - simple and clean */
   .btn-pill {
