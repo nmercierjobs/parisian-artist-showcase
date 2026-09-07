@@ -12,8 +12,8 @@ export interface Artwork {
 export const artworks: Artwork[] = [
   {
     id: "1",
-    title: "TEST",
-    slug: "sunset-over-the-valley",
+    title: "3D Camera Distance Sensor",
+    slug: "3d-camera-distance-sensor",
     medium: "Oil on canvas",
     dimensions: "80 × 100 cm",
     year: 2024,
@@ -22,8 +22,8 @@ export const artworks: Artwork[] = [
   },
   {
     id: "2",
-    title: "Portrait of Clara",
-    slug: "portrait-of-clara",
+    title: "Steer-by-wire Bicycle",
+    slug: "steer-by-wire-bicycle",
     medium: "Oil on linen",
     dimensions: "60 × 80 cm",
     year: 2024,
@@ -32,8 +32,8 @@ export const artworks: Artwork[] = [
   },
   {
     id: "3",
-    title: "Still Life with Flowers",
-    slug: "still-life-with-flowers",
+    title: "USB Torque Sensor",
+    slug: "usb-torque-sensor",
     medium: "Oil on canvas",
     dimensions: "50 × 60 cm",
     year: 2023,
@@ -42,8 +42,8 @@ export const artworks: Artwork[] = [
   },
   {
     id: "4",
-    title: "The Old Harbor",
-    slug: "the-old-harbor",
+    title: "Wireless MCU Timer Synchronization",
+    slug: "wireless-mcu-timer-synchronization",
     medium: "Oil on canvas",
     dimensions: "100 × 120 cm",
     year: 2023,
