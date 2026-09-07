@@ -1,5 +1,5 @@
 import { NavLink } from "@/components/NavLink";
-import { Instagram, Linkedin } from "lucide-react";
+import { Linkedin } from "lucide-react";
 import { toast } from "sonner";
 
 const ARTIST_EMAIL = "hello@emilelaurent.art";
@@ -93,15 +93,6 @@ const Sidebar = () => {
           aria-label="LinkedIn"
         >
           <Linkedin size={18} strokeWidth={1.5} />
-        </a>
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/60 text-muted-foreground transition-all duration-200 hover:bg-secondary hover:text-foreground"
-          aria-label="Instagram"
-        >
-          <Instagram size={18} strokeWidth={1.5} />
         </a>
       </div>
 
