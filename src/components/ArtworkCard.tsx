@@ -25,6 +25,11 @@ const ArtworkCard = ({ artwork, index }: ArtworkCardProps) => {
           className="h-full w-full object-cover"
         />
       </div>
+      <div className="border-t border-border/60 bg-card p-3 sm:p-4">
+        <h3 className="truncate text-sm font-medium text-card-foreground sm:text-base">
+          {artwork.title}
+        </h3>
+      </div>
     </Link>
   );
 };
