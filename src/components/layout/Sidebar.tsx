@@ -2,7 +2,7 @@ import { NavLink } from "@/components/NavLink";
 import { Linkedin } from "lucide-react";
 import { toast } from "sonner";
 
-const ARTIST_EMAIL = "hello@emilelaurent.art";
+const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
 const Sidebar = () => {
   const copyEmail = () => {
@@ -25,10 +25,10 @@ const Sidebar = () => {
       >
         <NavLink to="/" className="block w-fit">
           <h1 className="font-display text-5xl font-medium tracking-tight text-foreground lg:text-6xl">
-            Émile
+            Noah Mercier
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Visual Artist
+            Jack Of All Trades Engineer
           </p>
         </NavLink>
       </div>
@@ -82,11 +82,11 @@ const Sidebar = () => {
           onClick={copyEmail}
           className="btn-pill bg-secondary text-foreground"
         >
-          Say hello!
+          Email
         </button>
 
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/in/noah-mercier-453940421/"
           target="_blank"
           rel="noopener noreferrer"
           className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/60 text-muted-foreground transition-all duration-200 hover:bg-secondary hover:text-foreground"
@@ -96,17 +96,6 @@ const Sidebar = () => {
         </a>
       </div>
 
-      {/* Copyright */}
-      <p 
-        className="text-xs font-light text-muted-foreground"
-        style={{
-          opacity: 0,
-          animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-          animationDelay: "400ms"
-        }}
-      >
-        © 1994 – 2025 Émile Laurent
-      </p>
     </aside>
   );
 };

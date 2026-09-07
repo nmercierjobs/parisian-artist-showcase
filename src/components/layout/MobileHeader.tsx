@@ -20,10 +20,10 @@ const MobileHeader = () => {
       <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-background px-6 py-5 lg:hidden">
         <NavLink to="/" className="block">
           <h1 className="font-display text-3xl font-medium tracking-tight text-foreground">
-            Émile
+            Noah Mercier
           </h1>
           <p className="text-xs text-muted-foreground">
-            Visual Artist
+            Jack Of All Trades Engineer
           </p>
         </NavLink>
 
@@ -103,7 +103,7 @@ const MobileHeader = () => {
               transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
             }}
           >
-            Say hello!
+            Email
           </button>
 
           <div
@@ -126,17 +126,6 @@ const MobileHeader = () => {
             </a>
           </div>
 
-          <p
-            className={`mt-8 text-xs text-muted-foreground transition-all duration-500 ${
-              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-            style={{ 
-              transitionDelay: isOpen ? "300ms" : "0ms",
-              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)"
-            }}
-          >
-            © 1994 – 2025 Émile Laurent
-          </p>
         </nav>
       </div>
     </>
