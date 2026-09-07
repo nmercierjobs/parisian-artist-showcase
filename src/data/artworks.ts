@@ -12,7 +12,7 @@ export interface Artwork {
 export const artworks: Artwork[] = [
   {
     id: "1",
-    title: "Sunset over the Valley",
+    title: "TEST",
     slug: "sunset-over-the-valley",
     medium: "Oil on canvas",
     dimensions: "80 × 100 cm",
