@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "@/components/NavLink";
-import { Instagram, Linkedin, Menu, X } from "lucide-react";
+import { Linkedin, Menu, X } from "lucide-react";
 import { toast } from "sonner";
 
 const ARTIST_EMAIL = "hello@emilelaurent.art";
@@ -123,15 +123,6 @@ const MobileHeader = () => {
               aria-label="LinkedIn"
             >
               <Linkedin size={20} strokeWidth={1.5} />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/60 text-muted-foreground transition-all duration-300 hover:bg-secondary hover:text-foreground hover:scale-110"
-              aria-label="Instagram"
-            >
-              <Instagram size={20} strokeWidth={1.5} />
             </a>
           </div>
 
