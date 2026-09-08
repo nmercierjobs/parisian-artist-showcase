@@ -48,7 +48,7 @@ const Sidebar = () => {
           className="btn-pill-outline w-fit"
           activeClassName="!bg-secondary !text-foreground"
         >
-          Work
+          Projects
         </NavLink>
         <NavLink
           to="/about"

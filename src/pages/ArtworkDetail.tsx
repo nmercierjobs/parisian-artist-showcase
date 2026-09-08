@@ -97,9 +97,6 @@ const ArtworkDetail = () => {
                   animationDelay: "300ms"
                 }}
               >
-                <p className="text-sm text-muted-foreground">
-                  For inquiries about this piece, please get in touch.
-                </p>
               </div>
             </div>
 
