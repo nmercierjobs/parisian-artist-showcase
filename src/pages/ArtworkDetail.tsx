@@ -108,14 +108,6 @@ const ArtworkDetail = () => {
                     {artwork.year}
                   </p>
                 </div>
-
-                {/* Inquiry Button */}
-                <button
-                  onClick={copyEmail}
-                  className="btn-pill mt-8 w-fit bg-foreground text-background"
-                >
-                  Inquire about this work
-                </button>
               </div>
             </div>
 
