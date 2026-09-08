@@ -83,8 +83,8 @@ const Resume = () => {
                 Employment
               </h2>
               <div className="grid gap-1 text-sm font-semibold sm:grid-cols-3 ">
-                <h3>Recall Reseller</h3>
-                <p className="sm:ml-5">Self-Employed</p>
+                <p className="m-0">Recall Reseller</p>
+                <p className="sm:ml-6">Self-Employed</p>
                 <p className="sm:text-right">2022 – Present</p>
               </div>
               <p className="mt-2 text-sm leading-6 text-foreground/90">
@@ -101,7 +101,6 @@ const Resume = () => {
               <h2 className="mb-4 border-b border-foreground/60 pb-2 font-display text-sm font-semibold uppercase text-foreground">
                 Technical Experience
               </h2>
-              <h3 className="mb-4 text-sm font-semibold">Projects</h3>
               <div className="space-y-6">
                 {projects.map((project) => (
                   <div key={project.title}>
