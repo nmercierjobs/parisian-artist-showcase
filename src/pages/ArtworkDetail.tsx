@@ -47,7 +47,7 @@ const ArtworkDetail = () => {
         <title>{artwork.title} — Émile Laurent</title>
         <meta
           name="description"
-          content={`${artwork.title} by Émile Laurent. ${artwork.medium}, ${artwork.dimensions}. ${artwork.description.substring(0, 150)}...`}
+          content={`${artwork.title} by Émile Laurent. ${artwork.description.substring(0, 150)}...`}
         />
       </Helmet>
 
@@ -63,7 +63,7 @@ const ArtworkDetail = () => {
             }}
           >
             <ImageReveal
-              src={artwork.image}
+              src={artwork.detailImage}
               alt={artwork.title}
               className="h-full w-full object-cover"
             />
@@ -97,17 +97,9 @@ const ArtworkDetail = () => {
                   animationDelay: "300ms"
                 }}
               >
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">
-                    {artwork.medium}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {artwork.dimensions}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {artwork.year}
-                  </p>
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  For inquiries about this piece, please get in touch.
+                </p>
               </div>
             </div>
 
