@@ -63,7 +63,7 @@ const ArtworkDetail = () => {
             }}
           >
             <ImageReveal
-              src={artwork.image}
+              src={artwork.detailImage}
               alt={artwork.title}
               className="h-full w-full object-cover"
             />
