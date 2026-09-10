@@ -52,26 +52,28 @@ const ArtworkDetail = () => {
       </Helmet>
 
       <Layout>
-        <div className="page-transition flex flex-col py-10 lg:py-12">
-          {/* Hero Image - Full page width */}
-          <div 
-            className="relative w-full overflow-hidden aspect-[3/4] lg:aspect-auto lg:h-[85vh]"
-            style={{ 
-              opacity: 0,
-              animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-              animationDelay: "0ms"
-            }}
-          >
-            <ImageReveal
-              src={artwork.detailImage}
-              alt={artwork.title}
-              className="h-full w-full object-cover"
-            />
+        <div className="page-transition flex min-h-screen flex-col py-16 lg:py-24">
+          {/* Hero Image - Contained with rounded corners */}
+          <div className="px-6 lg:px-10">
+            <div
+              className="relative w-full overflow-hidden rounded-2xl aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10]"
+              style={{
+                opacity: 0,
+                animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                animationDelay: "0ms"
+              }}
+            >
+              <ImageReveal
+                src={artwork.detailImage}
+                alt={artwork.title}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
 
           {/* Content Section - Full page width */}
-          <div className="px-6 py-6 lg:px-10 lg:py-16">
-            <div 
+          <div className="flex-1 px-6 py-12 lg:px-10 lg:py-24">
+            <div
               style={{
                 opacity: 0,
                 animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
@@ -82,10 +84,10 @@ const ArtworkDetail = () => {
                 {artwork.title}
               </h1>
 
-              <div className="mt-6 text-base leading-relaxed text-foreground/80 lg:text-lg">
-                {/* Supporting Image - small and floated within the text */}
+              <div className="mt-8 text-base leading-relaxed text-foreground/80 lg:text-lg lg:leading-loose">
+                {/* Supporting Image - Half page width, floated within the text */}
                 <div
-                  className="float-right ml-5 mb-3 w-36 shrink-0 overflow-hidden rounded-xl sm:w-44 md:w-52"
+                  className="float-right ml-6 mb-4 w-1/2 shrink-0 overflow-hidden rounded-xl"
                   style={{
                     opacity: 0,
                     animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
@@ -105,7 +107,7 @@ const ArtworkDetail = () => {
 
             {/* Navigation */}
             <div 
-              className="mt-16 flex items-center justify-between border-t border-border pt-8"
+              className="mt-24 flex items-center justify-between border-t border-border pt-12"
               style={{
                 opacity: 0,
                 animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
