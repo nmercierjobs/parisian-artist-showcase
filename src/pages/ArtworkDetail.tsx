@@ -52,10 +52,10 @@ const ArtworkDetail = () => {
       </Helmet>
 
       <Layout>
-        <div className="page-transition flex flex-col px-6 py-10 lg:px-10 lg:py-12">
-          {/* Hero Image - With margins and rounded corners */}
+        <div className="page-transition flex flex-col py-10 lg:py-12">
+          {/* Hero Image - Full page width */}
           <div 
-            className="relative w-full overflow-hidden rounded-2xl aspect-[3/4] lg:aspect-auto lg:h-[85vh]"
+            className="relative w-full overflow-hidden aspect-[3/4] lg:aspect-auto lg:h-[85vh]"
             style={{ 
               opacity: 0,
               animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
@@ -69,50 +69,37 @@ const ArtworkDetail = () => {
             />
           </div>
 
-          {/* Content Section */}
-          <div className="py-6 lg:py-16">
-            <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-              {/* Left Column - Title and Description */}
-              <div 
-                style={{
-                  opacity: 0,
-                  animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-                  animationDelay: "200ms"
-                }}
-              >
-                <h1 className="font-display text-4xl font-medium tracking-tight text-foreground lg:text-5xl">
-                  {artwork.title}
-                </h1>
+          {/* Content Section - Full page width */}
+          <div className="px-6 py-6 lg:px-10 lg:py-16">
+            <div 
+              style={{
+                opacity: 0,
+                animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                animationDelay: "200ms"
+              }}
+            >
+              <h1 className="font-display text-4xl font-medium tracking-tight text-foreground lg:text-5xl">
+                {artwork.title}
+              </h1>
 
-                <div className="mt-6 text-base leading-relaxed text-foreground/80">
-                  {/* Supporting Image - small and floated within the text */}
-                  <div
-                    className="float-right ml-5 mb-3 w-36 shrink-0 overflow-hidden rounded-xl sm:w-44 md:w-52"
-                    style={{
-                      opacity: 0,
-                      animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-                      animationDelay: "280ms"
-                    }}
-                  >
-                    <ImageReveal
-                      src={artwork.image}
-                      alt={`${artwork.title} supporting view`}
-                      className="aspect-[4/3] w-full object-cover"
-                    />
-                  </div>
-
-                  {artwork.description}
+              <div className="mt-6 text-base leading-relaxed text-foreground/80 lg:text-lg">
+                {/* Supporting Image - small and floated within the text */}
+                <div
+                  className="float-right ml-5 mb-3 w-36 shrink-0 overflow-hidden rounded-xl sm:w-44 md:w-52"
+                  style={{
+                    opacity: 0,
+                    animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                    animationDelay: "280ms"
+                  }}
+                >
+                  <ImageReveal
+                    src={artwork.image}
+                    alt={`${artwork.title} supporting view`}
+                    className="aspect-[4/3] w-full object-cover"
+                  />
                 </div>
-              </div>
 
-              {/* Right Column - Details and CTA */}
-              <div 
-                style={{
-                  opacity: 0,
-                  animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-                  animationDelay: "300ms"
-                }}
-              >
+                {artwork.description}
               </div>
             </div>
 
