@@ -107,7 +107,7 @@ const ArtworkDetail = () => {
 
             {/* Navigation */}
             <div 
-              className="mt-16 flex items-center justify-between border-t border-border pt-8"
+              className="mt-24 flex items-center justify-between border-t border-border pt-12"
               style={{
                 opacity: 0,
                 animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
