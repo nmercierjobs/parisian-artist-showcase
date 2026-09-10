@@ -69,22 +69,6 @@ const ArtworkDetail = () => {
             />
           </div>
 
-          {/* Supporting Image */}
-          <div
-            className="relative mt-6 w-full overflow-hidden rounded-2xl aspect-[4/3] lg:mt-10 lg:h-[70vh] lg:aspect-auto"
-            style={{
-              opacity: 0,
-              animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-              animationDelay: "120ms"
-            }}
-          >
-            <ImageReveal
-              src={artwork.image}
-              alt={`${artwork.title} supporting view`}
-              className="h-full w-full object-cover"
-            />
-          </div>
-
           {/* Content Section */}
           <div className="py-6 lg:py-16">
             <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
@@ -100,9 +84,25 @@ const ArtworkDetail = () => {
                   {artwork.title}
                 </h1>
 
-                <p className="mt-6 text-base leading-relaxed text-foreground/80">
+                <div className="mt-6 text-base leading-relaxed text-foreground/80">
+                  {/* Supporting Image - small and floated within the text */}
+                  <div
+                    className="float-right ml-5 mb-3 w-36 shrink-0 overflow-hidden rounded-xl sm:w-44 md:w-52"
+                    style={{
+                      opacity: 0,
+                      animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                      animationDelay: "280ms"
+                    }}
+                  >
+                    <ImageReveal
+                      src={artwork.image}
+                      alt={`${artwork.title} supporting view`}
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                  </div>
+
                   {artwork.description}
-                </p>
+                </div>
               </div>
 
               {/* Right Column - Details and CTA */}
