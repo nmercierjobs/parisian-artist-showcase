@@ -3,7 +3,7 @@ import { NavLink } from "@/components/NavLink";
 import { Linkedin, Menu, X } from "lucide-react";
 import { toast } from "sonner";
 
-const ARTIST_EMAIL = "hello@emilelaurent.art";
+const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
 const MobileHeader = () => {
   const [isOpen, setIsOpen] = useState(false);

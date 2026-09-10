@@ -21,7 +21,7 @@ export const artworks: Artwork[] = [
     title: "Steer-by-wire Bicycle",
     slug: "steer-by-wire-bicycle",
     description: "An intimate portrait study exploring light and shadow. The subject's contemplative gaze invites viewers into a moment of quiet introspection.",
-    image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&q=80",
+    image: "/public/images/reverse_black.gif",
     detailImage: `${import.meta.env.BASE_URL}artworks/equilibre-instable.jpg`,
   },
   {

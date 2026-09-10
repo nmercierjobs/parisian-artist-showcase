@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
 import ImageReveal from "@/components/ImageReveal";
 
-const ARTIST_EMAIL = "hello@emilelaurent.art";
+const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
 const clients = [
   "Galerie Perrotin",

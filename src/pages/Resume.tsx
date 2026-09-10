@@ -107,7 +107,7 @@ const Resume = () => {
                     <h4 className="text-sm font-semibold text-foreground">
                       {project.title} <span className="font-normal text-muted-foreground">({project.meta})</span>
                     </h4>
-                    <ul className="mt-2 list-[circle] space-y-2 pl-7 text-sm leading-6 text-foreground/90">
+                    <ul className="mt-2 list-disc space-y-2 pl-7 text-sm leading-6 text-foreground/90">
                       {project.details.map((detail) => <li key={detail}>{detail}</li>)}
                     </ul>
                   </div>

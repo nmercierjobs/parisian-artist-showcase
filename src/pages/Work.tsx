@@ -7,7 +7,7 @@ const Work = () => {
   return (
     <>
       <Helmet>
-        <title>Émile Laurent — Visual Artist</title>
+        <title>Noah Mercier — Engineer</title>
         <meta
           name="description"
           content="Explore the artworks of Émile Laurent, a Paris-based visual artist specializing in oil paintings and classical techniques."

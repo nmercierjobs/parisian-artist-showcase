@@ -6,7 +6,7 @@ import Layout from "@/components/layout/Layout";
 import ImageReveal from "@/components/ImageReveal";
 import { getArtworkBySlug, artworks } from "@/data/artworks";
 
-const ARTIST_EMAIL = "hello@emilelaurent.art";
+const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
 const ArtworkDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -111,7 +111,7 @@ const ArtworkDetail = () => {
             >
               {prevArtwork ? (
                 <button
-                  onClick={() => navigate(`/work/${prevArtwork.slug}`)}
+                  onClick={() => navigate(`/projects/${prevArtwork.slug}`)}
                   className="btn-pill-outline flex items-center gap-2"
                 >
                   <ArrowLeft size={16} />
@@ -124,7 +124,7 @@ const ArtworkDetail = () => {
 
               {nextArtwork ? (
                 <button
-                  onClick={() => navigate(`/work/${nextArtwork.slug}`)}
+                  onClick={() => navigate(`/projects/${nextArtwork.slug}`)}
                   className="btn-pill-outline flex items-center gap-2"
                 >
                   <span className="hidden sm:inline">{nextArtwork.title}</span>

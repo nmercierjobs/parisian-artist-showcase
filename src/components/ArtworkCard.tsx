@@ -10,7 +10,7 @@ interface ArtworkCardProps {
 const ArtworkCard = ({ artwork, index }: ArtworkCardProps) => {
   return (
     <Link
-      to={`/work/${artwork.slug}`}
+      to={`/projects/${artwork.slug}`}
       className="artwork-card group relative block overflow-hidden rounded-2xl bg-card"
       style={{
         opacity: 0,
