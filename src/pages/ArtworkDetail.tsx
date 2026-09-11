@@ -66,7 +66,7 @@ const ArtworkDetail = () => {
           {/* Hero Image - Contained with rounded corners */}
           <div className="px-6 lg:px-10">
             <div
-              className="relative w-full overflow-hidden rounded-2xl aspect-[3/4] md:aspect-[4/3] lg:aspect-[16/10]"
+              className="relative w-full overflow-hidden rounded-2xl aspect-[3/4] lg:aspect-auto lg:h-[85vh]"
               style={{
                 opacity: 0,
                 animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
