@@ -112,7 +112,7 @@ const ArtworkDetail = () => {
                           }}
                         >
                           <ImageReveal
-                            src={artwork.image}
+                            src={artwork.supportImage}
                             alt={`${artwork.title} supporting view`}
                             className="aspect-[4/3] w-full object-cover"
                           />
