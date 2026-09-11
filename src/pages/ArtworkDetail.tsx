@@ -8,6 +8,16 @@ import { getArtworkBySlug, artworks } from "@/data/artworks";
 
 const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
+const sections = [
+  { key: "summary" as const, label: "Summary" },
+  { key: "problem" as const, label: "The Problem" },
+  { key: "requirements" as const, label: "Requirements" },
+  { key: "research" as const, label: "Research" },
+  { key: "finalApproach" as const, label: "Final Approach" },
+  { key: "problems" as const, label: "Problems" },
+  { key: "results" as const, label: "Results" },
+];
+
 const ArtworkDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -47,7 +57,7 @@ const ArtworkDetail = () => {
         <title>{artwork.title} — Émile Laurent</title>
         <meta
           name="description"
-          content={`${artwork.title} by Émile Laurent. ${artwork.description.substring(0, 150)}...`}
+          content={`${artwork.title} by Émile Laurent. ${artwork.summary.substring(0, 150)}...`}
         />
       </Helmet>
 
@@ -84,30 +94,42 @@ const ArtworkDetail = () => {
                 {artwork.title}
               </h1>
 
-              <div className="mt-8 text-base leading-relaxed text-foreground/80 lg:text-lg lg:leading-loose">
-                {/* Supporting Image - Half page width, floated within the text */}
-                <div
-                  className="float-right ml-6 mb-4 w-1/2 shrink-0 overflow-hidden rounded-xl"
-                  style={{
-                    opacity: 0,
-                    animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-                    animationDelay: "280ms"
-                  }}
-                >
-                  <ImageReveal
-                    src={artwork.image}
-                    alt={`${artwork.title} supporting view`}
-                    className="aspect-[4/3] w-full object-cover"
-                  />
-                </div>
-
-                {artwork.description}
+              <div className="mt-10 space-y-10 text-base leading-relaxed text-foreground/80 lg:text-lg lg:leading-loose">
+                {sections.map(({ key, label }) => (
+                  <section key={key} id={key}>
+                    <h2 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
+                      {label}
+                    </h2>
+                    {key === "summary" ? (
+                      <div className="mt-4">
+                        {/* Supporting Image - Half page width, floated within the text */}
+                        <div
+                          className="float-right ml-6 mb-4 w-1/2 shrink-0 overflow-hidden rounded-xl"
+                          style={{
+                            opacity: 0,
+                            animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                            animationDelay: "280ms"
+                          }}
+                        >
+                          <ImageReveal
+                            src={artwork.image}
+                            alt={`${artwork.title} supporting view`}
+                            className="aspect-[4/3] w-full object-cover"
+                          />
+                        </div>
+                        {artwork.summary}
+                      </div>
+                    ) : (
+                      <p className="mt-4">{artwork[key]}</p>
+                    )}
+                  </section>
+                ))}
               </div>
             </div>
 
             {/* Navigation */}
             <div 
-              className="mt-24 flex items-center justify-between border-t border-border pt-12"
+              className="mt-32 flex items-center justify-between border-t border-border pt-12"
               style={{
                 opacity: 0,
                 animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
