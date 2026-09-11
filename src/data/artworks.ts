@@ -65,6 +65,7 @@ export const artworks: Artwork[] = [
     summary: "A protocol and firmware stack for synchronizing timers across multiple microcontrollers over a wireless link, enabling distributed sensing and actuation with sub-millisecond alignment.",
     problem: "Multiple battery-powered nodes had to act in unison, but each ran from its own crystal oscillator. Clock drift made coordinated actions impossible without a shared time base.",
     requirements: "Sub-millisecond synchronization across at least five nodes, low power consumption, tolerance to packet loss, and no wired connection between devices.",
+    research: "I surveyed existing radio time-sync protocols, clock skew estimation methods, and low-power wireless stacks. Precision timing with low duty cycle was the central trade-off.",
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
     problems: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction.",
     results: "Five nodes maintained synchronization within 0.5 ms over a 20-minute test. The system ran on coin-cell power and recovered quickly from temporary wireless dropouts.",
