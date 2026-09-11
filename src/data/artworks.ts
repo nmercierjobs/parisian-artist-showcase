@@ -10,6 +10,7 @@ export interface Artwork {
   image: string;
   detailImage: string;
   supportImage: string;
+  supportCaption: string;
   summary: string;
   problem: string;
   requirements: string;
@@ -27,6 +28,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/chromatic-tension.jpg`,
     supportImage: support3dCamera,
+    supportCaption: "Stereo camera rig and checkerboard calibration target used during depth testing.",
     summary: "A personal exploration into low-cost depth sensing. This project built a 3D camera distance sensor capable of measuring real-world object positions using stereo vision and custom calibration.",
     problem: "Off-the-shelf depth cameras were either too expensive, too bulky, or lacked the precision needed for small-scale robotics projects. I needed a compact, affordable alternative.",
     requirements: "Sub-centimeter accuracy at close range, real-time frame output, compatibility with a standard microcontroller, and reliable performance under indoor lighting.",
@@ -42,6 +44,7 @@ export const artworks: Artwork[] = [
     image: "/images/reverse_black.gif",
     detailImage: `${import.meta.env.BASE_URL}artworks/equilibre-instable.jpg`,
     supportImage: supportSteerBike,
+    supportCaption: "Handlebar torque sensor and fork actuator mounted on the test frame.",
     summary: "An experimental bicycle that replaces the mechanical steering linkage with an electronic steer-by-wire system, exploring how software can change bicycle handling dynamics.",
     problem: "Traditional bicycle steering is fixed mechanically. I wanted to test how programmable steering response could affect stability, lane keeping, and rider feel.",
     requirements: "Safe fallback to manual control, low-latency sensor feedback, adjustable steering maps, and a rugged prototype that could survive repeated outdoor testing.",
@@ -57,6 +60,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/fragments-of-silence.jpg`,
     supportImage: supportTorqueSensor,
+    supportCaption: "Strain-gauge shaft and 3D-printed enclosure with USB-C interface.",
     summary: "A compact USB torque sensor for measuring rotational loads directly from a laptop. It combines a strain-gauge transducer with an integrated USB data acquisition interface.",
     problem: "Lab-grade torque sensors required bulky instrumentation amplifiers and separate DAQ hardware. I wanted a single device that plugged in and streamed calibrated torque over USB.",
     requirements: "±5 Nm range, 1 kHz sampling, USB-C connectivity, plug-and-play HID or serial interface, and a fully enclosed 3D-printed housing.",
@@ -72,6 +76,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1549289524-06cf8837ace5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/paris-layers.jpg`,
     supportImage: supportWirelessSync,
+    supportCaption: "Five synchronized sensor nodes arranged for the timing test.",
     summary: "A protocol and firmware stack for synchronizing timers across multiple microcontrollers over a wireless link, enabling distributed sensing and actuation with sub-millisecond alignment.",
     problem: "Multiple battery-powered nodes had to act in unison, but each ran from its own crystal oscillator. Clock drift made coordinated actions impossible without a shared time base.",
     requirements: "Sub-millisecond synchronization across at least five nodes, low power consumption, tolerance to packet loss, and no wired connection between devices.",

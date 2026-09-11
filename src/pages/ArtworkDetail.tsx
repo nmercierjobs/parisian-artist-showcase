@@ -116,6 +116,9 @@ const ArtworkDetail = () => {
                             alt={`${artwork.title} supporting view`}
                             className="aspect-[4/3] w-full object-cover"
                           />
+                          <p className="mt-2 text-sm text-muted-foreground italic">
+                            {artwork.supportCaption}
+                          </p>
                         </div>
                         {artwork.summary}
                       </div>
