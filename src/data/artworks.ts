@@ -1,5 +1,5 @@
-import support3dCamera from "@/assets/support-3d-camera.jpg";
-import supportSteerBike from "@/assets/support-steer-bike.jpg";
+import support3dCamera from "/images/normals_4_3.png";
+import supportSteerBike from "/images/bike_cad_4_3.png";
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
