@@ -12,7 +12,7 @@ const sections = [
   { key: "summary" as const, label: "Summary" },
   { key: "problem" as const, label: "The Problem" },
   { key: "requirements" as const, label: "Requirements" },
-  { key: "research" as const, label: "Research" },
+  { key: "research" as const, label: "Approaches Considered" },
   { key: "finalApproach" as const, label: "Final Approach" },
   { key: "problems" as const, label: "Problems" },
   { key: "results" as const, label: "Results" },
@@ -122,6 +122,28 @@ const ArtworkDetail = () => {
                         </div>
                         {artwork.summary}
                       </div>
+                    ) : key === "requirements" ? (
+                      <ul className="mt-4 list-disc list-inside space-y-2">
+                        {artwork.requirements.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : key === "research" ? (
+                      <ol className="mt-4 list-decimal list-inside space-y-6">
+                        {artwork.research.map((approach, index) => (
+                          <li key={index}>
+                            <span className="font-medium text-foreground">{approach.title}</span>
+                            <p className="mt-2 rounded-lg border border-border bg-muted/40 p-4 text-foreground/80">
+                              {approach.text}
+                            </p>
+                            <ul className="mt-3 list-disc list-inside space-y-1 pl-4 text-muted-foreground">
+                              {approach.subPoints.map((point, pIndex) => (
+                                <li key={pIndex}>{point}</li>
+                              ))}
+                            </ul>
+                          </li>
+                        ))}
+                      </ol>
                     ) : (
                       <p className="mt-4">{artwork[key]}</p>
                     )}
