@@ -3,6 +3,12 @@ import supportSteerBike from "/images/bike_cad_4_3.png";
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
+export interface Approach {
+  title: string;
+  text: string;
+  subPoints: [string, string];
+}
+
 export interface Artwork {
   id: string;
   title: string;
@@ -14,7 +20,7 @@ export interface Artwork {
   summary: string;
   problem: string;
   requirements: string[];
-  research: string;
+  research: Approach[];
   finalApproach: string;
   problems: string;
   results: string;

@@ -12,7 +12,7 @@ const sections = [
   { key: "summary" as const, label: "Summary" },
   { key: "problem" as const, label: "The Problem" },
   { key: "requirements" as const, label: "Requirements" },
-  { key: "research" as const, label: "Research" },
+  { key: "research" as const, label: "Approaches Considered" },
   { key: "finalApproach" as const, label: "Final Approach" },
   { key: "problems" as const, label: "Problems" },
   { key: "results" as const, label: "Results" },
