@@ -28,7 +28,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/chromatic-tension.jpg`,
     supportImage: support3dCamera,
-    supportCaption: "Stereo camera rig and checkerboard calibration target used during depth testing.",
+    supportCaption: "..Normal vectors visualized using 7x7 pixel subregions",
     summary: "A personal exploration into low-cost depth sensing. This project built a 3D camera distance sensor capable of measuring real-world object positions using stereo vision and custom calibration.",
     problem: "Off-the-shelf depth cameras were either too expensive, too bulky, or lacked the precision needed for small-scale robotics projects. I needed a compact, affordable alternative.",
     requirements: "Sub-centimeter accuracy at close range, real-time frame output, compatibility with a standard microcontroller, and reliable performance under indoor lighting.",
