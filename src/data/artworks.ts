@@ -3,6 +3,12 @@ import supportSteerBike from "/images/bike_cad_4_3.png";
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
+export interface Approach {
+  title: string;
+  text: string;
+  subPoints: [string, string];
+}
+
 export interface Artwork {
   id: string;
   title: string;
@@ -14,7 +20,7 @@ export interface Artwork {
   summary: string;
   problem: string;
   requirements: string[];
-  research: string;
+  research: Approach[];
   finalApproach: string;
   problems: string;
   results: string;
@@ -37,7 +43,32 @@ export const artworks: Artwork[] = [
       "Compatibility with a standard microcontroller",
       "Reliable performance under indoor lighting",
     ],
-    research: "I evaluated structured light, time-of-flight LiDAR, and passive stereo vision. Stereo vision emerged as the best balance of cost, accuracy, and complexity for my constraints.",
+    research: [
+      {
+        title: "Structured light",
+        text: "Projects a known pattern onto the scene and infers depth from how the pattern deforms on surfaces.",
+        subPoints: [
+          "High accuracy in controlled indoor environments.",
+          "Struggles with ambient infrared and reflective or textured surfaces.",
+        ],
+      },
+      {
+        title: "Time-of-flight LiDAR",
+        text: "Measures the round-trip time of emitted light pulses to build a dense depth map.",
+        subPoints: [
+          "Fast update rates and long range out of the box.",
+          "Expensive sensors and prone to multipath errors indoors.",
+        ],
+      },
+      {
+        title: "Passive stereo vision",
+        text: "Uses two calibrated cameras and triangulation to recover depth from disparity.",
+        subPoints: [
+          "Low cost and works with standard camera hardware.",
+          "Requires good scene texture and careful baseline calibration.",
+        ],
+      },
+    ],
     finalApproach: "A dual-camera rig with synchronized shutters, checkerboard calibration, and a disparity-to-depth pipeline computed on a host PC. I wrote the calibration routine in Python and optimized matching with OpenCV.",
     problems: "Ambient light caused inconsistent feature matching, and the cameras had to be kept perfectly aligned or the calibration drifted. I added IR-filtered lenses and a printed mounting bracket to stabilize the baseline.",
     results: "The sensor achieved reliable measurements within 5 mm at distances up to 1.5 m, running at 15 frames per second. The final setup cost under $80 in parts.",
@@ -58,7 +89,32 @@ export const artworks: Artwork[] = [
       "Adjustable steering maps",
       "Rugged prototype that could survive repeated outdoor testing",
     ],
-    research: "I studied bicycle self-stability, torque-based steering actuation, and existing academic steer-by-wire prototypes. Safety redundancy was the biggest open question.",
+    research: [
+      {
+        title: "Mechanical linkage modifications",
+        text: "Change head angle, fork trail, or handlebar geometry to alter handling characteristics.",
+        subPoints: [
+          "Simple to implement and easy to reverse.",
+          "Cannot vary steering feel in real time or under different riding conditions.",
+        ],
+      },
+      {
+        title: "Torque-based steering actuation",
+        text: "Apply motor torque to the fork based on rider input, speed, and lean angle.",
+        subPoints: [
+          "Enables fully programmable steering response maps.",
+          "Adds latency and demands a robust fail-safe design.",
+        ],
+      },
+      {
+        title: "Academic steer-by-wire prototypes",
+        text: "Reviewed prior art for control strategies, safety redundancy, and rider-interface findings.",
+        subPoints: [
+          "Provided proven starting points for control laws.",
+          "Often too complex or expensive to replicate directly as a personal project.",
+        ],
+      },
+    ],
     finalApproach: "A handlebar-mounted torque sensor measured rider intent, a brushless motor drove the fork, and a microcontroller applied programmable torque assist or damping based on speed and lean angle.",
     problems: "Latency between rider input and wheel response made the bike feel unnatural at low speeds. I tuned the control loop with a derivative term and added a mechanical fail-safe clutch.",
     results: "The prototype demonstrated stable low-speed balancing with adjustable steering weight. It became a platform for testing control algorithms and rider-interface concepts.",
@@ -80,7 +136,32 @@ export const artworks: Artwork[] = [
       "Plug-and-play HID or serial interface",
       "Fully enclosed 3D-printed housing",
     ],
-    research: "I compared foil strain gauges, MEMS torque cells, and capacitive sensing. Strain gauges offered the best accuracy and were easy to integrate with a Wheatstone bridge.",
+    research: [
+      {
+        title: "Foil strain gauges",
+        text: "Bond metal-foil gauges to a shaft and wire them in a Wheatstone bridge to sense torsion.",
+        subPoints: [
+          "Mature, accurate, and inexpensive transducer technology.",
+          "Requires careful temperature compensation and strain-relief cabling.",
+        ],
+      },
+      {
+        title: "MEMS torque cells",
+        text: "Use compact silicon-based transducers with integrated signal conditioning.",
+        subPoints: [
+          "Easy integration and low power consumption.",
+          "Lower accuracy and limited overload tolerance compared to foil gauges.",
+        ],
+      },
+      {
+        title: "Capacitive sensing",
+        text: "Measure shaft deflection through changes in capacitance between patterned plates.",
+        subPoints: [
+          "High sensitivity and inherently low drift.",
+          "Requires precise mechanical tolerances and is sensitive to electrical noise.",
+        ],
+      },
+    ],
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
     problems: "Temperature drift and electrical noise from the motor under test corrupted readings. I added temperature compensation and shielded cables, then oversampled and filtered in firmware.",
     results: "The sensor resolved torque to 0.01 Nm with stable USB streaming. The final device fit in the palm of a hand and was used in multiple motor characterization tests.",
@@ -101,7 +182,32 @@ export const artworks: Artwork[] = [
       "Tolerance to packet loss",
       "No wired connection between devices",
     ],
-    research: "I surveyed existing radio time-sync protocols, clock skew estimation methods, and low-power wireless stacks. Precision timing with low duty cycle was the central trade-off.",
+    research: [
+      {
+        title: "Wired clock distribution",
+        text: "Distribute a shared oscillator or pulse-per-second signal over physical cables.",
+        subPoints: [
+          "Simplest implementation and highest precision.",
+          "Violates the constraint of no wired connection between nodes.",
+        ],
+      },
+      {
+        title: "Existing radio time-sync protocols",
+        text: "Adopt standards such as PTP or custom beacon schemes over packet radio.",
+        subPoints: [
+          "Well documented and often scalable to many nodes.",
+          "Most are designed for higher-power radios than coin-cell sensor nodes.",
+        ],
+      },
+      {
+        title: "Clock skew estimation methods",
+        text: "Estimate and correct each node's clock drift using received reference timestamps.",
+        subPoints: [
+          "Fits low-power, intermittent beaconing schedules.",
+          "Requires outlier rejection to handle packet jitter and missed beacons.",
+        ],
+      },
+    ],
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
     problems: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction.",
     results: "Five nodes maintained synchronization within 0.5 ms over a 20-minute test. The system ran on coin-cell power and recovered quickly from temporary wireless dropouts.",
