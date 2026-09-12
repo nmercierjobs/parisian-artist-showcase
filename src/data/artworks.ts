@@ -13,7 +13,7 @@ export interface Artwork {
   supportCaption: string;
   summary: string;
   problem: string;
-  requirements: string;
+  requirements: string[];
   research: string;
   finalApproach: string;
   problems: string;
@@ -31,7 +31,12 @@ export const artworks: Artwork[] = [
     supportCaption: "Stereo camera rig and checkerboard calibration target used during depth testing.",
     summary: "A personal exploration into low-cost depth sensing. This project built a 3D camera distance sensor capable of measuring real-world object positions using stereo vision and custom calibration.",
     problem: "Off-the-shelf depth cameras were either too expensive, too bulky, or lacked the precision needed for small-scale robotics projects. I needed a compact, affordable alternative.",
-    requirements: "Sub-centimeter accuracy at close range, real-time frame output, compatibility with a standard microcontroller, and reliable performance under indoor lighting.",
+    requirements: [
+      "Sub-centimeter accuracy at close range",
+      "Real-time frame output",
+      "Compatibility with a standard microcontroller",
+      "Reliable performance under indoor lighting",
+    ],
     research: "I evaluated structured light, time-of-flight LiDAR, and passive stereo vision. Stereo vision emerged as the best balance of cost, accuracy, and complexity for my constraints.",
     finalApproach: "A dual-camera rig with synchronized shutters, checkerboard calibration, and a disparity-to-depth pipeline computed on a host PC. I wrote the calibration routine in Python and optimized matching with OpenCV.",
     problems: "Ambient light caused inconsistent feature matching, and the cameras had to be kept perfectly aligned or the calibration drifted. I added IR-filtered lenses and a printed mounting bracket to stabilize the baseline.",
@@ -47,7 +52,12 @@ export const artworks: Artwork[] = [
     supportCaption: "Handlebar torque sensor and fork actuator mounted on the test frame.",
     summary: "An experimental bicycle that replaces the mechanical steering linkage with an electronic steer-by-wire system, exploring how software can change bicycle handling dynamics.",
     problem: "Traditional bicycle steering is fixed mechanically. I wanted to test how programmable steering response could affect stability, lane keeping, and rider feel.",
-    requirements: "Safe fallback to manual control, low-latency sensor feedback, adjustable steering maps, and a rugged prototype that could survive repeated outdoor testing.",
+    requirements: [
+      "Safe fallback to manual control",
+      "Low-latency sensor feedback",
+      "Adjustable steering maps",
+      "Rugged prototype that could survive repeated outdoor testing",
+    ],
     research: "I studied bicycle self-stability, torque-based steering actuation, and existing academic steer-by-wire prototypes. Safety redundancy was the biggest open question.",
     finalApproach: "A handlebar-mounted torque sensor measured rider intent, a brushless motor drove the fork, and a microcontroller applied programmable torque assist or damping based on speed and lean angle.",
     problems: "Latency between rider input and wheel response made the bike feel unnatural at low speeds. I tuned the control loop with a derivative term and added a mechanical fail-safe clutch.",
@@ -63,7 +73,13 @@ export const artworks: Artwork[] = [
     supportCaption: "Strain-gauge shaft and 3D-printed enclosure with USB-C interface.",
     summary: "A compact USB torque sensor for measuring rotational loads directly from a laptop. It combines a strain-gauge transducer with an integrated USB data acquisition interface.",
     problem: "Lab-grade torque sensors required bulky instrumentation amplifiers and separate DAQ hardware. I wanted a single device that plugged in and streamed calibrated torque over USB.",
-    requirements: "±5 Nm range, 1 kHz sampling, USB-C connectivity, plug-and-play HID or serial interface, and a fully enclosed 3D-printed housing.",
+    requirements: [
+      "±5 Nm range",
+      "1 kHz sampling",
+      "USB-C connectivity",
+      "Plug-and-play HID or serial interface",
+      "Fully enclosed 3D-printed housing",
+    ],
     research: "I compared foil strain gauges, MEMS torque cells, and capacitive sensing. Strain gauges offered the best accuracy and were easy to integrate with a Wheatstone bridge.",
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
     problems: "Temperature drift and electrical noise from the motor under test corrupted readings. I added temperature compensation and shielded cables, then oversampled and filtered in firmware.",
@@ -79,7 +95,12 @@ export const artworks: Artwork[] = [
     supportCaption: "Five synchronized sensor nodes arranged for the timing test.",
     summary: "A protocol and firmware stack for synchronizing timers across multiple microcontrollers over a wireless link, enabling distributed sensing and actuation with sub-millisecond alignment.",
     problem: "Multiple battery-powered nodes had to act in unison, but each ran from its own crystal oscillator. Clock drift made coordinated actions impossible without a shared time base.",
-    requirements: "Sub-millisecond synchronization across at least five nodes, low power consumption, tolerance to packet loss, and no wired connection between devices.",
+    requirements: [
+      "Sub-millisecond synchronization across at least five nodes",
+      "Low power consumption",
+      "Tolerance to packet loss",
+      "No wired connection between devices",
+    ],
     research: "I surveyed existing radio time-sync protocols, clock skew estimation methods, and low-power wireless stacks. Precision timing with low duty cycle was the central trade-off.",
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
     problems: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction.",

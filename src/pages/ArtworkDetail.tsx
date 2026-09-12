@@ -122,6 +122,12 @@ const ArtworkDetail = () => {
                         </div>
                         {artwork.summary}
                       </div>
+                    ) : key === "requirements" ? (
+                      <ul className="mt-4 list-disc list-inside space-y-2">
+                        {artwork.requirements.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
                     ) : (
                       <p className="mt-4">{artwork[key]}</p>
                     )}
