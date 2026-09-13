@@ -129,21 +129,26 @@ const ArtworkDetail = () => {
                         ))}
                       </ul>
                     ) : key === "research" ? (
-                      <ol className="mt-4 list-decimal list-inside space-y-6">
-                        {artwork.research.map((approach, index) => (
-                          <li key={index}>
-                            <span className="font-medium text-foreground">{approach.title}</span>
-                            <p className="mt-2 rounded-lg border border-border bg-muted/40 p-4 text-foreground/80">
-                              {approach.text}
-                            </p>
-                            <ul className="mt-3 list-disc list-inside space-y-1 pl-4 text-muted-foreground">
-                              {approach.subPoints.map((point, pIndex) => (
-                                <li key={pIndex}>{point}</li>
-                              ))}
-                            </ul>
-                          </li>
-                        ))}
-                      </ol>
+                      <>
+                        <ol className="mt-4 list-decimal list-inside space-y-6">
+                          {artwork.research.map((approach, index) => (
+                            <li key={index}>
+                              <span className="font-medium text-foreground">{approach.title}</span>
+                              <p className="mt-2 rounded-lg bg-background p-4 text-foreground/80">
+                                {approach.text}
+                              </p>
+                              <ul className="mt-3 list-disc list-inside space-y-1 pl-4 text-muted-foreground">
+                                {approach.subPoints.map((point, pIndex) => (
+                                  <li key={pIndex}>{point}</li>
+                                ))}
+                              </ul>
+                            </li>
+                          ))}
+                        </ol>
+                        <div className="mt-8 rounded-lg bg-background p-4">
+                          <p className="text-foreground/80">{artwork.finalApproach}</p>
+                        </div>
+                      </>
                     ) : (
                       <p className="mt-4">{artwork[key]}</p>
                     )}
