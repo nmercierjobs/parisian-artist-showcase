@@ -130,14 +130,14 @@ const ArtworkDetail = () => {
                       </ul>
                     ) : key === "research" ? (
                       <>
-                        <ol className="mt-4 list-decimal list-inside space-y-6">
+                        <ol className="mt-4 list-decimal list-inside space-y-4">
                           {artwork.research.map((approach, index) => (
                             <li key={index}>
                               <span className="font-medium text-foreground">{approach.title}</span>
-                              <p className="mt-2 rounded-lg bg-background p-4 text-foreground/80">
+                              <p className="mt-1 rounded-lg bg-background p-4 text-foreground/80">
                                 {approach.text}
                               </p>
-                              <ul className="mt-3 list-disc list-inside space-y-1 pl-4 text-muted-foreground">
+                              <ul className="mt-2 list-disc list-inside space-y-1 pl-4 text-muted-foreground">
                                 {approach.subPoints.map((point, pIndex) => (
                                   <li key={pIndex}>{point}</li>
                                 ))}
