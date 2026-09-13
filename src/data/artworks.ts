@@ -228,17 +228,26 @@ export const artworks: Artwork[] = [
       {
         title: "Reference Broadcast Synchronization (RBS)",
         text: "Uses an additional transmitter with two receivers to eliminate send time variability. The transmitter emits a signal that both receivers timestamp and then exchange to determine one another’s offset",
-        subPoints: [],
+        subPoints: [
+          "Eliminates sender-side uncertainty by using a shared reference broadcast",
+          "Requires two receivers to exchange timestamps after the broadcast",
+        ],
       },
       {
         title: "Timing-sync Protocol for Sensor Networks (TPSN)",
         text: "Minimizes both send and receive time variability by timestamping packets as close as possible to the actual transmission and reception events. Designed for synchronizing a large network of microcontrollers",
-        subPoints: [],
+        subPoints: [
+          "Timestamping happens at the radio hardware level to remove software latency",
+          "Suitable for synchronizing many nodes in a sensor network",
+        ],
       },
       {
         title: "Flooding Time Synchronization Protocol (FTSP)",
         text: "Similar to TPSN with advancements made to make large-scale synchronization more reliable.",
-        subPoints: [],
+        subPoints: [
+          "Builds on TPSN but adds robustness for larger networks",
+          "Uses multiple reference beacons to tolerate node failures",
+        ],
       },
     ],
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
