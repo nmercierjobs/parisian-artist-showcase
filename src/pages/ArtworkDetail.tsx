@@ -145,7 +145,7 @@ const ArtworkDetail = () => {
                             </li>
                           ))}
                         </ol>
-                        <div className="mt-8 rounded-lg border border-border bg-muted/40 p-4">
+                        <div className="mt-8 rounded-lg border border-border bg-muted p-4">
                           <p className="text-foreground/80">{artwork.finalApproach}</p>
                         </div>
                       </>
