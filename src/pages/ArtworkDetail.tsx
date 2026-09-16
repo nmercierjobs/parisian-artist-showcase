@@ -145,9 +145,45 @@ const ArtworkDetail = () => {
                         ))}
                       </ol>
                     ) : key === "finalApproach" ? (
-                      <div className="mt-4 rounded-lg bg-background p-0">
-                        <p className="text-foreground/80">{artwork.finalApproach}</p>
-                      </div>
+                      artwork.finalApproachDetails ? (
+                        <div className="mt-4 space-y-10">
+                          <div>
+                            <h3 className="font-display text-xl font-medium tracking-tight text-foreground lg:text-2xl mb-4">
+                              How it works
+                            </h3>
+                            <div className="space-y-6">
+                              {artwork.finalApproachDetails.howItWorks.map((block, index) => (
+                                block.type === "text" ? (
+                                  <p key={index} className="text-foreground/80">
+                                    {block.content}
+                                  </p>
+                                ) : (
+                                  <div key={index} className="overflow-hidden rounded-xl">
+                                    <ImageReveal
+                                      src={block.src}
+                                      alt={block.alt}
+                                      className="w-full object-cover"
+                                      style={{ aspectRatio: `${block.width} / ${block.height}` }}
+                                    />
+                                  </div>
+                                )
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <h3 className="font-display text-xl font-medium tracking-tight text-foreground lg:text-2xl mb-4">
+                              Challenges
+                            </h3>
+                            <p className="text-foreground/80">
+                              {artwork.finalApproachDetails.challenges}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mt-4 rounded-lg bg-background p-0">
+                          <p className="text-foreground/80">{artwork.finalApproach}</p>
+                        </div>
+                      )
                     ) : (
                       <p className="mt-4">{artwork[key]}</p>
                     )}
