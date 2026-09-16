@@ -2,11 +2,22 @@ import support3dCamera from "/images/normals_4_3.png";
 import supportSteerBike from "/images/bike_cad_4_3.png";
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
+import wirelessHowItWorks1 from "@/assets/wireless-how-it-works-1.jpg";
+import wirelessHowItWorks2 from "@/assets/wireless-how-it-works-2.jpg";
 
 export interface Approach {
   title: string;
   text: string;
   subPoints: [string, string];
+}
+
+export type FinalApproachBlock =
+  | { type: "text"; content: string }
+  | { type: "image"; src: string; width: number; height: number; alt: string };
+
+export interface FinalApproachDetails {
+  howItWorks: FinalApproachBlock[];
+  challenges: string;
 }
 
 export interface Artwork {
@@ -22,6 +33,7 @@ export interface Artwork {
   requirements: string[];
   research: Approach[];
   finalApproach: string;
+  finalApproachDetails?: FinalApproachDetails;
   problems: string;
   results: string;
 }
@@ -251,6 +263,16 @@ export const artworks: Artwork[] = [
       },
     ],
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
+    finalApproachDetails: {
+      howItWorks: [
+        { type: "text", content: "The system centers on a single beacon node that periodically broadcasts a reference timestamp over a 2.4 GHz radio link. Every broadcast is timestamped at the radio hardware level so that send-time variability is minimized." },
+        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes" },
+        { type: "text", content: "Each slave node captures its own local timer value the moment it receives the beacon packet. By comparing the received reference time to the local timestamp, the node computes an offset estimate and begins tracking how its clock diverges over time." },
+        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench" },
+        { type: "text", content: "Over many beacon cycles, each slave applies a linear regression to the offset data to estimate both offset and drift, then gently adjusts its timer so all nodes stay aligned within the target microsecond window." },
+      ],
+      challenges: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction. The protocol also had to recover automatically when nodes powered up or temporarily lost signal, requiring a state machine that could re-acquire the beacon without user intervention.",
+    },
     problems: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction.",
     results: "Five nodes maintained synchronization within 0.5 ms over a 20-minute test. The system ran on coin-cell power and recovered quickly from temporary wireless dropouts.",
   },
