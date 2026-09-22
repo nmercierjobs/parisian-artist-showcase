@@ -4,6 +4,14 @@ import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 import wirelessHowItWorks1 from "/images/tx_final.png";
 import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
+import bicycleMechanicalOverview from "/images/bike_cad_components.png";
+import bicycleElectricalSystem from "/images/UI.png";
+import bicycleSoftwareControlLoop from "/images/sg_gif.gif";
+import bicycleSoftwareTuning from "/images/least_squares_matrix.png";
+
+import bicycleSoftwareValidation from "/images/combined_graphs_no_header.png";
+import bicycleSoftwareIntegration from "/images/program_flowchart.png";
+import bicycleChallenges from "/images/shaft_angle_error.png";
 
 export interface Approach {
   title: string;
