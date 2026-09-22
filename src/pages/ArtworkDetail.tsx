@@ -113,7 +113,7 @@ const ArtworkDetail = () => {
                 {sections.map(({ key, label }) => (
                   <section key={key} id={key}>
                     <h2 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
-                      {label}
+                      {key === "finalApproach" && artwork.cameraFinalApproachDetails ? "Chosen approach: 3D Camera" : label}
                     </h2>
                     {key === "summary" ? (
                       <div className="mt-4">
@@ -161,7 +161,38 @@ const ArtworkDetail = () => {
                         ))}
                       </ol>
                     ) : key === "finalApproach" ? (
-                      artwork.bicycleFinalApproachDetails ? (
+                      artwork.cameraFinalApproachDetails ? (
+                        <div className="mt-4 space-y-12">
+                          {artwork.cameraFinalApproachDetails.map((section) => (
+                            <section key={section.title}>
+                              <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">{section.title}</h3>
+                              <div className="mt-4 space-y-5">
+                                {section.blocks.map((block, index) =>
+                                  block.type === "text" ? (
+                                    <p key={index}>{block.content}</p>
+                                  ) : block.type === "list" ? (
+                                    <ul key={index} className="list-disc space-y-2 pl-6">
+                                      {block.points.map((point) => <li key={point}>{point}</li>)}
+                                    </ul>
+                                  ) : (
+                                    <CaseStudyPhoto key={index} image={block.image} />
+                                  ),
+                                )}
+                              </div>
+                              {section.topics && (
+                                <div className="mt-8 space-y-7">
+                                  {section.topics.map((topic) => (
+                                    <div key={topic.title}>
+                                      <h4 className="font-bold text-foreground">{topic.title}</h4>
+                                      <p className="mt-2">{topic.text}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </section>
+                          ))}
+                        </div>
+                      ) : artwork.bicycleFinalApproachDetails ? (
                         <div className="mt-4 space-y-14">
                           <div>
                             <p>{artwork.finalApproach}</p>

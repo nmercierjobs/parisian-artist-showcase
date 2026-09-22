@@ -11,6 +11,11 @@ import bicycleSoftwareIntegration from "/images/program_flowchart.png";
 import bicycleChallenges from "/images/shaft_angle_error.png";
 import usbTorqueSensorAssembly from "/images/decoded_stylized.png";
 import usbTorqueSensorValidation from "/images/COM0_waveform.png";
+import cameraRegionOfInterest from "@/assets/camera-region-of-interest.png";
+import cameraNormalEstimation from "@/assets/camera-normal-estimation.png";
+import cameraNormalField from "@/assets/camera-normal-field.png";
+import cameraFilteredCloud from "@/assets/camera-filtered-cloud.png";
+import cameraNormalFilter from "@/assets/camera-normal-filter.png";
 
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
@@ -94,6 +99,17 @@ export interface TorqueSensorFinalApproachDetails {
   ];
 }
 
+export type CameraApproachBlock =
+  | { type: "text"; content: string }
+  | { type: "image"; image: CaseStudyImage }
+  | { type: "list"; points: string[] };
+
+export interface CameraApproachSection {
+  title: string;
+  blocks: CameraApproachBlock[];
+  topics?: { title: string; text: string }[];
+}
+
 export interface Artwork {
   id: string;
   title: string;
@@ -112,6 +128,7 @@ export interface Artwork {
   finalApproachDetails?: FinalApproachDetails;
   bicycleFinalApproachDetails?: BicycleFinalApproachDetails;
   torqueSensorFinalApproachDetails?: TorqueSensorFinalApproachDetails;
+  cameraFinalApproachDetails?: CameraApproachSection[];
   problems: string;
   results: string;
 }
@@ -173,6 +190,75 @@ export const artworks: Artwork[] = [
       },
     ],
     finalApproach: "A dual-camera rig with synchronized shutters, checkerboard calibration, and a disparity-to-depth pipeline computed on a host PC. I wrote the calibration routine in Python and optimized matching with OpenCV.",
+    cameraFinalApproachDetails: [
+      {
+        title: "Hardware",
+        blocks: [
+          { type: "text", content: "The camera assembly combines a compact depth-sensing rig with a rigid mount to keep the camera geometry repeatable. Calibration relates image coordinates to real-world distances; the depth frames are then processed on a host computer to estimate the height above the ground." },
+        ],
+      },
+      {
+        title: "Region of Interest",
+        blocks: [
+          { type: "text", content: "Only the part of the depth frame likely to contain the ground is needed for a height measurement. A region of interest excludes distant scene features, the object carrying the camera, and the edges of the image where depth readings are less dependable." },
+          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 40 } },
+        ],
+      },
+      {
+        title: "Subdivisioning",
+        blocks: [
+          { type: "text", content: "The selected region is divided into small neighborhoods instead of treating the whole frame as one surface. Each neighborhood contributes a local estimate, making it easier to distinguish a coherent ground plane from isolated objects or missing depth values." },
+        ],
+      },
+      {
+        title: "Normal Vectors",
+        blocks: [
+          { type: "text", content: "For each neighborhood, nearby 3D points define a local surface plane. Its normal vector describes which way that patch faces, providing an orientation measurement that can be compared across the depth frame." },
+          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Diagram of local plane fitting and normal vectors on depth samples", displayWidthPercent: 70 } },
+          { type: "text", content: "Comparing adjacent normals reveals where the surface stays approximately flat and where it changes sharply. The existing point-cloud visualization below shows those local orientations across a scanned surface." },
+          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Point-cloud visualization of computed surface normal vectors", displayWidthPercent: 70 } },
+        ],
+      },
+      {
+        title: "Filtering",
+        blocks: [
+          { type: "text", content: "Depth maps can contain missing pixels, reflections, and isolated measurements. Filtering first removes unreliable samples, then keeps patches whose depth and orientation agree with nearby ground candidates." },
+          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Illustration comparing raw depth samples with filtered ground candidates", displayWidthPercent: 80 } },
+          { type: "text", content: "A normal-angle check rejects patches that face away from the dominant ground orientation. This helps stop vertical obstacles and stray returns from shifting the final surface estimate." },
+          { type: "image", image: { src: cameraNormalFilter, width: 752, height: 361, alt: "Diagram showing aligned surface normals retained and inconsistent normals rejected", displayWidthPercent: 50 } },
+        ],
+      },
+      {
+        title: "Region Growing",
+        blocks: [
+          { type: "text", content: "Starting from a reliable ground patch, the algorithm adds neighboring patches only when their distance and normal direction remain consistent. Growing a connected region reduces the chance of mixing the road surface with unrelated objects at a similar depth." },
+        ],
+      },
+      {
+        title: "Kinematic Modeling",
+        blocks: [
+          { type: "text", content: "Camera tilt changes as the moving object accelerates and rotates. The distance calculation therefore needs to account for the camera's orientation, not just the depth value at one pixel." },
+          { type: "list", points: [
+            "Estimate the orientation of the ground plane from its normal vector.",
+            "Relate that orientation to the camera's mounted position and viewing direction.",
+            "Project the camera-to-ground displacement onto the plane normal to obtain height.",
+          ] },
+          { type: "text", content: "Using the surface normal for the final projection keeps the height definition tied to the ground even when the camera is pitched or rolled. Consecutive frame estimates can then be compared for sudden changes caused by noisy depth data." },
+        ],
+      },
+      {
+        title: "Optimizing Camera",
+        blocks: [
+          { type: "text", content: "Camera placement and capture settings affect how much usable ground is visible and how stable the depth estimates remain. These tradeoffs guide the physical setup as well as the processing settings." },
+        ],
+        topics: [
+          { title: "Mounting Angle", text: "Aim the camera so the ground stays inside the selected region throughout expected motion, without placing the most important measurements at the edge of the frame." },
+          { title: "Working Distance", text: "Keep the target ground area within the camera's useful depth range; farther surfaces generally contain fewer reliable samples for a small height change." },
+          { title: "Exposure and Lighting", text: "Check the depth output in changing outdoor light and avoid settings that make bright or low-texture surfaces disappear from the depth map." },
+          { title: "Resolution and Frame Rate", text: "Balance the number of usable points in each neighborhood against the time available to process each frame. The goal is a repeatable height estimate without falling behind the camera feed." },
+        ],
+      },
+    ],
     problems: "Ambient light caused inconsistent feature matching, and the cameras had to be kept perfectly aligned or the calibration drifted. I added IR-filtered lenses and a printed mounting bracket to stabilize the baseline.",
     results: "The sensor achieved reliable measurements within 5 mm at distances up to 1.5 m, running at 15 frames per second. The final setup cost under $80 in parts.",
   },
