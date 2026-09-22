@@ -4,6 +4,13 @@ import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 import wirelessHowItWorks1 from "@/assets/wireless-how-it-works-1.jpg";
 import wirelessHowItWorks2 from "@/assets/wireless-how-it-works-2.jpg";
+import bicycleMechanicalOverview from "@/assets/bicycle-mechanical-overview.jpg";
+import bicycleElectricalSystem from "@/assets/bicycle-electrical-system.jpg";
+import bicycleSoftwareControlLoop from "@/assets/bicycle-software-control-loop.jpg";
+import bicycleSoftwareTuning from "@/assets/bicycle-software-tuning.jpg";
+import bicycleSoftwareValidation from "@/assets/bicycle-software-validation.jpg";
+import bicycleSoftwareIntegration from "@/assets/bicycle-software-integration.jpg";
+import bicycleChallenges from "@/assets/bicycle-challenges.jpg";
 
 export interface Approach {
   title: string;
@@ -20,6 +27,60 @@ export interface FinalApproachDetails {
   challenges: string;
 }
 
+export interface CaseStudyImage {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+export interface BicycleDesignTopic {
+  title: string;
+  text: string;
+  image?: CaseStudyImage;
+  steps?: string[];
+}
+
+export interface BicycleFinalApproachDetails {
+  summaryPoints: string[];
+  mechanical: {
+    intro: string;
+    steps: string[];
+    image: CaseStudyImage;
+    topics: BicycleDesignTopic[];
+  };
+  electrical: {
+    topics: BicycleDesignTopic[];
+  };
+  software: {
+    intro: string;
+    control: {
+      title: string;
+      textBeforeFirstImage: string;
+      firstImage: CaseStudyImage;
+      textBeforeSecondImage: string;
+      secondImage: CaseStudyImage;
+      textBeforeList: string;
+      points: string[];
+      textBeforeThirdImage: string;
+      thirdImage: CaseStudyImage;
+      closingText: string;
+    };
+    tuning: BicycleDesignTopic;
+    integration: {
+      title: string;
+      intro: string;
+      image: CaseStudyImage;
+      closingText: string;
+    };
+  };
+  challenges: {
+    intro: string;
+    image: CaseStudyImage;
+    closingText: string;
+  };
+}
+
 export interface Artwork {
   id: string;
   title: string;
@@ -34,6 +95,7 @@ export interface Artwork {
   research: Approach[];
   finalApproach: string;
   finalApproachDetails?: FinalApproachDetails;
+  bicycleFinalApproachDetails?: BicycleFinalApproachDetails;
   problems: string;
   results: string;
 }
@@ -164,7 +226,91 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    finalApproach: "A d rider intent, a brushless motor drove the fork, and a microcontroller applied programmable torque assist or damping based on speed and lean angle.",
+    finalApproach: "The selected architecture separated the handlebars from the fork mechanically. A rotary encoder measured rider input, a brushless motor drove the fork, and a microcontroller translated the requested steering mode into a controlled wheel angle.",
+    bicycleFinalApproachDetails: {
+      summaryPoints: [
+        "Electronically adjustable steering gain of 1:1 or 2:1",
+        "Selectable normal and reverse steering behavior",
+        "A modular design that could be tuned without rebuilding the bicycle",
+      ],
+      mechanical: {
+        intro: "The mechanical system had to isolate the handlebar from the fork while supporting ordinary riding loads. I designed the conversion around removable brackets so the prototype could be assembled, serviced, and returned to a conventional configuration without modifying the frame.",
+        steps: [
+          "Measure the head tube, steerer, handlebar, and available frame clearances.",
+          "Separate the handlebar input shaft from the fork output shaft.",
+          "Design bearing-supported shafts for both rotating assemblies.",
+          "Select a belt reduction that keeps the steering motor within its useful speed range.",
+          "Model the motor, encoder, and bracket interfaces in CAD.",
+          "Machine the aluminum mounts and install serviceable fasteners.",
+          "Verify full steering travel, cable clearance, and mechanical stops before powered testing.",
+        ],
+        image: { src: bicycleMechanicalOverview, width: 1920, height: 1376, alt: "Steer-by-wire bicycle mechanical components arranged for assembly" },
+        topics: [
+          { title: "Handlebar Input", text: "The handlebars rotate on their own bearing-supported shaft. This preserves familiar rider ergonomics while allowing the input angle to be measured independently from the front wheel." },
+          { title: "Fork Actuation", text: "A compact brushless motor and timing-belt reduction apply torque to the fork shaft. The reduction increases available steering torque while keeping backlash low." },
+          { title: "Bearing Supports", text: "Paired bearings constrain each shaft against radial and axial loads. Their spacing was selected to minimize flex without restricting the bicycle’s steering range." },
+          { title: "Mounting Brackets", text: "Machined aluminum brackets locate the motor, encoder, and shaft supports from existing frame features. Slotted interfaces provide belt tension and alignment adjustment." },
+          { title: "Mechanical Safety", text: "Hard stops prevent over-rotation, while guarded moving parts and accessible fasteners make inspection straightforward before every test ride." },
+        ],
+      },
+      electrical: {
+        topics: [
+          { title: "Rider Input Sensing", text: "An absolute rotary encoder measures handlebar angle at startup and throughout operation, eliminating the need for a homing movement before the bicycle can be controlled." },
+          { title: "Wheel Position Feedback", text: "A second encoder measures fork angle directly. Comparing commanded and measured position gives the controller the error signal required for closed-loop steering." },
+          { title: "Motor Drive", text: "A brushless motor controller converts low-voltage steering commands into three-phase motor current. Current limiting protects the actuator when the wheel encounters an obstruction." },
+          {
+            title: "Power and Signal Architecture",
+            text: "The battery feeds separate protected branches for motor power and low-voltage logic. Star grounding, twisted signal pairs, and physical separation between power and encoder wiring reduce electrical noise.",
+            image: { src: bicycleElectricalSystem, width: 1920, height: 720, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain" },
+            steps: [
+              "Route battery power through the main fuse and emergency cutoff.",
+              "Supply the motor controller from the protected high-current branch.",
+              "Regulate a separate low-voltage rail for the microcontroller and encoders.",
+              "Read handlebar and fork position through shielded encoder cables.",
+              "Send the requested motor command over the isolated control connection.",
+              "Monitor current, supply voltage, and controller status during operation.",
+              "Remove motor torque and report a fault whenever a safety limit is exceeded.",
+            ],
+          },
+          { title: "Emergency Controls", text: "A latching cutoff removes actuator power independently of software. The controller also defaults to zero torque after communication loss, invalid sensor data, or low supply voltage." },
+        ],
+      },
+      software: {
+        intro: "The firmware converts measured handlebar motion into a wheel-angle target, closes the motor position loop, and supervises every input for conditions that require a safe shutdown.",
+        control: {
+          title: "Steering Control Loop",
+          textBeforeFirstImage: "Each control cycle samples both encoders, unwraps their angular positions, applies the selected gain and direction, and produces a target fork angle.",
+          firstImage: { src: bicycleSoftwareControlLoop, width: 1280, height: 528, alt: "Bench setup representing the bicycle steering control loop" },
+          textBeforeSecondImage: "A cascaded controller turns position error into a requested motor current. Feed-forward compensates for predictable friction, while proportional and derivative terms correct tracking error without making the handlebars oscillate.",
+          secondImage: { src: bicycleSoftwareTuning, width: 1744, height: 912, alt: "Bicycle steering controller being tuned from recorded response plots" },
+          textBeforeList: "The control loop was tuned around the behaviors a rider notices most directly:",
+          points: [
+            "Low delay between handlebar motion and wheel response",
+            "Smooth reversal through the center position",
+            "Stable tracking at both 1:1 and 2:1 gain",
+            "Predictable torque limits near the steering stops",
+          ],
+          textBeforeThirdImage: "Bench tests swept the handlebar through repeatable inputs while logging target angle, measured wheel angle, current, and loop timing. The results were reviewed before each increase in speed or torque limit.",
+          thirdImage: { src: bicycleSoftwareValidation, width: 1920, height: 672, alt: "Steer-by-wire bicycle mounted in a bench validation fixture" },
+          closingText: "This staged process exposed instability safely and produced a conservative baseline tune before the first supported riding tests.",
+        },
+        tuning: {
+          title: "Modes and Tuning",
+          text: "A configuration layer selects normal or reverse direction and a steering gain of one or two. Mode changes are accepted only near center with low wheel speed, preventing an abrupt target-angle jump while riding.",
+        },
+        integration: {
+          title: "Fault Handling and Integration",
+          intro: "A supervisory state machine checks encoder plausibility, loop timing, supply voltage, motor status, and command limits. Any failed check moves the system to a zero-torque fault state that requires deliberate reset.",
+          image: { src: bicycleSoftwareIntegration, width: 960, height: 1664, alt: "Integrated steer-by-wire bicycle prototype in the workshop" },
+          closingText: "The integrated prototype stores diagnostic values for review after each test, making intermittent wiring, alignment, and controller faults easier to reproduce and correct.",
+        },
+      },
+      challenges: {
+        intro: "The hardest problem was balancing immediate steering response with stability. Backlash, frame flex, sensor noise, and actuator delay all changed the feel at the handlebars and could amplify one another at higher controller gains.",
+        image: { src: bicycleChallenges, width: 944, height: 704, alt: "Steer-by-wire bicycle steering assembly during troubleshooting" },
+        closingText: "I addressed these effects through repeated alignment checks, stiffer brackets, filtered velocity estimates, current limits, and progressively faster bench tests. The resulting tune favored predictable straight-line behavior and graceful fault handling over maximum response speed.",
+      },
+    },
     problems: "Latency between rider input and wheel response made the bike feel unnatural at low speeds. I tuned the control loop with a derivative term and added a mechanical fail-safe clutch.",
     results: "The prototype demonstrated stable low-speed balancing with adjustable steering weight. It became a platform for testing control algorithms and rider-interface concepts.",
   },
