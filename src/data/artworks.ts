@@ -227,24 +227,23 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia of 1035 kg·cm², these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
+    finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia, these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
     bicycleFinalApproachDetails: {
       summaryPoints: [
-        "Torque greater than or equal to 5Nm",
+        "Torque greater than or equal to 5 N·m",
         "Output angular velocity of at least 70rpm",
         "Under 20 millisecond input delay",
         "At least 1 hour battery life"
       ],
       mechanical: {
-        intro: "The mechanical system had to isolate the handlebar from the fork while supporting ordinary riding loads. I designed the conversion around removable brackets so the prototype could be assembled, serviced, and returned to a conventional configuration without modifying the frame.",
+        intro: "My design philosophy is to maximize adaptability to help tackle the inevitable issues and changes. This was especially imperative to achieve the budget requirement. The following list outlines the major mechanical components and how they were designed with this principle in mind.",
         steps: [
-          "Measure the head tube, steerer, handlebar, and available frame clearances.",
-          "Separate the handlebar input shaft from the fork output shaft.",
-          "Design bearing-supported shafts for both rotating assemblies.",
-          "Select a belt reduction that keeps the steering motor within its useful speed range.",
-          "Model the motor, encoder, and bracket interfaces in CAD.",
-          "Machine the aluminum mounts and install serviceable fasteners.",
-          "Verify full steering travel, cable clearance, and mechanical stops before powered testing.",
+          "Additional Head Tube: Attachment point kept as long as possible in case removal and re-attachement was required.",
+          "Encoder Shaft: Press fit with a three ten-thousandths interference for easy repositioning and removal. Both shaft lengths were made longer to account for any changes in encoder mounting position.",
+          "Encoder Mount: Slot implemented for back and forth variability in the final encoder shaft location.",
+          "Encoder Mount Extender: Width toleranced for encoder mount side to side movement to account for misalignment of the weld.",
+          "Fork Shaft: Plug welded to forks for easier removal. Both shafts lengths were made longer for changes in the position or bevel gear ratio.",
+          "Motor Mounts: Utilized the full slot width of the motor brackets to allow gearbox or bevel gear ratio changes.",
         ],
         image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly" },
         topics: [

@@ -19,7 +19,7 @@ const sections = [
 ];
 
 const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; className?: string }) => (
-  <div className={`overflow-hidden rounded-xl ${className}`}>
+  <div className={`w-1/2 overflow-hidden rounded-xl ${className}`}>
     <ImageReveal
       src={image.src}
       alt={image.alt}
