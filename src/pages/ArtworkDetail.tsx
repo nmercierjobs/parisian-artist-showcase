@@ -20,7 +20,7 @@ const sections = [
 
 const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; className?: string }) => (
   <div
-    className={`max-w-full overflow-hidden rounded-xl ${className}`}
+    className={`max-w-full mx-auto overflow-hidden rounded-xl ${className}`}
     style={{ width: `${image.displayWidthPercent}%` }}
   >
     <ImageReveal
@@ -262,7 +262,7 @@ const ArtworkDetail = () => {
                                 ) : (
                                   <div
                                     key={index}
-                                    className="max-w-full overflow-hidden rounded-xl"
+                                    className="mx-auto max-w-full overflow-hidden rounded-xl"
                                     style={{ width: `${block.displayWidthPercent}%` }}
                                   >
                                     <ImageReveal
