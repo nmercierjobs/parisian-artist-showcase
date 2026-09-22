@@ -12,6 +12,8 @@ import bicycleSoftwareTuning from "/images/least_squares_matrix.png";
 import bicycleSoftwareValidation from "/images/combined_graphs_no_header.png";
 import bicycleSoftwareIntegration from "/images/program_flowchart.png";
 import bicycleChallenges from "/images/shaft_angle_error.png";
+import usbTorqueSensorAssembly from "@/assets/usb-torque-sensor-assembly-exact.jpg";
+import usbTorqueSensorValidation from "@/assets/usb-torque-sensor-validation.jpg";
 
 export interface Approach {
   title: string;
@@ -83,6 +85,15 @@ export interface BicycleFinalApproachDetails {
   };
 }
 
+export interface TorqueSensorFinalApproachDetails {
+  assemblyImage: CaseStudyImage;
+  topics: [
+    BicycleDesignTopic,
+    BicycleDesignTopic & { image: CaseStudyImage; closingText: string },
+    BicycleDesignTopic,
+  ];
+}
+
 export interface Artwork {
   id: string;
   title: string;
@@ -100,6 +111,7 @@ export interface Artwork {
   finalApproach: string;
   finalApproachDetails?: FinalApproachDetails;
   bicycleFinalApproachDetails?: BicycleFinalApproachDetails;
+  torqueSensorFinalApproachDetails?: TorqueSensorFinalApproachDetails;
   problems: string;
   results: string;
 }
@@ -374,6 +386,37 @@ export const artworks: Artwork[] = [
       },
     ],
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
+    torqueSensorFinalApproachDetails: {
+      assemblyImage: {
+        src: usbTorqueSensorAssembly,
+        width: 1354,
+        height: 1162,
+        alt: "Custom USB torque sensor assembly with machined housing and signal-conditioning electronics",
+        displayWidthPercent: 50,
+      },
+      topics: [
+        {
+          title: "Mechanical Sensor Design",
+          text: "The sensing shaft was sized for the full 200 N·m measurement range while concentrating torsional strain where the gauges were bonded. A rigid aluminum housing supports the shaft bearings, protects the gauge wiring, and provides repeatable mounting at both ends.",
+        },
+        {
+          title: "Signal Conditioning and Calibration",
+          text: "Four strain gauges form a full Wheatstone bridge so torsional strain produces a differential voltage while common temperature effects largely cancel. A low-noise 24-bit converter amplifies and digitizes this signal before the microcontroller applies zero-offset and scale corrections.",
+          image: {
+            src: usbTorqueSensorValidation,
+            width: 921,
+            height: 218,
+            alt: "USB torque sensor calibration setup with motor, load arm, and measurement equipment",
+            displayWidthPercent: 70,
+          },
+          closingText: "Calibration loads were applied through a known lever arm and compared against the digitized output across the operating range. A fitted calibration curve converts bridge counts into torque, while repeated loading cycles quantify linearity, hysteresis, and measurement uncertainty.",
+        },
+        {
+          title: "USB Data Acquisition",
+          text: "The microcontroller packages each calibrated sample with a timestamp and streams it over USB to a Python application. The desktop tool plots live torque, records tests to a file, and allows the sensor to be zeroed without interrupting acquisition.",
+        },
+      ],
+    },
     problems: "Temperature drift and electrical noise from the motor under test corrupted readings. I added temperature compensation and shielded cables, then oversampled and filtered in firmware.",
     results: "The sensor resolved torque to 0.01 Nm with stable USB streaming. The final device fit in the palm of a hand and was used in multiple motor characterization tests.",
   },
