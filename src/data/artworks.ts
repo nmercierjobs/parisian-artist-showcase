@@ -2,8 +2,8 @@ import support3dCamera from "/images/normals_4_3.png";
 import supportSteerBike from "/images/bike_cad_4_3.png";
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
-import wirelessHowItWorks1 from "@/assets/wireless-how-it-works-1.jpg";
-import wirelessHowItWorks2 from "@/assets/wireless-how-it-works-2.jpg";
+import wirelessHowItWorks1 from "/images/tx_final.png";
+import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
 
 export interface Approach {
   title: string;
