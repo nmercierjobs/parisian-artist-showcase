@@ -1,19 +1,19 @@
 import support3dCamera from "/images/normals_4_3.png";
 import supportSteerBike from "/images/bike_cad_4_3.png";
-import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
-import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 import wirelessHowItWorks1 from "/images/tx_final.png";
 import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
 import bicycleMechanicalOverview from "/images/bike_cad_components.png";
 import bicycleElectricalSystem from "/images/UI.png";
 import bicycleSoftwareControlLoop from "/images/sg_gif.gif";
 import bicycleSoftwareTuning from "/images/least_squares_matrix.png";
-
 import bicycleSoftwareValidation from "/images/combined_graphs_no_header.png";
 import bicycleSoftwareIntegration from "/images/program_flowchart.png";
 import bicycleChallenges from "/images/shaft_angle_error.png";
-import usbTorqueSensorAssembly from "@/assets/usb-torque-sensor-assembly-exact.jpg";
-import usbTorqueSensorValidation from "@/assets/usb-torque-sensor-validation.jpg";
+import usbTorqueSensorAssembly from "/images/decoded_stylized.png";
+import usbTorqueSensorValidation from "/images/COM0_waveform.png";
+
+import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
+import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
 export interface Approach {
   title: string;
