@@ -227,12 +227,13 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    finalApproach: "The selected architecture separated the handlebars from the fork mechanically. A rotary encoder measured rider input, a brushless motor drove the fork, and a microcontroller translated the requested steering mode into a controlled wheel angle.",
+    finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia of 1035 kg·cm², these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
     bicycleFinalApproachDetails: {
       summaryPoints: [
-        "Electronically adjustable steering gain of 1:1 or 2:1",
-        "Selectable normal and reverse steering behavior",
-        "A modular design that could be tuned without rebuilding the bicycle",
+        "Torque greater than or equal to 5Nm",
+        "Output angular velocity of at least 70rpm",
+        "Under 20 millisecond input delay",
+        "At least 1 hour battery life"
       ],
       mechanical: {
         intro: "The mechanical system had to isolate the handlebar from the fork while supporting ordinary riding loads. I designed the conversion around removable brackets so the prototype could be assembled, serviced, and returned to a conventional configuration without modifying the frame.",

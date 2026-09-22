@@ -13,7 +13,7 @@ const sections = [
   { key: "problem" as const, label: "The Problem" },
   { key: "requirements" as const, label: "Requirements" },
   { key: "research" as const, label: "Approaches Considered" },
-  { key: "finalApproach" as const, label: "Final Approach" },
+  { key: "finalApproach" as const, label: "Chosen Approach: Steer-by-wire" },
   { key: "problems" as const, label: "Problems" },
   { key: "results" as const, label: "Results" },
 ];
@@ -168,7 +168,7 @@ const ArtworkDetail = () => {
                           </div>
 
                           <section>
-                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Mechanical Design</h3>
+                            <h3 className="font-display text-xl font-medium text-foreground lg:text-3xl">Mechanical Design</h3>
                             <p className="mt-4">{artwork.bicycleFinalApproachDetails.mechanical.intro}</p>
                             <ol className="mt-4 list-decimal space-y-2 pl-6">
                               {artwork.bicycleFinalApproachDetails.mechanical.steps.map((step) => (
