@@ -244,7 +244,7 @@ export const artworks: Artwork[] = [
           "Machine the aluminum mounts and install serviceable fasteners.",
           "Verify full steering travel, cable clearance, and mechanical stops before powered testing.",
         ],
-        image: { src: bicycleMechanicalOverview, width: 1920, height: 1376, alt: "Steer-by-wire bicycle mechanical components arranged for assembly" },
+        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly" },
         topics: [
           { title: "Handlebar Input", text: "The handlebars rotate on their own bearing-supported shaft. This preserves familiar rider ergonomics while allowing the input angle to be measured independently from the front wheel." },
           { title: "Fork Actuation", text: "A compact brushless motor and timing-belt reduction apply torque to the fork shaft. The reduction increases available steering torque while keeping backlash low." },
@@ -261,7 +261,7 @@ export const artworks: Artwork[] = [
           {
             title: "Power and Signal Architecture",
             text: "The battery feeds separate protected branches for motor power and low-voltage logic. Star grounding, twisted signal pairs, and physical separation between power and encoder wiring reduce electrical noise.",
-            image: { src: bicycleElectricalSystem, width: 1920, height: 720, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain" },
+            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain" },
             steps: [
               "Route battery power through the main fuse and emergency cutoff.",
               "Supply the motor controller from the protected high-current branch.",
@@ -280,9 +280,9 @@ export const artworks: Artwork[] = [
         control: {
           title: "Steering Control Loop",
           textBeforeFirstImage: "Each control cycle samples both encoders, unwraps their angular positions, applies the selected gain and direction, and produces a target fork angle.",
-          firstImage: { src: bicycleSoftwareControlLoop, width: 1280, height: 528, alt: "Bench setup representing the bicycle steering control loop" },
+          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop" },
           textBeforeSecondImage: "A cascaded controller turns position error into a requested motor current. Feed-forward compensates for predictable friction, while proportional and derivative terms correct tracking error without making the handlebars oscillate.",
-          secondImage: { src: bicycleSoftwareTuning, width: 1744, height: 912, alt: "Bicycle steering controller being tuned from recorded response plots" },
+          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots" },
           textBeforeList: "The control loop was tuned around the behaviors a rider notices most directly:",
           points: [
             "Low delay between handlebar motion and wheel response",
@@ -291,7 +291,7 @@ export const artworks: Artwork[] = [
             "Predictable torque limits near the steering stops",
           ],
           textBeforeThirdImage: "Bench tests swept the handlebar through repeatable inputs while logging target angle, measured wheel angle, current, and loop timing. The results were reviewed before each increase in speed or torque limit.",
-          thirdImage: { src: bicycleSoftwareValidation, width: 1920, height: 672, alt: "Steer-by-wire bicycle mounted in a bench validation fixture" },
+          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture" },
           closingText: "This staged process exposed instability safely and produced a conservative baseline tune before the first supported riding tests.",
         },
         tuning: {
@@ -301,13 +301,13 @@ export const artworks: Artwork[] = [
         integration: {
           title: "Fault Handling and Integration",
           intro: "A supervisory state machine checks encoder plausibility, loop timing, supply voltage, motor status, and command limits. Any failed check moves the system to a zero-torque fault state that requires deliberate reset.",
-          image: { src: bicycleSoftwareIntegration, width: 960, height: 1664, alt: "Integrated steer-by-wire bicycle prototype in the workshop" },
+          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop" },
           closingText: "The integrated prototype stores diagnostic values for review after each test, making intermittent wiring, alignment, and controller faults easier to reproduce and correct.",
         },
       },
       challenges: {
         intro: "The hardest problem was balancing immediate steering response with stability. Backlash, frame flex, sensor noise, and actuator delay all changed the feel at the handlebars and could amplify one another at higher controller gains.",
-        image: { src: bicycleChallenges, width: 944, height: 704, alt: "Steer-by-wire bicycle steering assembly during troubleshooting" },
+        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Steer-by-wire bicycle steering assembly during troubleshooting" },
         closingText: "I addressed these effects through repeated alignment checks, stiffer brackets, filtered velocity estimates, current limits, and progressively faster bench tests. The resulting tune favored predictable straight-line behavior and graceful fault handling over maximum response speed.",
       },
     },
