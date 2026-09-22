@@ -19,7 +19,10 @@ const sections = [
 ];
 
 const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; className?: string }) => (
-  <div className={`w-1/2 overflow-hidden rounded-xl ${className}`}>
+  <div
+    className={`max-w-full overflow-hidden rounded-xl ${className}`}
+    style={{ width: `${image.displayWidthPercent}%` }}
+  >
     <ImageReveal
       src={image.src}
       alt={image.alt}
@@ -77,8 +80,9 @@ const ArtworkDetail = () => {
           {/* Hero Image - Contained with rounded corners */}
           <div className="px-6 lg:px-10">
             <div
-              className="relative w-full overflow-hidden rounded-2xl aspect-[3/4] lg:aspect-auto lg:h-[85vh]"
+              className="relative mx-auto max-w-full overflow-hidden rounded-2xl aspect-[3/4] lg:aspect-auto lg:h-[85vh]"
               style={{
+                width: `${artwork.detailImageWidthPercent}%`,
                 opacity: 0,
                 animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                 animationDelay: "0ms"
@@ -115,8 +119,9 @@ const ArtworkDetail = () => {
                       <div className="mt-4">
                         {/* Supporting Image - Half page width, floated within the text */}
                         <div
-                          className="float-right ml-6 mb-4 w-1/2 shrink-0 overflow-hidden rounded-xl"
+                          className="float-right ml-6 mb-4 max-w-full shrink-0 overflow-hidden rounded-xl"
                           style={{
+                            width: `${artwork.supportImageWidthPercent}%`,
                             opacity: 0,
                             animation: "staggerFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                             animationDelay: "280ms"
@@ -229,7 +234,7 @@ const ArtworkDetail = () => {
                               <div>
                                 <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.integration.title}</h4>
                                 <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.integration.intro}</p>
-                                <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.integration.image} className="mt-5 max-w-2xl" />
+                                <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.integration.image} className="mt-5" />
                                 <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.integration.closingText}</p>
                               </div>
                             </div>
@@ -238,7 +243,7 @@ const ArtworkDetail = () => {
                           <section>
                             <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Challenges</h3>
                             <p className="mt-4">{artwork.bicycleFinalApproachDetails.challenges.intro}</p>
-                            <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.challenges.image} className="mt-5 max-w-3xl" />
+                            <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.challenges.image} className="mt-5" />
                             <p className="mt-5">{artwork.bicycleFinalApproachDetails.challenges.closingText}</p>
                           </section>
                         </div>
@@ -255,7 +260,11 @@ const ArtworkDetail = () => {
                                     {block.content}
                                   </p>
                                 ) : (
-                                  <div key={index} className="overflow-hidden rounded-xl">
+                                  <div
+                                    key={index}
+                                    className="max-w-full overflow-hidden rounded-xl"
+                                    style={{ width: `${block.displayWidthPercent}%` }}
+                                  >
                                     <ImageReveal
                                       src={block.src}
                                       alt={block.alt}
