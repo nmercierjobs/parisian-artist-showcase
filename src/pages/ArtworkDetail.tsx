@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import Layout from "@/components/layout/Layout";
 import ImageReveal from "@/components/ImageReveal";
-import { getArtworkBySlug, artworks } from "@/data/artworks";
+import { getArtworkBySlug, artworks, type CaseStudyImage } from "@/data/artworks";
 
 const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
@@ -17,6 +17,17 @@ const sections = [
   { key: "problems" as const, label: "Problems" },
   { key: "results" as const, label: "Results" },
 ];
+
+const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; className?: string }) => (
+  <div className={`overflow-hidden rounded-xl ${className}`}>
+    <ImageReveal
+      src={image.src}
+      alt={image.alt}
+      className="h-full w-full object-cover"
+      style={{ aspectRatio: `${image.width} / ${image.height}` }}
+    />
+  </div>
+);
 
 const ArtworkDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -145,7 +156,93 @@ const ArtworkDetail = () => {
                         ))}
                       </ol>
                     ) : key === "finalApproach" ? (
-                      artwork.finalApproachDetails ? (
+                      artwork.bicycleFinalApproachDetails ? (
+                        <div className="mt-4 space-y-14">
+                          <div>
+                            <p>{artwork.finalApproach}</p>
+                            <ul className="mt-3 list-disc space-y-1 pl-6">
+                              {artwork.bicycleFinalApproachDetails.summaryPoints.map((point) => (
+                                <li key={point}>{point}</li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <section>
+                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Mechanical Design</h3>
+                            <p className="mt-4">{artwork.bicycleFinalApproachDetails.mechanical.intro}</p>
+                            <ol className="mt-4 list-decimal space-y-2 pl-6">
+                              {artwork.bicycleFinalApproachDetails.mechanical.steps.map((step) => (
+                                <li key={step}>{step}</li>
+                              ))}
+                            </ol>
+                            <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.mechanical.image} className="mt-6" />
+                            <div className="mt-8 space-y-6">
+                              {artwork.bicycleFinalApproachDetails.mechanical.topics.map((topic) => (
+                                <div key={topic.title}>
+                                  <h4 className="font-bold text-foreground">{topic.title}</h4>
+                                  <p className="mt-2">{topic.text}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </section>
+
+                          <section>
+                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Electrical Design</h3>
+                            <div className="mt-4 space-y-7">
+                              {artwork.bicycleFinalApproachDetails.electrical.topics.map((topic) => (
+                                <div key={topic.title}>
+                                  <h4 className="font-bold text-foreground">{topic.title}</h4>
+                                  <p className="mt-2">{topic.text}</p>
+                                  {topic.image && <CaseStudyPhoto image={topic.image} className="mt-5" />}
+                                  {topic.steps && (
+                                    <ol className="mt-4 list-decimal space-y-2 pl-6">
+                                      {topic.steps.map((step) => <li key={step}>{step}</li>)}
+                                    </ol>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </section>
+
+                          <section>
+                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Software Design</h3>
+                            <p className="mt-4">{artwork.bicycleFinalApproachDetails.software.intro}</p>
+                            <div className="mt-7 space-y-10">
+                              <div>
+                                <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.control.title}</h4>
+                                <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.control.textBeforeFirstImage}</p>
+                                <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.firstImage} className="mt-5" />
+                                <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.textBeforeSecondImage}</p>
+                                <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.secondImage} className="mt-5" />
+                                <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.textBeforeList}</p>
+                                <ul className="mt-3 list-disc space-y-1 pl-6">
+                                  {artwork.bicycleFinalApproachDetails.software.control.points.map((point) => <li key={point}>{point}</li>)}
+                                </ul>
+                                <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.textBeforeThirdImage}</p>
+                                <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.thirdImage} className="mt-5" />
+                                <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.closingText}</p>
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.tuning.title}</h4>
+                                <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.tuning.text}</p>
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.integration.title}</h4>
+                                <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.integration.intro}</p>
+                                <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.integration.image} className="mt-5 max-w-2xl" />
+                                <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.integration.closingText}</p>
+                              </div>
+                            </div>
+                          </section>
+
+                          <section>
+                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Challenges</h3>
+                            <p className="mt-4">{artwork.bicycleFinalApproachDetails.challenges.intro}</p>
+                            <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.challenges.image} className="mt-5 max-w-3xl" />
+                            <p className="mt-5">{artwork.bicycleFinalApproachDetails.challenges.closingText}</p>
+                          </section>
+                        </div>
+                      ) : artwork.finalApproachDetails ? (
                         <div className="mt-4 space-y-10">
                           <div>
                             <h3 className="font-display text-xl font-medium tracking-tight text-foreground lg:text-2xl mb-4">
