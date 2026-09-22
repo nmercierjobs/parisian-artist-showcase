@@ -21,7 +21,7 @@ export interface Approach {
 
 export type FinalApproachBlock =
   | { type: "text"; content: string }
-  | { type: "image"; src: string; width: number; height: number; alt: string };
+  | { type: "image"; src: string; width: number; height: number; alt: string; displayWidthPercent: number };
 
 export interface FinalApproachDetails {
   howItWorks: FinalApproachBlock[];
@@ -33,6 +33,7 @@ export interface CaseStudyImage {
   width: number;
   height: number;
   alt: string;
+  displayWidthPercent: number;
 }
 
 export interface BicycleDesignTopic {
@@ -88,7 +89,9 @@ export interface Artwork {
   slug: string;
   image: string;
   detailImage: string;
+  detailImageWidthPercent: number;
   supportImage: string;
+  supportImageWidthPercent: number;
   supportCaption: string;
   summary: string;
   problem: string;
@@ -108,7 +111,9 @@ export const artworks: Artwork[] = [
     slug: "3d-camera-distance-sensor",
     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/chromatic-tension.jpg`,
+    detailImageWidthPercent: 100,
     supportImage: support3dCamera,
+    supportImageWidthPercent: 50,
     supportCaption: "..Normal vectors visualized using 7x7 pixel subregions",
     summary: "A personal exploration into low-cost depth sensing. This project built a 3D camera distance sensor capable of measuring real-world object positions using stereo vision and custom calibration.",
     problem: "How do you measure an object's height above a flat surface while in motion?",
@@ -165,7 +170,9 @@ export const artworks: Artwork[] = [
     slug: "steer-by-wire-bicycle",
     image: "/images/reverse_black.gif",
     detailImage: `${import.meta.env.BASE_URL}artworks/equilibre-instable.jpg`,
+    detailImageWidthPercent: 100,
     supportImage: supportSteerBike,
+    supportImageWidthPercent: 50,
     supportCaption: "Handlebar torque sensor and fork actuator mounted on the test frame.",
     summary: "An experimental bicycle that replaces the mechanical steering linkage with an electronic steer-by-wire system, exploring how software can change bicycle handling dynamics.",
     problem: "How to make a bicycle wheel move twice as much as the handlebars and in the opposite direction?",
@@ -245,7 +252,7 @@ export const artworks: Artwork[] = [
           "Fork Shaft: Plug welded to forks for easier removal. Both shafts lengths were made longer for changes in the position or bevel gear ratio.",
           "Motor Mounts: Utilized the full slot width of the motor brackets to allow gearbox or bevel gear ratio changes.",
         ],
-        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly" },
+        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly", displayWidthPercent: 50 },
         topics: [
           { title: "Handlebar Input", text: "The handlebars rotate on their own bearing-supported shaft. This preserves familiar rider ergonomics while allowing the input angle to be measured independently from the front wheel." },
           { title: "Fork Actuation", text: "A compact brushless motor and timing-belt reduction apply torque to the fork shaft. The reduction increases available steering torque while keeping backlash low." },
@@ -262,7 +269,7 @@ export const artworks: Artwork[] = [
           {
             title: "Power and Signal Architecture",
             text: "The battery feeds separate protected branches for motor power and low-voltage logic. Star grounding, twisted signal pairs, and physical separation between power and encoder wiring reduce electrical noise.",
-            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain" },
+            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain", displayWidthPercent: 50 },
             steps: [
               "Route battery power through the main fuse and emergency cutoff.",
               "Supply the motor controller from the protected high-current branch.",
@@ -281,9 +288,9 @@ export const artworks: Artwork[] = [
         control: {
           title: "Steering Control Loop",
           textBeforeFirstImage: "Each control cycle samples both encoders, unwraps their angular positions, applies the selected gain and direction, and produces a target fork angle.",
-          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop" },
+          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop", displayWidthPercent: 50 },
           textBeforeSecondImage: "A cascaded controller turns position error into a requested motor current. Feed-forward compensates for predictable friction, while proportional and derivative terms correct tracking error without making the handlebars oscillate.",
-          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots" },
+          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots", displayWidthPercent: 50 },
           textBeforeList: "The control loop was tuned around the behaviors a rider notices most directly:",
           points: [
             "Low delay between handlebar motion and wheel response",
@@ -292,7 +299,7 @@ export const artworks: Artwork[] = [
             "Predictable torque limits near the steering stops",
           ],
           textBeforeThirdImage: "Bench tests swept the handlebar through repeatable inputs while logging target angle, measured wheel angle, current, and loop timing. The results were reviewed before each increase in speed or torque limit.",
-          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture" },
+          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture", displayWidthPercent: 50 },
           closingText: "This staged process exposed instability safely and produced a conservative baseline tune before the first supported riding tests.",
         },
         tuning: {
@@ -302,13 +309,13 @@ export const artworks: Artwork[] = [
         integration: {
           title: "Fault Handling and Integration",
           intro: "A supervisory state machine checks encoder plausibility, loop timing, supply voltage, motor status, and command limits. Any failed check moves the system to a zero-torque fault state that requires deliberate reset.",
-          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop" },
+          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop", displayWidthPercent: 50 },
           closingText: "The integrated prototype stores diagnostic values for review after each test, making intermittent wiring, alignment, and controller faults easier to reproduce and correct.",
         },
       },
       challenges: {
         intro: "The hardest problem was balancing immediate steering response with stability. Backlash, frame flex, sensor noise, and actuator delay all changed the feel at the handlebars and could amplify one another at higher controller gains.",
-        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Steer-by-wire bicycle steering assembly during troubleshooting" },
+        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Steer-by-wire bicycle steering assembly during troubleshooting", displayWidthPercent: 50 },
         closingText: "I addressed these effects through repeated alignment checks, stiffer brackets, filtered velocity estimates, current limits, and progressively faster bench tests. The resulting tune favored predictable straight-line behavior and graceful fault handling over maximum response speed.",
       },
     },
@@ -321,7 +328,9 @@ export const artworks: Artwork[] = [
     slug: "usb-torque-sensor",
     image: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/fragments-of-silence.jpg`,
+    detailImageWidthPercent: 100,
     supportImage: supportTorqueSensor,
+    supportImageWidthPercent: 50,
     supportCaption: "Strain-gauge shaft and 3D-printed enclosure with USB-C interface.",
     summary: "A compact USB torque sensor for measuring rotational loads directly from a laptop. It combines a strain-gauge transducer with an integrated USB data acquisition interface.",
     problem: "How can torque measurements collected using a sensor be graphed and analyzed?",
@@ -374,7 +383,9 @@ export const artworks: Artwork[] = [
     slug: "wireless-mcu-timer-synchronization",
     image: "https://images.unsplash.com/photo-1549289524-06cf8837ace5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/paris-layers.jpg`,
+    detailImageWidthPercent: 100,
     supportImage: supportWirelessSync,
+    supportImageWidthPercent: 50,
     supportCaption: "Five synchronized sensor nodes arranged for the timing test.",
     summary: "A protocol and firmware stack for synchronizing timers across multiple microcontrollers over a wireless link, enabling distributed sensing and actuation with sub-millisecond alignment.",
     problem: "How to match the timers on two microcontrollers wirelessly?",
@@ -413,9 +424,9 @@ export const artworks: Artwork[] = [
     finalApproachDetails: {
       howItWorks: [
         { type: "text", content: "The system centers on a single beacon node that periodically broadcasts a reference timestamp over a 2.4 GHz radio link. Every broadcast is timestamped at the radio hardware level so that send-time variability is minimized." },
-        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes" },
+        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes", displayWidthPercent: 100 },
         { type: "text", content: "Each slave node captures its own local timer value the moment it receives the beacon packet. By comparing the received reference time to the local timestamp, the node computes an offset estimate and begins tracking how its clock diverges over time." },
-        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench" },
+        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench", displayWidthPercent: 100 },
         { type: "text", content: "Over many beacon cycles, each slave applies a linear regression to the offset data to estimate both offset and drift, then gently adjusts its timer so all nodes stay aligned within the target microsecond window." },
       ],
       challenges: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction. The protocol also had to recover automatically when nodes powered up or temporarily lost signal, requiring a state machine that could re-acquire the beacon without user intervention.",
