@@ -308,9 +308,27 @@ const ArtworkDetail = () => {
                                 {topic.title}
                               </h3>
                               <div className="mt-4 space-y-6">
-                                {topic.paragraphs.map((paragraph, paragraphIndex) => (
-                                  <p key={paragraphIndex}>{paragraph}</p>
-                                ))}
+                                {topic.paragraphs.map((paragraph, paragraphIndex) => {
+                                  const link = "link" in topic ? topic.link : undefined;
+                                  if (link && paragraph.includes(link.text)) {
+                                    const splitAt = paragraph.lastIndexOf(link.text);
+                                    return (
+                                      <p key={paragraphIndex}>
+                                        {paragraph.slice(0, splitAt)}
+                                        <a
+                                          href={link.href}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="underline underline-offset-2 hover:text-muted-foreground"
+                                        >
+                                          {link.text}
+                                        </a>
+                                        {paragraph.slice(splitAt + link.text.length)}
+                                      </p>
+                                    );
+                                  }
+                                  return <p key={paragraphIndex}>{paragraph}</p>;
+                                })}
                               </div>
                               {index === 1 && "image" in topic && (
                                 <>
