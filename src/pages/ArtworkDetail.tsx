@@ -254,6 +254,9 @@ const ArtworkDetail = () => {
                               <div>
                                 <h4 className="font-semibold text-foreground">{artwork.bicycleFinalApproachDetails.software.control.title}</h4>
                                 <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.control.textBeforeFirstImage}</p>
+                                 {artwork.bicycleFinalApproachDetails.software.control.additionalTextBeforeFirstImage && (
+                                   <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.additionalTextBeforeFirstImage}</p>
+                                 )}
                                 <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.firstImage} className="mt-5" />
                                 <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.textBeforeSecondImage}</p>
                                 <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.secondImage} className="mt-5" />

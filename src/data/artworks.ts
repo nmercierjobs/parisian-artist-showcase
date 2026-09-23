@@ -69,6 +69,7 @@ export interface BicycleFinalApproachDetails {
     control: {
       title: string;
       textBeforeFirstImage: string;
+      additionalTextBeforeFirstImage?: string;
       firstImage: CaseStudyImage;
       textBeforeSecondImage: string;
       secondImage: CaseStudyImage;
@@ -380,7 +381,7 @@ export const artworks: Artwork[] = [
             additionalParagraphs: ["TODO", "TODO", "TODO"],
           },
           { title: "Driver Selection", text: "I chose the CL86T motor driver over other nema 34 models for its slightly less terrible programming software. The software exposes a wide variety of configuration parameters most of which have no description. I meticulously researched descriptions for them and managed to piece everything together with documentation provided on the original manufacturers website (leadshine). Of note, this gave me a set of PID parameters I could configure and I discovered the driver filtered inputs for 15ms which I set to zero to help achieve the input delay requirement." },
-          { title: "Battery Selection", text: "A brushless motor controller converts low-voltage steering commands into three-phase motor current. Current limiting protects the actuator when the wheel encounters an obstruction." },
+          { title: "Battery Selection", text: "A brushless motor controller converts low-voltage steering commands into three-phase motor current. Current limiting protects the actuator when the wheel encounters an obstruction.", additionalParagraphs: ["TODO"] },
           {
             title: "User Interface",
             text: "All components were selected based on cost, with the exception of the LCD, which was chosen for its flexibility in displaying information. The functionality of each component is described below:",
@@ -403,6 +404,7 @@ export const artworks: Artwork[] = [
         control: {
           title: "Filtering",
           textBeforeFirstImage: "TODO",
+          additionalTextBeforeFirstImage: "TODO",
           firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop", displayWidthPercent: 50 },
           textBeforeSecondImage: "I had experience with least-squares quadratic regression so I chose to use the LOESS method. To optimize the approach, I computed each summation as a running sum where the next iteration subtracts the oldest value and adds the new value, substantially reducing the number of operations.",
           secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots", displayWidthPercent: 30 },
