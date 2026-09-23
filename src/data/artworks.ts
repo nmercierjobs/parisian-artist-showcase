@@ -488,7 +488,7 @@ export const artworks: Artwork[] = [
     researchConclusion: "A ready-made sensor was simpler but too costly, while manually reading a torque adapter limited analysis. A custom sensing and USB readout path offered a way to capture measurements directly on a computer.",
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
     torqueSensorFinalApproachDetails: {
-      introParagraphs: ["TODO", "TODO", "TODO"],
+      introParagraphs: ["TODO", "TODO"],
       assemblyImage: {
         src: usbTorqueSensorAssembly,
         width: 1354,
@@ -520,7 +520,7 @@ export const artworks: Artwork[] = [
           closingText: "Calibration loads were applied through a known lever arm and compared against the digitized output across the operating range. A fitted calibration curve converts bridge counts into torque, while repeated loading cycles quantify linearity, hysteresis, and measurement uncertainty.",
         },
         {
-          title: "Other Challenges",
+          title: "Challenges",
           paragraphs: [
             "The microcontroller packages each calibrated sample with a timestamp and streams it over USB to a Python application. The desktop tool plots live torque, records tests to a file, and allows the sensor to be zeroed without interrupting acquisition.",
             "TODO",
