@@ -268,7 +268,6 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    problems: "Ambient light caused inconsistent feature matching, and the cameras had to be kept perfectly aligned or the calibration drifted. I added IR-filtered lenses and a printed mounting bracket to stabilize the baseline.",
     results: "TODO",
   },
   {
@@ -429,7 +428,6 @@ export const artworks: Artwork[] = [
         closingText: "Towards completion, I installed the motor driver revealing that its ABS side panel acted as an amplifier for the motor’s vibrations. The amplification was substantial, easily doubling the volume. At this point, available funds were dwindling, so I limited the solutions to those that required no additional cost. I first tried stiffening the panel by gluing pieces of scrap ABS between the internal ribs, providing a modest improvement. I also considered longer pulse widths and microstepping, with the latter reducing the sound to an acceptable level.",
       },
     },
-    problems: "Latency between rider input and wheel response made the bike feel unnatural at low speeds. I tuned the control loop with a derivative term and added a mechanical fail-safe clutch.",
     results: "TODO",
   },
   {
@@ -515,7 +513,6 @@ export const artworks: Artwork[] = [
         },
       ],
     },
-    problems: "Temperature drift and electrical noise from the motor under test corrupted readings. I added temperature compensation and shielded cables, then oversampled and filtered in firmware.",
     results: "The sensor resolved torque to 0.01 Nm with stable USB streaming. The final device fit in the palm of a hand and was used in multiple motor characterization tests.",
   },
   {
@@ -572,7 +569,6 @@ export const artworks: Artwork[] = [
       ],
       challenges: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction. The protocol also had to recover automatically when nodes powered up or temporarily lost signal, requiring a state machine that could re-acquire the beacon without user intervention.",
     },
-    problems: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction.",
     results: "Five nodes maintained synchronization within 0.5 ms over a 20-minute test. The system ran on coin-cell power and recovered quickly from temporary wireless dropouts.",
   },
 ];
