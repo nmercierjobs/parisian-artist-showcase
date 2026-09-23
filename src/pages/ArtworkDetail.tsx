@@ -233,6 +233,9 @@ const ArtworkDetail = () => {
                                 <div key={topic.title}>
                                   <h4 className="font-semibold text-foreground">{topic.title}</h4>
                                   <p className="mt-2">{topic.text}</p>
+                                   {topic.additionalParagraphs?.map((paragraph, index) => (
+                                     <p key={index} className="mt-5">{paragraph}</p>
+                                   ))}
                                   {topic.image && <CaseStudyPhoto image={topic.image} className="mt-5" />}
                                   {topic.steps && (
                                     <ol className="mt-4 list-decimal space-y-2 pl-6">

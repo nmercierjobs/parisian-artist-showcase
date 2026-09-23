@@ -48,6 +48,7 @@ export interface CaseStudyImage {
 export interface BicycleDesignTopic {
   title: string;
   text: string;
+  additionalParagraphs?: string[];
   image?: CaseStudyImage;
   steps?: string[];
 }
@@ -375,7 +376,8 @@ export const artworks: Artwork[] = [
         topics: [
           { 
             title: "Motor Selection", 
-            text: "TODO" 
+            text: "TODO",
+            additionalParagraphs: ["TODO", "TODO", "TODO"],
           },
           { title: "Driver Selection", text: "I chose the CL86T motor driver over other nema 34 models for its slightly less terrible programming software. The software exposes a wide variety of configuration parameters most of which have no description. I meticulously researched descriptions for them and managed to piece everything together with documentation provided on the original manufacturers website (leadshine). Of note, this gave me a set of PID parameters I could configure and I discovered the driver filtered inputs for 15ms which I set to zero to help achieve the input delay requirement." },
           { title: "Battery Selection", text: "A brushless motor controller converts low-voltage steering commands into three-phase motor current. Current limiting protects the actuator when the wheel encounters an obstruction." },
