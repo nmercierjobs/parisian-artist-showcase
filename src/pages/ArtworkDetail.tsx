@@ -160,13 +160,18 @@ const ArtworkDetail = () => {
                             </li>
                           ))}
                         </ol>
-                        <p className="mt-6 rounded-lg bg-background px-0 py-4 text-foreground">
-                          {artwork.researchConclusion}
-                        </p>
+                        <div className="mt-6 space-y-4">
+                          {(Array.isArray(artwork.researchConclusion) ? artwork.researchConclusion : [artwork.researchConclusion]).map((paragraph, index) => (
+                            <p key={index} className="rounded-lg bg-background px-0 py-4 text-foreground/80">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
                       </>
                     ) : key === "finalApproach" ? (
                       artwork.cameraFinalApproachDetails ? (
                         <div className="mt-4 space-y-12">
+                          <p>TODO</p>
                           {artwork.cameraFinalApproachDetails.map((section) => (
                             <section key={section.title}>
                               <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">{section.title}</h3>
