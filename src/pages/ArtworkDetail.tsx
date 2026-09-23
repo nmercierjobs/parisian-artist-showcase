@@ -326,9 +326,11 @@ const ArtworkDetail = () => {
                             <h3 className="font-display text-xl font-medium tracking-tight text-foreground lg:text-2xl mb-4">
                               Challenges
                             </h3>
-                            <p className="text-foreground/80">
-                              {artwork.finalApproachDetails.challenges}
-                            </p>
+                            <div className="space-y-6">
+                              {artwork.finalApproachDetails.challenges.map((challenge, index) => (
+                                <p key={index} className="text-foreground/80">{challenge}</p>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       ) : (
