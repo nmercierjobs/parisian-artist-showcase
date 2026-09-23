@@ -144,21 +144,26 @@ const ArtworkDetail = () => {
                         ))}
                       </ul>
                     ) : key === "research" ? (
-                      <ol className="mt-4 list-decimal list-inside space-y-4">
-                        {artwork.research.map((approach, index) => (
-                          <li key={index}>
-                            <span className="font-medium text-foreground">{approach.title}</span>
-                            <p className="-mt-4 rounded-lg bg-background px-0 py-4 text-foreground/80">
-                              {approach.text}
-                            </p>
-                            <ul className="-mt-2 list-disc list-inside space-y-1 pl-10 text-foreground/80">
-                              {approach.subPoints.map((point, pIndex) => (
-                                <li key={pIndex}>{point}</li>
-                              ))}
-                            </ul>
-                          </li>
-                        ))}
-                      </ol>
+                      <>
+                        <ol className="mt-4 list-decimal list-inside space-y-4">
+                          {artwork.research.map((approach, index) => (
+                            <li key={index}>
+                              <span className="font-medium text-foreground">{approach.title}</span>
+                              <p className="-mt-4 rounded-lg bg-background px-0 py-4 text-foreground/80">
+                                {approach.text}
+                              </p>
+                              <ul className="-mt-2 list-disc list-inside space-y-1 pl-10 text-foreground/80">
+                                {approach.subPoints.map((point, pIndex) => (
+                                  <li key={pIndex}>{point}</li>
+                                ))}
+                              </ul>
+                            </li>
+                          ))}
+                        </ol>
+                        <p className="mt-6 rounded-lg bg-background px-0 py-4 text-foreground/80">
+                          {artwork.researchConclusion}
+                        </p>
+                      </>
                     ) : key === "finalApproach" ? (
                       artwork.cameraFinalApproachDetails ? (
                         <div className="mt-4 space-y-12">
