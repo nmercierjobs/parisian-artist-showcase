@@ -34,7 +34,7 @@ export type FinalApproachBlock =
 
 export interface FinalApproachDetails {
   howItWorks: FinalApproachBlock[];
-  challenges: string;
+  challenges: string[];
 }
 
 export interface CaseStudyImage {
@@ -481,8 +481,8 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
-    torqueSensorFinalApproachDetails: {
+    finalApproach: "TODO",
+      torqueSensorFinalApproachDetails: {
       assemblyImage: {
         src: usbTorqueSensorAssembly,
         width: 1354,
@@ -492,11 +492,11 @@ export const artworks: Artwork[] = [
       },
       topics: [
         {
-          title: "Mechanical Sensor Design",
+          title: "Measuring The Segments",
           text: "The sensing shaft was sized for the full 200 N·m measurement range while concentrating torsional strain where the gauges were bonded. A rigid aluminum housing supports the shaft bearings, protects the gauge wiring, and provides repeatable mounting at both ends.",
         },
         {
-          title: "Signal Conditioning and Calibration",
+          title: "When To Sample",
           text: "Four strain gauges form a full Wheatstone bridge so torsional strain produces a differential voltage while common temperature effects largely cancel. A low-noise 24-bit converter amplifies and digitizes this signal before the microcontroller applies zero-offset and scale corrections.",
           image: {
             src: usbTorqueSensorValidation,
@@ -508,7 +508,7 @@ export const artworks: Artwork[] = [
           closingText: "Calibration loads were applied through a known lever arm and compared against the digitized output across the operating range. A fitted calibration curve converts bridge counts into torque, while repeated loading cycles quantify linearity, hysteresis, and measurement uncertainty.",
         },
         {
-          title: "USB Data Acquisition",
+          title: "Other Challenges",
           text: "The microcontroller packages each calibrated sample with a timestamp and streams it over USB to a Python application. The desktop tool plots live torque, records tests to a file, and allows the sensor to be zeroed without interrupting acquisition.",
         },
       ],
@@ -569,9 +569,13 @@ export const artworks: Artwork[] = [
         { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench", displayWidthPercent: 70 },
         { type: "text", content: "TODO" },
       ],
-      challenges: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction. The protocol also had to recover automatically when nodes powered up or temporarily lost signal, requiring a state machine that could re-acquire the beacon without user intervention.",
+      challenges: [
+        "I chose Nordic’s nRF52 series of microcontrollers for this project because of the company’s strong reputation and its proprietary Enhanced ShockBurst (ESB) radio protocol. However, integrating the protocol with time synchronization proved to be a significant technical challenge. ESB requires exclusive control of the radio peripheral, while time synchronization requires direct, low-level access to the same hardware. To resolve this conflict, I implemented Nordic’s Multiprotocol Service Layer (MPSL) timeslot feature, which temporarily yields control of reserved peripherals. This also simplified correction event scheduling. Initially, achieving the system requirement of microsecond-level accuracy required correction events every few milliseconds because the timers operated at different tick rates. To reduce the frequency of these corrections, I use linear regression to estimate the clock drift rate and applied corrections between the master correction events. This extended the interval between master corrections from milliseconds to tens of minutes.",
+        "ESB presented another challenge. It modifies the default radio settings, causing my timestamps to be ignored by the receiving device. After exploring my options, I determined that I would need to replicate the ESB message format when transmitting the timestamp. I scoured the nRF52 datasheet, which was useful for understanding the standard radio packet format but provided little information about ESB itself. I then turned to the nRF24 series datasheet, which documented the legacy ShockBurst protocol in greater detail, but even this information was insufficient. Ultimately, I had to reverse-engineer the format by tracing through the source code.",
+        "Another challenge I encountered was an unusual race condition. The counter would occasionally be one increment too small while the free-running timer read zero. I initially implemented the free-running timer using the Nordic shortcut system, which is essentially a non-configurable version of the PPI system. I eventually discovered that the shortcut system has a shorter propagation delay, causing the free-running timer to reset ever so slightly before the counter could be incremented. Reconfiguring the free-running timer to use the PPI system equalized the propagation delays, resolving the issue.",
+      ],
     },
-    results: "Five nodes maintained synchronization within 0.5 ms over a 20-minute test. The system ran on coin-cell power and recovered quickly from temporary wireless dropouts.",
+    results: "TODO",
   },
 ];
 

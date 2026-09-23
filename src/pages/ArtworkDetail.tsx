@@ -283,7 +283,7 @@ const ArtworkDetail = () => {
                           <CaseStudyPhoto image={artwork.torqueSensorFinalApproachDetails.assemblyImage} />
                           {artwork.torqueSensorFinalApproachDetails.topics.map((topic, index) => (
                             <section key={topic.title}>
-                              <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">
+                              <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">
                                 {topic.title}
                               </h3>
                               <p className="mt-4">{topic.text}</p>
@@ -302,7 +302,7 @@ const ArtworkDetail = () => {
                             <div className="space-y-6">
                               {artwork.finalApproachDetails.howItWorks.map((block, index) => (
                                 block.type === "text" ? (
-                                  <p key={index} className="text-foreground/80">
+                                  <p key={index} className="text-foreground">
                                     {block.content}
                                   </p>
                                 ) : (
@@ -326,9 +326,11 @@ const ArtworkDetail = () => {
                             <h3 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl mb-4">
                               Challenges
                             </h3>
-                            <p className="text-foreground/80">
-                              {artwork.finalApproachDetails.challenges}
-                            </p>
+                            <div className="space-y-6">
+                              {artwork.finalApproachDetails.challenges.map((challenge, index) => (
+                                <p key={index} className="text-foreground">{challenge}</p>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       ) : (
