@@ -11,14 +11,16 @@ import bicycleSoftwareIntegration from "/images/program_flowchart.png";
 import bicycleChallenges from "/images/shaft_angle_error.png";
 import usbTorqueSensorAssembly from "/images/decoded_stylized.png";
 import usbTorqueSensorValidation from "/images/COM0_waveform.png";
-import cameraRegionOfInterest from "@/assets/camera-region-of-interest.png";
-import cameraNormalEstimation from "@/assets/camera-normal-estimation.png";
-import cameraNormalField from "@/assets/camera-normal-field.png";
-import cameraFilteredCloud from "@/assets/camera-filtered-cloud.png";
-import cameraNormalFilter from "@/assets/camera-normal-filter.png";
 
 import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
+
+import cameraRegionOfInterest from "/images/3d_camera/ROI.png";
+import cameraNormalEstimation from "/images/3d_camera/summed_area_table.png";
+import cameraNormalField from "/images/3d_camera/covariance_matrix_stylized.png";
+import cameraFilteredCloud from "/images/3d_camera/kurvature.png";
+import cameraNormalFilter from "/images/3d_camera/projected_height.png";
+
 
 export interface Approach {
   title: string;
@@ -194,44 +196,51 @@ export const artworks: Artwork[] = [
       {
         title: "Hardware",
         blocks: [
-          { type: "text", content: "The camera assembly combines a compact depth-sensing rig with a rigid mount to keep the camera geometry repeatable. Calibration relates image coordinates to real-world distances; the depth frames are then processed on a host computer to estimate the height above the ground." },
+          { type: "text", content: "Among the companies that offer a 3D camera capable of 90 Hz are Intel realsense, Luxonis, and Stereolabs. They are all reputable brands with differing ideal use cases but for this application it did not really matter. They all met the accuracy requirement and were more or less the same size. I ended up selecting the Intel Realsense D435 camera simply because I managed to get a used one for $50. In retrospect, I would buy another as the whitepapers and support they provide are very informative." },
+          { type: "text", content: "To meet the size requirements, I explored single-board computer (SBC) options to pair with the camera. At the time, the most performant option in the typical SBC form factor was the Orange Pi 6. However, when paired with the camera, the combined size exceeded the requirement. Instead, I discovered the Raspberry Pi 5 Compute Module and paired it with Waveshare’s nano base board. This combination reduced the overall form factor by 3.5× while retaining most of the computational performance, allowing it to meet the size requirement." },
         ],
       },
       {
         title: "Region of Interest",
         blocks: [
-          { type: "text", content: "Only the part of the depth frame likely to contain the ground is needed for a height measurement. A region of interest excludes distant scene features, the object carrying the camera, and the edges of the image where depth readings are less dependable." },
-          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 40 } },
+          { type: "text", content: "The first part of the program selects a region of interest (ROI) in the image to the desired real-world size. Implementing this proved challenging because 3D cameras operate according to the pinhole camera principle in which the point-to-point distance increases with depth. Consequently, each quadrant of the ROI can consist of a different number of points." },
+          { type: "text", content: "To address this, I implemented a function that iterates upward, downward, leftward, and rightward from the center row and column to determine the pixel dimensions of the ROI for each frame. To improve robustness, the function iterates along the entire row or column with the median distance used. My application has a maximum operating distance of 1.5 meters which provides a lower bound on the ROI’s dimensions. I leveraged this constraint to optimize the iteration process by initializing each search at this minimum dimension rather than starting from the center. This reduces the number of iterations required, helping meet the 90 Hz sampling requirement." },
+          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 20 } },
         ],
       },
       {
         title: "Subdivisioning",
         blocks: [
-          { type: "text", content: "The selected region is divided into small neighborhoods instead of treating the whole frame as one surface. Each neighborhood contributes a local estimate, making it easier to distinguish a coherent ground plane from isolated objects or missing depth values." },
+          { type: "text", content: "The goal of breaking the surface into smaller chunks is to identify and remove undesirable regions. For example, if a branch or leaf is present in the image, the corresponding regions can be excluded so they do not influence the plane fit. The subregion size essentially determines the resolution at which surface variation can be captured. Smaller regions capture finer details but too small and the measurement noise becomes problematic. In practice, I found that a 7×7 pixel subregion provided a good tradeoff for this application." },
+          { type: "text", content: "There is also a question of step size, or how far the subregion moves between measurements. Initially, I subdivided the surface and shifted the region by the entire width for each subsequent measurement. However, shifting the region by only 1 pixel proved far more effective at capturing surface detail, since adjacent regions overlap and provide much denser coverage of the surface." },
         ],
       },
       {
         title: "Normal Vectors",
         blocks: [
-          { type: "text", content: "For each neighborhood, nearby 3D points define a local surface plane. Its normal vector describes which way that patch faces, providing an orientation measurement that can be compared across the depth frame." },
-          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Diagram of local plane fitting and normal vectors on depth samples", displayWidthPercent: 70 } },
-          { type: "text", content: "Comparing adjacent normals reveals where the surface stays approximately flat and where it changes sharply. The existing point-cloud visualization below shows those local orientations across a scanned surface." },
-          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Point-cloud visualization of computed surface normal vectors", displayWidthPercent: 70 } },
+          { type: "text", content: "I chose the principal component analysis (PCA) plane-fit approach to determine the normal vectors. I initially considered more robust methods, however, they were not feasible given the required sampling rate and I did not want to pursue approaches that relied on randomization. PCA provides a least-squares fit by calculating the orthogonal eigenvectors of the covariance matrix. In other words, it identifies the directions of variance with the direction of least variance used as the normal vector to the fitted plane." },
+          { type: "text", content: "A critical optimization I incorporated to achieve the 90 Hz requirement was the use of summed-area tables to compute the normal vectors for each subregion. To implement this, an array of cumulative sums is precomputed where each element contains the sum of all values above and to the left of it. Example below." },
+          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Diagram of local plane fitting and normal vectors on depth samples", displayWidthPercent: 30 } },
+          { type: "text", content: "Using a summed-area table, the sum of any rectangular region — or in this case square — can be computed using only addition and subtraction of the four corner elements. This eliminates the need to iterate over every pixel within the region each time a sum is required. In my implementation, I created nine separate summed-area tables to substantially accelerate the computation of the covariance matrices for the subregions. The summation breakdown of a covariance matrix is shown below. When processing the entire depth image (848 × 480 pixels), this optimization reduces the number of required operations by approximately 10× when using 7 × 7 pixel subregions." },
+          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Point-cloud visualization of computed surface normal vectors", displayWidthPercent: 40 } },
         ],
       },
       {
         title: "Filtering",
         blocks: [
-          { type: "text", content: "Depth maps can contain missing pixels, reflections, and isolated measurements. Filtering first removes unreliable samples, then keeps patches whose depth and orientation agree with nearby ground candidates." },
-          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Illustration comparing raw depth samples with filtered ground candidates", displayWidthPercent: 80 } },
-          { type: "text", content: "A normal-angle check rejects patches that face away from the dominant ground orientation. This helps stop vertical obstacles and stray returns from shifting the final surface estimate." },
+          { type: "text", content: "With the directional variances already calculated, filtering non-planar subregions is quite straight-forward. If the proportion of variance in the direction of the normal vector is small compared to the total variance, the region can be considered planar. In other words, the fraction of the smallest eigenvalue to the sum of all eigenvalues." },
+          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Illustration comparing raw depth samples with filtered ground candidates", displayWidthPercent: 30 } },
+          { type: "text", content: "There is also a need to distinguish regions that are planar but not coplanar with the majority plane. To determine the plane a subregion lies on I use the magnitude of the camera-to-normal vector projected onto the normal of the subregion, as shown below. I call this the projected height. This approach is only valid when applied to a set of normal vectors orientated in the same direction." },
           { type: "image", image: { src: cameraNormalFilter, width: 752, height: 361, alt: "Diagram showing aligned surface normals retained and inconsistent normals rejected", displayWidthPercent: 50 } },
         ],
       },
       {
         title: "Region Growing",
         blocks: [
-          { type: "text", content: "Starting from a reliable ground patch, the algorithm adds neighboring patches only when their distance and normal direction remain consistent. Growing a connected region reduces the chance of mixing the road surface with unrelated objects at a similar depth." },
+          { type: "text", content: "I was now left with a set of scattered subregions that needed to be combined to form the majority plane. Initially, I selected a subregion as a seed and expanded outward, adding neighboring subregions whose normal vectors fell within an angular threshold. I soon realized that finding the largest possible set would require considering every subregion as a potential seed. This was computationally infeasible given the 90 Hz requirement." },
+          { type: "text", content: "Instead, I implemented histograms to substantially reduce the number of computations. Early on I converted the cartesian vectors into spherical coordinates thinking this would simplify the process. Nope. When the measured plane is parallel to the camera the measurement noise causes the normal vectors to disperse randomly around the azimuth direction. Using cosine direction angles instead resolved this issue." },
+          { type: "text", content: "The cosine direction angle histogram is dimensioned so that each voxel spans 1°x1°x1°. Each voxel contains an array storing the normal vector’s subregion index, defined by its center point, along with its projected height. Once all normal vectors have been added, each occupied voxel is expanded to its neighbors within the angular threshold to form clusters. The voxel arrays within each cluster are then concatenated and a histogram of projected heights formed. For each cluster, a sliding window is applied to the projected height histogram to identify the largest set of coplanar subregions oriented in the same direction. PCA is then reapplied to this set of points to obtain a robust normal vector which is used to calculate the sensor’s height and orientation." },
+          { type: "text", content: "A number of optimizations were needed for this method to be successful. First, not all voxels are expanded to form clusters, and not all clusters generate projected height histograms. Only those containing enough vectors proceed to the next stage. Additionally, when clusters are formed, a new array containing all of the voxel data is not created. Instead, each cluster maintains an array of pointers to the existing voxel arrays, avoiding the need to copy the data. Lastly, memory arenas were implemented to enable fast runtime allocation." },
         ],
       },
       {

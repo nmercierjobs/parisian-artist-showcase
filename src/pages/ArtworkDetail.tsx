@@ -97,7 +97,7 @@ const ArtworkDetail = () => {
           </div>
 
           {/* Content Section - Full page width */}
-          <div className="flex-1 px-6 py-12 lg:px-10 lg:py-24">
+          <div className="mx-auto w-3/4 flex-1 px-6 py-12 lg:px-10 lg:py-24">
             <div
               style={{
                 opacity: 0,
