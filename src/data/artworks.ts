@@ -488,7 +488,7 @@ export const artworks: Artwork[] = [
     researchConclusion: "A ready-made sensor was simpler but too costly, while manually reading a torque adapter limited analysis. A custom sensing and USB readout path offered a way to capture measurements directly on a computer.",
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
     torqueSensorFinalApproachDetails: {
-      introParagraphs: ["TODO", "TODO"],
+      introParagraphs: ["TODO", "TODO", "TODO"],
       assemblyImage: {
         src: usbTorqueSensorAssembly,
         width: 1354,
