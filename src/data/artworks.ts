@@ -345,7 +345,7 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    researchConclusion: "Mechanical options could change steering gain or reverse its direction, but combining both behaviors in a compact, adjustable system made steer-by-wire the most flexible option to pursue.",
+    researchConclusion: "Initially, I chose the planetary gearbox paired with the idler gears methods because the math was very unique and challenging. I am proud of the idea for its relative mechanical simplicity and it is something I really wanted to realize. But, is it the right approach? As I delved deeper analyzing the forces it became clear that many additional components would be required to guarantee sucess. And, any mistakes in the design or manufacture would be costly and potentially cause the project to exceed its budget. As a result, I transitioned to the steer-by-wire system which trades much of the mechanical complexity for software complexity.",
     finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia, these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
     bicycleFinalApproachDetails: {
       summaryPoints: [
@@ -377,11 +377,18 @@ export const artworks: Artwork[] = [
         topics: [
           { 
             title: "Motor Selection", 
-            text: "TODO",
-            additionalParagraphs: ["TODO", "TODO", "TODO"],
+            text: "Driven by a desire to maximize motor performance, I wanted to understand every available avenue for improvement. I had already selected a NEMA 24 motor that met the torque requirement, but I wanted a plan for increasing performance if the initial design proved insufficient. This led me down a rabbit hole of textbooks and whitepapers covering thermal optimization, current rise time, closed-loop operation, and stepping modes.",
+            additionalParagraphs: 
+            [
+              "At its core, a motor’s performance is fundamentally limited by its temperature and magnetic saturation. I found reports of magnetic saturation occurring in stepper motors at approximately twice the rated current. Cooling at twice the current would not be feasible with the budget but I reasoned the lower duty cycle of this application would withstand some additional current without modification. Thus, I upsized the motor driver to a nema 34 which was capable of supplying additional current at a negligible upcharge.",
+              "Another choice to be made was between open and closed-loop operation. In an open-loop configuration, the motor must always be driven slightly below its maximum performance to avoid position errors. Closed-loop operation removes this requirement, making it the obvious choice given the negligible cost difference. It also simplified my program, as I no longer needed to monitor whether I was pushing the motor beyond its limits.", 
+              "Lastly, microstepping is a very popular driving technique for these motors due to the noise reduction and smoother operation. However, it reduces output torque considerably with one source reporting a 30% reduction."
+            ],
           },
           { title: "Driver Selection", text: "I chose the CL86T motor driver over other nema 34 models for its slightly less terrible programming software. The software exposes a wide variety of configuration parameters most of which have no description. I meticulously researched descriptions for them and managed to piece everything together with documentation provided on the original manufacturers website (leadshine). Of note, this gave me a set of PID parameters I could configure and I discovered the driver filtered inputs for 15ms which I set to zero to help achieve the input delay requirement." },
-          { title: "Battery Selection", text: "A brushless motor controller converts low-voltage steering commands into three-phase motor current. Current limiting protects the actuator when the wheel encounters an obstruction.", additionalParagraphs: ["TODO"] },
+          { title: "Battery Selection", 
+            text: "The upsized driver also provided an opportunity to experiment with higher drive voltages. Increasing the voltage allows current to build more quickly in the motor windings, improving acceleration. Testing with a power supply demonstrated a substantial improvement when increasing the voltage from 24 V to 36 V, while further increases yielded little additional benefit.", 
+            additionalParagraphs: ["Higher voltage also helps maintain torque at high speeds. With the selected gearbox, the available torque at maximum speed was approximately twice the required torque, so additional high-speed torque was unnecessary. Based on these findings, a 36 V battery was selected. Specifically, a tool battery was chosen for its cost-effectiveness and the ability to extend runtime by swapping batteries."] },
           {
             title: "User Interface",
             text: "All components were selected based on cost, with the exception of the LCD, which was chosen for its flexibility in displaying information. The functionality of each component is described below:",
@@ -403,8 +410,8 @@ export const artworks: Artwork[] = [
         intro: "The overall structure of my program is extremely simple. It waits until the encoder measures a steering angle change twice its resolution (0.175 degrees) and sends the pulses to the motor driver. Layered onto this is filtering, interaction with the peripheral components, safety checks, and error handling.",
         control: {
           title: "Filtering",
-          textBeforeFirstImage: "TODO",
-          additionalTextBeforeFirstImage: "TODO",
+          textBeforeFirstImage: "I wanted to monitor the input steering velocity and acceleration for safety, debugging, and verification that the design requirements were satisfied. I initially implemented finite-difference differentiation of the encoder measurements but encountered the noise amplification inherent to numerical differentiation. I therefore explored several filtering techniques including moving averages, Gaussian filters, and regression-based approaches. I ultimately selected the regression-based method for its ability to better preserve the underlying signal.",
+          additionalTextBeforeFirstImage: "The Savitzy-Golay (SG) filter curve fits a window of the data, samples the middle of the curve, and applies derivatives at the same location. The genius of the filter is its ability to precompute the majority of calculations with the trade-off that the data points need to be equally spaced. Locally Estimated Scatterplot Smoothing (LOESS) regression is essentially the same filter without the need for equally spaced data points but the requirement to recompute the least-squares solution for every window. The example below illustrates an application using a 4th-order polynomial and 45-point window size.",
           firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop", displayWidthPercent: 50 },
           textBeforeSecondImage: "I had experience with least-squares quadratic regression so I chose to use the LOESS method. To optimize the approach, I computed each summation as a running sum where the next iteration subtracts the oldest value and adds the new value, substantially reducing the number of operations.",
           secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots", displayWidthPercent: 30 },
@@ -490,9 +497,13 @@ export const artworks: Artwork[] = [
       },
     ],
     researchConclusion: "A ready-made sensor was simpler but too costly, while manually reading a torque adapter limited analysis. A custom sensing and USB readout path offered a way to capture measurements directly on a computer.",
-    finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
+    finalApproach: "Researching how to decode an LCD screen turned out to be quite tricky. Unsurprisingly, there is very little information about the subject. I began by learning all about the operation of the twisted nematic LCD displays used in these applications. I learned there are two major types: static and multiplexed displays. The static displays have one common pin plus however many segments the display has. A multiplexed display shares multiple common pins among the segment pins to reduce the total number needed to drive the screen.",
     torqueSensorFinalApproachDetails: {
-      introParagraphs: ["TODO", "TODO", "TODO"],
+      introParagraphs: 
+      [
+        "To simplify the project, I wanted to find a torque adapter that used a static display. I purchased four different models, selected for their unique features: the Durofix RM602-4A, Powerbuilt 940962, ANPUDS, and ThreeH. The Durofix had a backlight, the ANPUDS had a color screen, and the remaining models had different screen sizes. Unfortunately, after disassembling them, I discovered that all four used multiplexed displays. Purchasing them was not a waste, however, as I also wanted to characterize the displays’ responsiveness and refresh rates. I assembled a test rig in which I dropped a 1/2-inch socket onto the end of a socket wrench and recorded the displays in slow motion. To identify the start of the impulse, I built a simple circuit that illuminated an LED when the socket contacted the wrench. This proved extremely informative, with the ANPUDS model being substantially more responsive than the others. I later measured its frame rate directly at 60 fps and suspected that the remaining displays operated at 30 fps.", 
+        "Stuck with multiplexed displays I decoded the ANPUDS screen through trial and error by applying a small dc voltage across the pins. Here is the completed table:",
+      ],
       assemblyImage: {
         src: usbTorqueSensorAssembly,
         width: 1354,
@@ -504,15 +515,15 @@ export const artworks: Artwork[] = [
         {
           title: "Measuring The Segments",
           paragraphs: [
-            "The sensing shaft was sized for the full 200 N·m measurement range while concentrating torsional strain where the gauges were bonded. A rigid aluminum housing supports the shaft bearings, protects the gauge wiring, and provides repeatable mounting at both ends.",
-            "TODO",
+            "The screen has a total of 6 digits with only 5 of them in use by the sensor. Since my requirement is only up to 200 N·m I only needed to decode 4 of these digits. This reduced the number of segment pins I would need to measure from 10 to 8. The segment pins used 4 common pins for a total of 32 individual segments I would need to measure. To accomplish this, I implemented two 8-channel demultiplexers with one used to select among the 4 common pins and the other the 8 segment pins. I could have purchased a 4-channel demultiplexer for the common pins but the 8-channel was cheaper.",
+            "The toughest part was measuring the segment voltages. These LCD screens must be driven with an AC voltage because prolonged DC damages the screen. I did a lot of testing with op amps, diodes, and comparators before realizing I made a mistake. I assumed that the AC drive voltage requirement meant that the voltage must alternate between a positive and negative voltage. The screen was actually set up to produce an AC voltage between 3.6v and 0v. With a DC bias why isn't the screen damaged? Because the polarity between the common and segments is alternated creating an average dc voltage of zero. With this, I was able to greatly simplify the circuit by just using voltage dividers to reduce the voltage to a maximum of 3.3v. I sampled both segment and common voltages independently with the adc on an STM32 and computed the difference digitally.",
           ],
         },
         {
           title: "When To Sample",
           paragraphs: [
-            "Four strain gauges form a full Wheatstone bridge so torsional strain produces a differential voltage while common temperature effects largely cancel. A low-noise 24-bit converter amplifies and digitizes this signal before the microcontroller applies zero-offset and scale corrections.",
-            "TODO",
+            "At this point, the ideal approach would have been to measure the common waveforms to determine when to sample each segment. I had access to an oscilloscope at UC Davis, but I wanted to challenge myself to solve the problem without one. Without knowing how the screen was updated, I instead designed my program to continuously sample the segments and calculate their root mean squared voltage. This approach, however, reduced the effective sampling rate from 60 Hz to around 20 Hz. Additionally, transitions between certain digits could briefly produce readings corresponding to another valid digit. These corrupted measurements would have been relatively easy to remove during a post-processing step, but I wanted to achieve a faster sampling rate.",
+            "Close to abandoning the oscilloscope-less approach I inspected the microcontroller on the torque adapter and managed to read its model number (BH67F5265). In it, I managed to find thorough documentation of the many LCD drive types it supported. The waveforms generated for each drive type is unique so I plotted some adc measurements to determine which one this application uses. The waveform for COM0 is shown below. The full set can be viewed here.",
           ],
           image: {
             src: usbTorqueSensorValidation,
@@ -521,19 +532,19 @@ export const artworks: Artwork[] = [
             alt: "USB torque sensor calibration setup with motor, load arm, and measurement equipment",
             displayWidthPercent: 70,
           },
-          closingText: "Calibration loads were applied through a known lever arm and compared against the digitized output across the operating range. A fitted calibration curve converts bridge counts into torque, while repeated loading cycles quantify linearity, hysteresis, and measurement uncertainty.",
+          closingText: "Using this information and the known frame rate of 60 fps I could time my program to sample each segment at precisely the right moment letting me achieve the full sampling rate.",
         },
         {
           title: "Challenges",
           paragraphs: [
-            "The microcontroller packages each calibrated sample with a timestamp and streams it over USB to a Python application. The desktop tool plots live torque, records tests to a file, and allows the sensor to be zeroed without interrupting acquisition.",
+            "TODO",
             "TODO",
             "TODO",
           ],
         },
       ],
     },
-    results: "The sensor resolved torque to 0.01 Nm with stable USB streaming. The final device fit in the palm of a hand and was used in multiple motor characterization tests.",
+    results: "TODO",
   },
   {
     id: "4",

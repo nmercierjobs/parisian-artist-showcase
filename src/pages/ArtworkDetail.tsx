@@ -160,7 +160,7 @@ const ArtworkDetail = () => {
                             </li>
                           ))}
                         </ol>
-                        <p className="mt-6 rounded-lg bg-background px-0 py-4 text-foreground/80">
+                        <p className="mt-6 rounded-lg bg-background px-0 py-4 text-foreground">
                           {artwork.researchConclusion}
                         </p>
                       </>
