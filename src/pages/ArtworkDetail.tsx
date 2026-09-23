@@ -97,7 +97,7 @@ const ArtworkDetail = () => {
           </div>
 
           {/* Content Section - Full page width */}
-          <div className="mx-auto w-3/4 flex-1 px-6 py-12 lg:px-10 lg:py-24">
+          <div className="border-x-2 border-border mx-auto max-w-6xl flex-1 px-6 py-12 lg:px-10 lg:py-24 font-[Arial]">
             <div
               style={{
                 opacity: 0,
@@ -109,7 +109,7 @@ const ArtworkDetail = () => {
                 {artwork.title}
               </h1>
 
-              <div className="mt-10 space-y-10 text-base leading-relaxed text-foreground/80 lg:text-lg lg:leading-loose">
+              <div className="mt-10 space-y-10 text-base leading-relaxed text-foreground lg:text-lg lg:leading-loose">
                 {sections.map(({ key, label }) => (
                   <section key={key} id={key}>
                     <h2 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
@@ -152,7 +152,7 @@ const ArtworkDetail = () => {
                             <p className="-mt-4 rounded-lg bg-background px-0 py-4 text-foreground/80">
                               {approach.text}
                             </p>
-                            <ul className="-mt-2 list-disc list-inside space-y-1 pl-10 text-muted-foreground">
+                            <ul className="-mt-2 list-disc list-inside space-y-1 pl-10 text-foreground/80">
                               {approach.subPoints.map((point, pIndex) => (
                                 <li key={pIndex}>{point}</li>
                               ))}
@@ -165,7 +165,7 @@ const ArtworkDetail = () => {
                         <div className="mt-4 space-y-12">
                           {artwork.cameraFinalApproachDetails.map((section) => (
                             <section key={section.title}>
-                              <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">{section.title}</h3>
+                              <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">{section.title}</h3>
                               <div className="mt-4 space-y-5">
                                 {section.blocks.map((block, index) =>
                                   block.type === "text" ? (
@@ -183,7 +183,7 @@ const ArtworkDetail = () => {
                                 <div className="mt-8 space-y-7">
                                   {section.topics.map((topic) => (
                                     <div key={topic.title}>
-                                      <h4 className="font-bold text-foreground">{topic.title}</h4>
+                                      <h4 className="font-semibold text-foreground">{topic.title}</h4>
                                       <p className="mt-2">{topic.text}</p>
                                     </div>
                                   ))}
@@ -204,7 +204,7 @@ const ArtworkDetail = () => {
                           </div>
 
                           <section>
-                            <h3 className="font-display text-xl font-medium text-foreground lg:text-3xl">Mechanical Design</h3>
+                            <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Mechanical Design</h3>
                             <p className="mt-4">{artwork.bicycleFinalApproachDetails.mechanical.intro}</p>
                             <ol className="mt-4 list-decimal space-y-2 pl-6">
                               {artwork.bicycleFinalApproachDetails.mechanical.steps.map((step) => (
@@ -215,7 +215,7 @@ const ArtworkDetail = () => {
                             <div className="mt-8 space-y-6">
                               {artwork.bicycleFinalApproachDetails.mechanical.topics.map((topic) => (
                                 <div key={topic.title}>
-                                  <h4 className="font-bold text-foreground">{topic.title}</h4>
+                                  <h4 className="font-semibold text-foreground">{topic.title}</h4>
                                   <p className="mt-2">{topic.text}</p>
                                 </div>
                               ))}
@@ -223,11 +223,11 @@ const ArtworkDetail = () => {
                           </section>
 
                           <section>
-                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Electrical Design</h3>
+                            <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Electrical Design</h3>
                             <div className="mt-4 space-y-7">
                               {artwork.bicycleFinalApproachDetails.electrical.topics.map((topic) => (
                                 <div key={topic.title}>
-                                  <h4 className="font-bold text-foreground">{topic.title}</h4>
+                                  <h4 className="font-semibold text-foreground">{topic.title}</h4>
                                   <p className="mt-2">{topic.text}</p>
                                   {topic.image && <CaseStudyPhoto image={topic.image} className="mt-5" />}
                                   {topic.steps && (
@@ -241,11 +241,11 @@ const ArtworkDetail = () => {
                           </section>
 
                           <section>
-                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Software Design</h3>
+                            <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Software Design</h3>
                             <p className="mt-4">{artwork.bicycleFinalApproachDetails.software.intro}</p>
                             <div className="mt-7 space-y-10">
                               <div>
-                                <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.control.title}</h4>
+                                <h4 className="font-semibold text-foreground">{artwork.bicycleFinalApproachDetails.software.control.title}</h4>
                                 <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.control.textBeforeFirstImage}</p>
                                 <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.firstImage} className="mt-5" />
                                 <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.textBeforeSecondImage}</p>
@@ -259,11 +259,11 @@ const ArtworkDetail = () => {
                                 <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.closingText}</p>
                               </div>
                               <div>
-                                <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.tuning.title}</h4>
+                                <h4 className="font-semibold text-foreground">{artwork.bicycleFinalApproachDetails.software.tuning.title}</h4>
                                 <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.tuning.text}</p>
                               </div>
                               <div>
-                                <h4 className="font-bold text-foreground">{artwork.bicycleFinalApproachDetails.software.integration.title}</h4>
+                                <h4 className="font-semibold text-foreground">{artwork.bicycleFinalApproachDetails.software.integration.title}</h4>
                                 <p className="mt-2">{artwork.bicycleFinalApproachDetails.software.integration.intro}</p>
                                 <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.integration.image} className="mt-5" />
                                 <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.integration.closingText}</p>
@@ -272,7 +272,7 @@ const ArtworkDetail = () => {
                           </section>
 
                           <section>
-                            <h3 className="font-display text-xl font-medium text-foreground lg:text-2xl">Challenges</h3>
+                            <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Challenges</h3>
                             <p className="mt-4">{artwork.bicycleFinalApproachDetails.challenges.intro}</p>
                             <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.challenges.image} className="mt-5" />
                             <p className="mt-5">{artwork.bicycleFinalApproachDetails.challenges.closingText}</p>
