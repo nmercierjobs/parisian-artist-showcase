@@ -323,7 +323,7 @@ const ArtworkDetail = () => {
                             </div>
                           </div>
                           <div>
-                            <h3 className="font-display text-xl font-medium tracking-tight text-foreground lg:text-2xl mb-4">
+                            <h3 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl mb-4">
                               Challenges
                             </h3>
                             <p className="text-foreground/80">
