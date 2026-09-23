@@ -34,7 +34,7 @@ export type FinalApproachBlock =
 
 export interface FinalApproachDetails {
   howItWorks: FinalApproachBlock[];
-  challenges: string;
+  challenges: string[];
 }
 
 export interface CaseStudyImage {
@@ -569,7 +569,12 @@ export const artworks: Artwork[] = [
         { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench", displayWidthPercent: 70 },
         { type: "text", content: "TODO" },
       ],
-      challenges: "Packet jitter and missed beacons introduced spikes in the skew estimate. I implemented outlier rejection and a Kalman-style filter to smooth the clock correction. The protocol also had to recover automatically when nodes powered up or temporarily lost signal, requiring a state machine that could re-acquire the beacon without user intervention.",
+      challenges: [
+        "Packet jitter and missed beacons introduced spikes in the skew estimate.",
+        "I implemented outlier rejection to limit those spikes.",
+        "A Kalman-style filter smoothed the clock correction.",
+        "The protocol also had to recover automatically when nodes powered up or temporarily lost signal, requiring a state machine that could re-acquire the beacon without user intervention.",
+      ],
     },
     results: "Five nodes maintained synchronization within 0.5 ms over a 20-minute test. The system ran on coin-cell power and recovered quickly from temporary wireless dropouts.",
   },
