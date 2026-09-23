@@ -284,15 +284,24 @@ const ArtworkDetail = () => {
                         </div>
                       ) : artwork.torqueSensorFinalApproachDetails ? (
                         <div className="mt-4 space-y-10">
-                          <p>{artwork.finalApproach}</p>
+                          <div className="space-y-6">
+                            <p>{artwork.finalApproach}</p>
+                            {artwork.torqueSensorFinalApproachDetails.introParagraphs.map((paragraph, index) => (
+                              <p key={index}>{paragraph}</p>
+                            ))}
+                          </div>
                           <CaseStudyPhoto image={artwork.torqueSensorFinalApproachDetails.assemblyImage} />
                           {artwork.torqueSensorFinalApproachDetails.topics.map((topic, index) => (
                             <section key={topic.title}>
                               <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">
                                 {topic.title}
                               </h3>
-                              <p className="mt-4">{topic.text}</p>
-                              {index === 1 && "image" in topic && "closingText" in topic && (
+                              <div className="mt-4 space-y-6">
+                                {topic.paragraphs.map((paragraph, paragraphIndex) => (
+                                  <p key={paragraphIndex}>{paragraph}</p>
+                                ))}
+                              </div>
+                              {index === 1 && "image" in topic && (
                                 <>
                                   <CaseStudyPhoto image={topic.image} className="mt-5" />
                                   <p className="mt-5">{topic.closingText}</p>

@@ -94,10 +94,11 @@ export interface BicycleFinalApproachDetails {
 
 export interface TorqueSensorFinalApproachDetails {
   assemblyImage: CaseStudyImage;
+  introParagraphs: string[];
   topics: [
-    BicycleDesignTopic,
-    BicycleDesignTopic & { image: CaseStudyImage; closingText: string },
-    BicycleDesignTopic,
+    { title: string; paragraphs: string[] },
+    { title: string; paragraphs: string[]; image: CaseStudyImage; closingText: string },
+    { title: string; paragraphs: string[] },
   ];
 }
 
@@ -487,6 +488,7 @@ export const artworks: Artwork[] = [
     researchConclusion: "A ready-made sensor was simpler but too costly, while manually reading a torque adapter limited analysis. A custom sensing and USB readout path offered a way to capture measurements directly on a computer.",
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
     torqueSensorFinalApproachDetails: {
+      introParagraphs: ["TODO", "TODO", "TODO"],
       assemblyImage: {
         src: usbTorqueSensorAssembly,
         width: 1354,
@@ -497,11 +499,17 @@ export const artworks: Artwork[] = [
       topics: [
         {
           title: "Measuring The Segments",
-          text: "The sensing shaft was sized for the full 200 N·m measurement range while concentrating torsional strain where the gauges were bonded. A rigid aluminum housing supports the shaft bearings, protects the gauge wiring, and provides repeatable mounting at both ends.",
+          paragraphs: [
+            "The sensing shaft was sized for the full 200 N·m measurement range while concentrating torsional strain where the gauges were bonded. A rigid aluminum housing supports the shaft bearings, protects the gauge wiring, and provides repeatable mounting at both ends.",
+            "TODO",
+          ],
         },
         {
           title: "When To Sample",
-          text: "Four strain gauges form a full Wheatstone bridge so torsional strain produces a differential voltage while common temperature effects largely cancel. A low-noise 24-bit converter amplifies and digitizes this signal before the microcontroller applies zero-offset and scale corrections.",
+          paragraphs: [
+            "Four strain gauges form a full Wheatstone bridge so torsional strain produces a differential voltage while common temperature effects largely cancel. A low-noise 24-bit converter amplifies and digitizes this signal before the microcontroller applies zero-offset and scale corrections.",
+            "TODO",
+          ],
           image: {
             src: usbTorqueSensorValidation,
             width: 921,
@@ -513,7 +521,11 @@ export const artworks: Artwork[] = [
         },
         {
           title: "Other Challenges",
-          text: "The microcontroller packages each calibrated sample with a timestamp and streams it over USB to a Python application. The desktop tool plots live torque, records tests to a file, and allows the sensor to be zeroed without interrupting acquisition.",
+          paragraphs: [
+            "The microcontroller packages each calibrated sample with a timestamp and streams it over USB to a Python application. The desktop tool plots live torque, records tests to a file, and allows the sensor to be zeroed without interrupting acquisition.",
+            "TODO",
+            "TODO",
+          ],
         },
       ],
     },
