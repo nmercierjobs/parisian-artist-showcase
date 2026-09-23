@@ -14,7 +14,6 @@ const sections = [
   { key: "requirements" as const, label: "Requirements" },
   { key: "research" as const, label: "Approaches Considered" },
   { key: "finalApproach" as const, label: "Chosen Approach: Steer-by-wire" },
-  { key: "problems" as const, label: "Problems" },
   { key: "results" as const, label: "Results" },
 ];
 
