@@ -126,6 +126,7 @@ export interface Artwork {
   problem: string;
   requirements: string[];
   research: Approach[];
+  researchConclusion: string;
   finalApproach: string;
   finalApproachDetails?: FinalApproachDetails;
   bicycleFinalApproachDetails?: BicycleFinalApproachDetails;
@@ -190,6 +191,7 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
+    researchConclusion: "The distance-sensing approach avoids the cumulative drift of inertial methods and the cost of precision GPS, while keeping the measurement focused on the nearby ground surface.",
     finalApproach: "A dual-camera rig with synchronized shutters, checkerboard calibration, and a disparity-to-depth pipeline computed on a host PC. I wrote the calibration routine in Python and optimized matching with OpenCV.",
     cameraFinalApproachDetails: [
       {
@@ -340,6 +342,7 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
+    researchConclusion: "Mechanical options could change steering gain or reverse its direction, but combining both behaviors in a compact, adjustable system made steer-by-wire the most flexible option to pursue.",
     finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia, these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
     bicycleFinalApproachDetails: {
       summaryPoints: [
@@ -481,6 +484,7 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
+    researchConclusion: "A ready-made sensor was simpler but too costly, while manually reading a torque adapter limited analysis. A custom sensing and USB readout path offered a way to capture measurements directly on a computer.",
     finalApproach: "A custom shaft with four strain gauges wired in a full Wheatstone bridge, a 24-bit ADC, and an ARM-based USB interface that streamed calibrated torque values to a Python logger.",
     torqueSensorFinalApproachDetails: {
       assemblyImage: {
@@ -558,6 +562,7 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
+    researchConclusion: "The network protocols highlighted the importance of timestamping close to the radio event. For two devices, a master-reference scheme with hardware-assisted timestamps offered a more direct path to the required precision.",
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
     finalApproachDetails: {
       howItWorks: [
