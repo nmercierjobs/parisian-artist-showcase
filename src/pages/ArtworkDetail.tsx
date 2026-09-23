@@ -299,9 +299,6 @@ const ArtworkDetail = () => {
                       ) : artwork.finalApproachDetails ? (
                         <div className="mt-4 space-y-10">
                           <div>
-                            <h3 className="font-display text-xl font-medium tracking-tight text-foreground lg:text-2xl mb-4">
-                              How it works
-                            </h3>
                             <div className="space-y-6">
                               {artwork.finalApproachDetails.howItWorks.map((block, index) => (
                                 block.type === "text" ? (
