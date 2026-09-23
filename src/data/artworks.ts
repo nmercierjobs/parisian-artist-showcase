@@ -129,7 +129,7 @@ export interface Artwork {
   problem: string;
   requirements: string[];
   research: Approach[];
-  researchConclusion: string;
+  researchConclusion: string | string[];
   finalApproach: string;
   finalApproachDetails?: FinalApproachDetails;
   bicycleFinalApproachDetails?: BicycleFinalApproachDetails;
@@ -194,7 +194,11 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    researchConclusion: "The distance-sensing approach avoids the cumulative drift of inertial methods and the cost of precision GPS, while keeping the measurement focused on the nearby ground surface.",
+    researchConclusion: [
+      "The distance-sensing approach avoids the cumulative drift of inertial methods and the cost of precision GPS, while keeping the measurement focused on the nearby ground surface.",
+      "TODO",
+      "TODO",
+    ],
     finalApproach: "A dual-camera rig with synchronized shutters, checkerboard calibration, and a disparity-to-depth pipeline computed on a host PC. I wrote the calibration routine in Python and optimized matching with OpenCV.",
     cameraFinalApproachDetails: [
       {
