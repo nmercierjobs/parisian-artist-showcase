@@ -94,13 +94,18 @@ export interface BicycleFinalApproachDetails {
   };
 }
 
+export interface TorqueSensorLink {
+  text: string;
+  href: string;
+}
+
 export interface TorqueSensorFinalApproachDetails {
   assemblyImage: CaseStudyImage;
   introParagraphs: string[];
   topics: [
-    { title: string; paragraphs: string[] },
-    { title: string; paragraphs: string[]; image: CaseStudyImage; closingText: string },
-    { title: string; paragraphs: string[] },
+    { title: string; paragraphs: string[]; link?: TorqueSensorLink },
+    { title: string; paragraphs: string[]; image: CaseStudyImage; closingText: string; link?: TorqueSensorLink },
+    { title: string; paragraphs: string[]; link?: TorqueSensorLink },
   ];
 }
 
@@ -529,6 +534,10 @@ export const artworks: Artwork[] = [
             "At this point, the ideal approach would have been to measure the common waveforms to determine when to sample each segment. I had access to an oscilloscope at UC Davis, but I wanted to challenge myself to solve the problem without one. Without knowing how the screen was updated, I instead designed my program to continuously sample the segments and calculate their root mean squared voltage. This approach, however, reduced the effective sampling rate from 60 Hz to around 20 Hz. Additionally, transitions between certain digits could briefly produce readings corresponding to another valid digit. These corrupted measurements would have been relatively easy to remove during a post-processing step, but I wanted to achieve a faster sampling rate.",
             "Close to abandoning the oscilloscope-less approach I inspected the microcontroller on the torque adapter and managed to read its model number (BH67F5265). In it, I managed to find thorough documentation of the many LCD drive types it supported. The waveforms generated for each drive type is unique so I plotted some adc measurements to determine which one this application uses. The waveform for COM0 is shown below. The full set can be viewed here.",
           ],
+          link: {
+            text: "here",
+            href: `${import.meta.env.BASE_URL}images/com_waveforms_full.png`,
+          },
           image: {
             src: usbTorqueSensorValidation,
             width: 921,
