@@ -125,6 +125,7 @@ const ArtworkDetail = () => {
                     {key === "summary" ? (
                       <div className="mt-4">
                         {/* Supporting Image - Half page width, floated within the text */}
+                        {artwork.supportImage && (
                         <div
                           className="float-right ml-6 mb-4 max-w-full shrink-0 overflow-hidden rounded-xl"
                           style={{
@@ -143,6 +144,7 @@ const ArtworkDetail = () => {
                             {artwork.supportCaption}
                           </p>
                         </div>
+                        )}
                         {artwork.summary}
                       </div>
                     ) : key === "requirements" ? (
