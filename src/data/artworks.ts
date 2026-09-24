@@ -633,6 +633,13 @@ export const artworks: Artwork[] = [
       ],
     },
     results: "All said and done, I achieved an accuracy of 250 ± 21 ns. Exceeding the 1 μs requirement provides the opportunity to further extend the time between correction events. Corrections have currently been tested at 10-minute intervals, with accuracy declining to only 350 ns. Based on these results, maintaining the 1 μs requirement with hourly corrections appears very achievable. Automatic synchronization was also successful, regardless of the power-up order of the devices. In retrospect, was the approach successful? Yes and no. All requirements were exceeded but implementing the peripheral management and low-level radio control were very time consuming. In my case, I greatly value what I have learned about the nRF52 hardware and would not change anything. Practically, the RBS protocol should be able to achieve the same results with a fraction of the effort.",
+    resultsImage: {
+      src: wirelessAccuracyPlaceholder,
+      width: 600,
+      height: 500,
+      alt: "add accuracy photo",
+      displayWidthPercent: 60,
+    },
   },
 ];
 
