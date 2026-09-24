@@ -453,7 +453,7 @@ export const artworks: Artwork[] = [
           title: "Complete Picture",
           intro: "The following flowchart brings these individual components together to illustrate the overall program operation.",
           image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop", displayWidthPercent: 40 },
-          closingText: "TODO",
+          closingText: "The zero button is checked first and, when activated, resets the wheel position to ±90 degrees. To meet the SG filter requirement for equally spaced sampling intervals, the program then waits for a new encoder measurement. Once a measurement is received, any updates to the gain or steering mode are sent on the LCD. These settings are only applied at this stage when the steering has returned to the zero position. The next stage advances the filter window by one point and calculates the filtered position, velocity, and acceleration. Before advancing to the final stage, conditional and safety checks must be completed. First, it is checked whether the wheel will remain within the ±90° limit and whether the steering wheel has moved the minimum required amount (0.175°) to activate the motor. Second, the safety checks are performed. If any safety check fails, an error code is sent to the display and execution is halted. If the checks are satisfied, the required number of command pulses is sent to the motor driver, accounting for the microstep setting, gain configuration, steering mode, and gear ratio.",
         },
       },
       challenges: {
@@ -634,7 +634,7 @@ export const artworks: Artwork[] = [
         "Another challenge I encountered was an unusual race condition. The counter would occasionally be one increment too small while the free-running timer read zero. I initially implemented the free-running timer using the Nordic shortcut system, which is essentially a non-configurable version of the PPI system. I eventually discovered that the shortcut system has a shorter propagation delay, causing the free-running timer to reset ever so slightly before the counter could be incremented. Reconfiguring the free-running timer to use the PPI system equalized the propagation delays, resolving the issue.",
       ],
     },
-    results: "TODO",
+    results: "All said and done, I achieved an accuracy of 250 ± 21 ns. Exceeding the 1 μs requirement provides the opportunity to further extend the time between correction events. Corrections have currently been tested at 10-minute intervals, with accuracy declining to only 350 ns. Based on these results, maintaining the 1 μs requirement with hourly corrections appears very achievable. Automatic synchronization was also successful, regardless of the power-up order of the devices. In retrospect, was the approach successful? Yes and no. All requirements were exceeded but implementing the peripheral management and low-level radio control were very time consuming. In my case, I greatly value what I have learned about the nRF52 hardware and would not change anything. Practically, the RBS protocol should be able to achieve the same results with a fraction of the effort.",
   },
 ];
 
