@@ -117,7 +117,7 @@ export type CameraApproachBlock =
 export interface CameraApproachSection {
   title: string;
   blocks: CameraApproachBlock[];
-  topics?: { title: string; text: string }[];
+  topics?: { title: string; text: string; additionalParagraphs?: string[] }[];
 }
 
 export interface Artwork {
@@ -277,7 +277,7 @@ export const artworks: Artwork[] = [
         topics: [
           { title: "Dot Projector", text: "The D435 uses a projector that shines thousands of dots onto the scene to improve performance. I discovered the default power is 150 milliwatts but can be increased to 360 for a reasonable reduction in the depth noise. Intel also provided a whitepaper that outlined further reducing depth noise with an extra external dot projector. I was intrigued and wanted to test the performance gains myself but the available dot projectors are too expensive. To overcome this, I purchased a set of broken xbox kinects for cheap and scrapped them for their dot projectors. These turned out to be on the weaker side and provided minimal improvement." },
           { title: "Post-Processing Filters", text: "TODO",},
-          { title: "Configuration Presets", text: "Intel provides a set of configuration files that adjust various settings in the stereo-matching algorithm. These settings can also be modified manually — I have experimented with doing so — but Intel provides no documentation describing their individual functions. Some of the available presets include high accuracy, high density, and hand tracking. I use the high accuracy preset for whatever additional robustness it may provide" },
+          { title: "Configuration Presets", text: "Intel provides a set of configuration files that adjust various settings in the stereo-matching algorithm. These settings can also be modified manually — I have experimented with doing so — but Intel provides no documentation describing their individual functions. Some of the available presets include high accuracy, high density, and hand tracking. I use the high accuracy preset for whatever additional robustness it may provide", additionalParagraphs: ["TODO"] },
           { title: "Optical Filters", text: "My interest in applying an optical filter was to increase the contrast of the dot projector. Intel demonstrated a reduction in depth noise by up to a factor of 3. I briefly tested a long-pass filter, but further testing would be needed to conclusively determine its impact. Ultimately, after achieving sufficient results through the other optimizations, I abandoned this approach." },
         ],
       },
