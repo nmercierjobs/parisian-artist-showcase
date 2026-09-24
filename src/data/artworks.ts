@@ -15,6 +15,7 @@ import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
 import cameraRegionOfInterest from "/images/3d_camera/ROI.png";
+import cameraSubdivision from "@/assets/camera-subdivision.jpg";
 import cameraNormalEstimation from "/images/3d_camera/summed_area_table.png";
 import cameraNormalField from "/images/3d_camera/covariance_matrix_stylized.png";
 import cameraFilteredCloud from "/images/3d_camera/kurvature.png";
@@ -224,6 +225,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The goal of breaking the surface into smaller chunks is to identify and remove undesirable regions. For example, if a branch or leaf is present in the image, the corresponding regions can be excluded so they do not influence the plane fit. The subregion size essentially determines the resolution at which surface variation can be captured. Smaller regions capture finer details but too small and the measurement noise becomes problematic. In practice, I found that a 7×7 pixel subregion provided a good tradeoff for this application." },
           { type: "text", content: "There is also a question of step size, or how far the subregion moves between measurements. Initially, I subdivided the surface and shifted the region by the entire width for each subsequent measurement. However, shifting the region by only 1 pixel proved far more effective at capturing surface detail, since adjacent regions overlap and provide much denser coverage of the surface." },
+          { type: "image", image: { src: cameraSubdivision, width: 1015, height: 759, alt: "Diagram of depth image subdivided into overlapping subregions", displayWidthPercent: 50 } },
         ],
       },
       {
