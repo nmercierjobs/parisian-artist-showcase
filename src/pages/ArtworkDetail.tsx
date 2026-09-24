@@ -400,6 +400,13 @@ const ArtworkDetail = () => {
                           <p className="text-foreground/80">{artwork.finalApproach}</p>
                         </div>
                       )
+                    ) : key === "results" ? (
+                      <div className="mt-4">
+                        <p>{artwork.results}</p>
+                        {artwork.resultsImage && (
+                          <CaseStudyPhoto image={artwork.resultsImage} className="mt-5" />
+                        )}
+                      </div>
                     ) : (
                       <p className="mt-4">{artwork[key]}</p>
                     )}
