@@ -343,6 +343,9 @@ const ArtworkDetail = () => {
                                   return <p key={paragraphIndex}>{paragraph}</p>;
                                 })}
                               </div>
+                              {"endImage" in topic && topic.endImage && (
+                                <CaseStudyPhoto image={topic.endImage} className="mt-5" />
+                              )}
                               {index === 1 && "image" in topic && (
                                 <>
                                   <CaseStudyPhoto image={topic.image} className="mt-5" />
