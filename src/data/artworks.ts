@@ -154,7 +154,7 @@ export const artworks: Artwork[] = [
     supportImage: support3dCamera,
     supportImageWidthPercent: 50,
     supportCaption: "..Normal vectors visualized using 7x7 pixel subregions",
-    summary: "A personal exploration into low-cost depth sensing. This project built a 3D camera distance sensor capable of measuring real-world object positions using stereo vision and custom calibration.",
+    summary: "TODO",
     problem: "How do you measure an object's height above a flat surface while in motion?",
     requirements: [
       "Used over outdoor surfaces: Sidewalks, roads, etc",
@@ -200,9 +200,9 @@ export const artworks: Artwork[] = [
       },
     ],
     researchConclusion: [
-      "The distance-sensing approach avoids the cumulative drift of inertial methods and the cost of precision GPS, while keeping the measurement focused on the nearby ground surface.",
-      "TODO",
-      "TODO",
+      "I quickly learned that no sensor combination with an IMU would be able to achieve the desired accuracy for any reasonable period of time, eliminating all those options. Likewise, a real time kinematic GPS would far exceed the budget. Thus, only distance sensors remained viable.",
+      "To ensure I met the requirements, I began by calculating the overall measurement error with an uncertainty analysis. I found that, of the main methods for measuring distance — time-of-flight, ultrasonic, single-point LiDAR, and radar — only time-of-flight and LiDAR provided the precision I needed. However, I realized that in a real environment surface variations and obstacles could make any single measurement unreliable. To identify these incorrect measurements, I would need to collect a large number of points.",
+      "A 3D camera can measure the positions of thousands of points simultaneously. This provides enough data to distinguish points belonging to the main surface from those caused by obstacles or surface irregularities. There are time-of-flight, LiDAR, and stereo vision 3D cameras to choose from. I initially tested a time-of-flight camera (pico flexx) but discovered their performance deteriorates in strong sunlight. LiDAR was rejected for the price leaving stereo vision as the only option. ",
     ],
     finalApproach: "A dual-camera rig with synchronized shutters, checkerboard calibration, and a disparity-to-depth pipeline computed on a host PC. I wrote the calibration routine in Python and optimized matching with OpenCV.",
     cameraFinalApproachDetails: [
@@ -218,7 +218,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The first part of the program selects a region of interest (ROI) in the image to the desired real-world size. Implementing this proved challenging because 3D cameras operate according to the pinhole camera principle in which the point-to-point distance increases with depth. Consequently, each quadrant of the ROI can consist of a different number of points." },
           { type: "text", content: "To address this, I implemented a function that iterates upward, downward, leftward, and rightward from the center row and column to determine the pixel dimensions of the ROI for each frame. To improve robustness, the function iterates along the entire row or column with the median distance used. My application has a maximum operating distance of 1.5 meters which provides a lower bound on the ROI’s dimensions. I leveraged this constraint to optimize the iteration process by initializing each search at this minimum dimension rather than starting from the center. This reduces the number of iterations required, helping meet the 90 Hz sampling requirement." },
-          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 20 } },
+          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 40 } },
         ],
       },
       {
@@ -233,18 +233,18 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "I chose the principal component analysis (PCA) plane-fit approach to determine the normal vectors. I initially considered more robust methods, however, they were not feasible given the required sampling rate and I did not want to pursue approaches that relied on randomization. PCA provides a least-squares fit by calculating the orthogonal eigenvectors of the covariance matrix. In other words, it identifies the directions of variance with the direction of least variance used as the normal vector to the fitted plane." },
           { type: "text", content: "A critical optimization I incorporated to achieve the 90 Hz requirement was the use of summed-area tables to compute the normal vectors for each subregion. To implement this, an array of cumulative sums is precomputed where each element contains the sum of all values above and to the left of it. Example below." },
-          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Diagram of local plane fitting and normal vectors on depth samples", displayWidthPercent: 30 } },
+          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Diagram of local plane fitting and normal vectors on depth samples", displayWidthPercent: 50 } },
           { type: "text", content: "Using a summed-area table, the sum of any rectangular region — or in this case square — can be computed using only addition and subtraction of the four corner elements. This eliminates the need to iterate over every pixel within the region each time a sum is required. In my implementation, I created nine separate summed-area tables to substantially accelerate the computation of the covariance matrices for the subregions. The summation breakdown of a covariance matrix is shown below. When processing the entire depth image (848 × 480 pixels), this optimization reduces the number of required operations by approximately 10× when using 7 × 7 pixel subregions." },
-          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Point-cloud visualization of computed surface normal vectors", displayWidthPercent: 40 } },
+          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Point-cloud visualization of computed surface normal vectors", displayWidthPercent: 70 } },
         ],
       },
       {
         title: "Filtering",
         blocks: [
           { type: "text", content: "With the directional variances already calculated, filtering non-planar subregions is quite straight-forward. If the proportion of variance in the direction of the normal vector is small compared to the total variance, the region can be considered planar. In other words, the fraction of the smallest eigenvalue to the sum of all eigenvalues." },
-          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Illustration comparing raw depth samples with filtered ground candidates", displayWidthPercent: 30 } },
+          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Illustration comparing raw depth samples with filtered ground candidates", displayWidthPercent: 40 } },
           { type: "text", content: "There is also a need to distinguish regions that are planar but not coplanar with the majority plane. To determine the plane a subregion lies on I use the magnitude of the camera-to-normal vector projected onto the normal of the subregion, as shown below. I call this the projected height. This approach is only valid when applied to a set of normal vectors orientated in the same direction." },
-          { type: "image", image: { src: cameraNormalFilter, width: 752, height: 361, alt: "Diagram showing aligned surface normals retained and inconsistent normals rejected", displayWidthPercent: 50 } },
+          { type: "image", image: { src: cameraNormalFilter, width: 752, height: 361, alt: "Diagram showing aligned surface normals retained and inconsistent normals rejected", displayWidthPercent: 80 } },
         ],
       },
       {
@@ -272,13 +272,13 @@ export const artworks: Artwork[] = [
       {
         title: "Optimizing Camera",
         blocks: [
-          { type: "text", content: "TODO" },
+          { type: "text", content: "Where possible, I like to tailor equipment to the project at hand to maximize performance. Even when additional performance is not necessary, I find that doing so provides valuable insight into the underlying operation of the hardware. In this case, the options were extensive." },
         ],
         topics: [
-          { title: "Dot Projector", text: "TODO" },
-          { title: "Post-Processing Filters", text: "TODO" },
-          { title: "Configuration Presets", text: "TODO" },
-          { title: "Optical Filters", text: "TODO" },
+          { title: "Dot Projector", text: "The D435 uses a projector that shines thousands of dots onto the scene to improve performance. I discovered the default power is 150 milliwatts but can be increased to 360 for a reasonable reduction in the depth noise. Intel also provided a whitepaper that outlined further reducing depth noise with an extra external dot projector. I was intrigued and wanted to test the performance gains myself but the available dot projectors are too expensive. To overcome this, I purchased a set of broken xbox kinects for cheap and scrapped them for their dot projectors. These turned out to be on the weaker side and provided minimal improvement." },
+          { title: "Post-Processing Filters", text: "TODO",},
+          { title: "Configuration Presets", text: "Intel provides a set of configuration files that adjust various settings in the stereo-matching algorithm. These settings can also be modified manually — I have experimented with doing so — but Intel provides no documentation describing their individual functions. Some of the available presets include high accuracy, high density, and hand tracking. I use the high accuracy preset for whatever additional robustness it may provide" },
+          { title: "Optical Filters", text: "My interest in applying an optical filter was to increase the contrast of the dot projector. Intel demonstrated a reduction in depth noise by up to a factor of 3. I briefly tested a long-pass filter, but further testing would be needed to conclusively determine its impact. Ultimately, after achieving sufficient results through the other optimizations, I abandoned this approach." },
         ],
       },
     ],
@@ -294,7 +294,7 @@ export const artworks: Artwork[] = [
     supportImage: supportSteerBike,
     supportImageWidthPercent: 50,
     supportCaption: "Handlebar torque sensor and fork actuator mounted on the test frame.",
-    summary: "An experimental bicycle that replaces the mechanical steering linkage with an electronic steer-by-wire system, exploring how software can change bicycle handling dynamics.",
+    summary: "TODO",
     problem: "How to make a bicycle wheel move twice as much as the handlebars and in the opposite direction?",
     requirements: [
       "Steering gain of 1 and 2",
@@ -373,7 +373,7 @@ export const artworks: Artwork[] = [
           "Fork Shaft: Plug welded to forks for easier removal. Both shafts lengths were made longer for changes in the position or bevel gear ratio.",
           "Motor Mounts: Utilized the full slot width of the motor brackets to allow gearbox or bevel gear ratio changes.",
         ],
-        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly", displayWidthPercent: 70 },
+        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly", displayWidthPercent: 100 },
         topics: [
           { title: "Bevel Gears", text: "A high-quality set of gears was not feasible within the available budget. I therefore selected a pair with a 1.5 mm module and unity (1:1) gear ratio. Calculations indicated that the gears were undersized for the expected loading. That said, the low number of operating cycles, low cost, and ease of replacement made for an acceptable tradeoff. I consider this analysis to have been successful but, for reasons discussed later, the gears were ultimately replaced with a set using a 2 mm module. I chose to mesh the gears at the top to reduce the overall assembly height resulting in a more compact design." },
           { title: "Steering Feel", text: "Steering feel was anticipated to be very strange in the absence of the fork and wheel inertia. I wanted to incorporate force feedback with an additional stepper motor but it was too expensive. I considered approaches that would match the inertia but everything that would work looked terrible. My original designs used a simple bolt perpendicular to the head tube to vary the amount of friction on the inner sleeve. I quickly abandoned this when I realized I could just replace the headset bearings with o-rings which worked spectacularly well." },
@@ -401,7 +401,7 @@ export const artworks: Artwork[] = [
           {
             title: "User Interface",
             text: "All components were selected based on cost, with the exception of the LCD, which was chosen for its flexibility in displaying information. The functionality of each component is described below:",
-            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain", displayWidthPercent: 75 },
+            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain", displayWidthPercent: 100 },
             steps: [
               "Increases gain.",
               "Changes steering mode between normal and reverse.",
@@ -421,9 +421,9 @@ export const artworks: Artwork[] = [
           title: "Filtering",
           textBeforeFirstImage: "I wanted to monitor the input steering velocity and acceleration for safety, debugging, and verification that the design requirements were satisfied. I initially implemented finite-difference differentiation of the encoder measurements but encountered the noise amplification inherent to numerical differentiation. I therefore explored several filtering techniques including moving averages, Gaussian filters, and regression-based approaches. I ultimately selected the regression-based method for its ability to better preserve the underlying signal.",
           additionalTextBeforeFirstImage: "The Savitzy-Golay (SG) filter curve fits a window of the data, samples the middle of the curve, and applies derivatives at the same location. The genius of the filter is its ability to precompute the majority of calculations with the trade-off that the data points need to be equally spaced. Locally Estimated Scatterplot Smoothing (LOESS) regression is essentially the same filter without the need for equally spaced data points but the requirement to recompute the least-squares solution for every window. The example below illustrates an application using a 4th-order polynomial and 45-point window size.",
-          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop", displayWidthPercent: 50 },
+          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop", displayWidthPercent: 100 },
           textBeforeSecondImage: "I had experience with least-squares quadratic regression so I chose to use the LOESS method. To optimize the approach, I computed each summation as a running sum where the next iteration subtracts the oldest value and adds the new value, substantially reducing the number of operations.",
-          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots", displayWidthPercent: 30 },
+          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots", displayWidthPercent: 45 },
           textBeforeList: "The implementation was very successful but I had become fascinated with adding weight functions to improve the filtering power. Implementing weight functions with LOESS required forgoing my optimization so I circled back to the SG approach. Comparing and contrasting the approaches I came to the following conclusions:",
           points: [
             "My application did not require extra filtering power",
@@ -432,7 +432,7 @@ export const artworks: Artwork[] = [
             "LOESS is easier to implement",
           ],
           textBeforeThirdImage: "With these findings, I ultimately preferred the LOESS approach but I later discovered it requires double precision which Arduino does not support. Thus, the SG filter was used in the final program. The following graphs depict the results when measuring the maximum expected user steering velocity and acceleration.",
-          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture", displayWidthPercent: 80 },
+          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture", displayWidthPercent: 100 },
           closingText: "A drawback of this filter is that it introduces some latency due to sampling at the midpoint. The sampling point can be changed to the most recent data point but if a sudden input change occurs the qunatities will be overestimated. Configuring the sampling spacing and number of points was tricky. The least latency possible was desired but acceleration required a sizable window to capture enough detail. After much trial and error a sampling interval of 2.8ms was selected with a 19 point window resulting in a latency of 12ms; far below the requirement.",
         },
         tuning: {
@@ -442,13 +442,13 @@ export const artworks: Artwork[] = [
         integration: {
           title: "Complete Picture",
           intro: "The following flowchart brings these individual components together to illustrate the overall program operation.",
-          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop", displayWidthPercent: 25 },
+          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop", displayWidthPercent: 40 },
           closingText: "TODO",
         },
       },
       challenges: {
         intro: "In the early testing phase, I noticed plastic deformation at the roots of many gear teeth and excessive wear of the faces. The wear pattern, shown below, indicated the gear were meshing at too shallow of an angle. This was peculiar as I had confirmed the shafts to be at the required 90 degrees. Analyzing further, I was able to determine that the gears themselves were improperly manufactured and meshed at around 85 degrees. The gears were replaced with a set having a 2 mm module to better withstand misalignment.",
-        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Steer-by-wire bicycle steering assembly during troubleshooting", displayWidthPercent: 30 },
+        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Steer-by-wire bicycle steering assembly during troubleshooting", displayWidthPercent: 60 },
         closingText: "Towards completion, I installed the motor driver revealing that its ABS side panel acted as an amplifier for the motor’s vibrations. The amplification was substantial, easily doubling the volume. At this point, available funds were dwindling, so I limited the solutions to those that required no additional cost. I first tried stiffening the panel by gluing pieces of scrap ABS between the internal ribs, providing a modest improvement. I also considered longer pulse widths and microstepping, with the latter reducing the sound to an acceptable level.",
       },
     },
@@ -464,7 +464,7 @@ export const artworks: Artwork[] = [
     supportImage: supportTorqueSensor,
     supportImageWidthPercent: 50,
     supportCaption: "Strain-gauge shaft and 3D-printed enclosure with USB-C interface.",
-    summary: "A compact USB torque sensor for measuring rotational loads directly from a laptop. It combines a strain-gauge transducer with an integrated USB data acquisition interface.",
+    summary: "TODO",
     problem: "How can torque measurements collected using a sensor be graphed and analyzed?",
     requirements: [
       "±3% Accuracy",
@@ -505,7 +505,7 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    researchConclusion: "A ready-made sensor was simpler but too costly, while manually reading a torque adapter limited analysis. A custom sensing and USB readout path offered a way to capture measurements directly on a computer.",
+    researchConclusion: "I selected the torque adapter approach to decode the LCD screen as my knowledge of circuitry at this point was fairly limited and I wanted to learn more. Rotary load cells are extremely expensive and creating a custom load cell that I was confident in its accuracy would require equipment exceeding the budget. Likewise, the approach of manually recording the measurements would require an expensive gearbox if I hoped to achieve the accuracy requirement.",
     finalApproach: "Researching how to decode an LCD screen turned out to be quite tricky. Unsurprisingly, there is very little information about the subject. I began by learning all about the operation of the twisted nematic LCD displays used in these applications. I learned there are two major types: static and multiplexed displays. The static displays have one common pin plus however many segments the display has. A multiplexed display shares multiple common pins among the segment pins to reduce the total number needed to drive the screen.",
     torqueSensorFinalApproachDetails: {
       introParagraphs: 
@@ -518,7 +518,7 @@ export const artworks: Artwork[] = [
         width: 1354,
         height: 1162,
         alt: "Custom USB torque sensor assembly with machined housing and signal-conditioning electronics",
-        displayWidthPercent: 50,
+        displayWidthPercent: 60,
       },
       topics: [
         {
@@ -536,23 +536,23 @@ export const artworks: Artwork[] = [
           ],
           link: {
             text: "here",
-            href: `${import.meta.env.BASE_URL}images/com_waveforms_full.png`,
+            href: `${import.meta.env.BASE_URL}images/torque_adapter/lcd_drive_type.png`,
           },
           image: {
             src: usbTorqueSensorValidation,
             width: 921,
             height: 218,
             alt: "USB torque sensor calibration setup with motor, load arm, and measurement equipment",
-            displayWidthPercent: 70,
+            displayWidthPercent: 90,
           },
           closingText: "Using this information and the known frame rate of 60 fps I could time my program to sample each segment at precisely the right moment letting me achieve the full sampling rate.",
         },
         {
           title: "Challenges",
           paragraphs: [
-            "TODO",
-            "TODO",
-            "TODO",
+            "Understanding when the sensor applied updates to the screen was confusing. Based on the documentation, I initially assumed that the beginning of COM0 marked the start of every frame. To avoid measuring the screen during an update, I planned to detect a change, wait for the update to complete, and then resume sampling at the beginning of the next COM0 pulse. This failed. I realized that what I called COM0 was likely not the same signal described in the documentation. I then tried starting each frame at what I called COM1, COM2, and COM3. This also failed. After considerable trial and error, I discovered that a frame could start at the beginning of any of the COM waveforms. Applying this, after detecting a segment change, I wait for one frame starting from whichever COM line drives that segment before I resume sampling.",
+            "My realization that the circuit could be greatly simplified using only demultiplexers and voltage dividers opened up another opportunity: integrating all of the electronics within the original housing. To accomplish this, I cut off the original AAA battery compartment and powered the sensor directly from the microcontroller. Ordering a custom PCB would have made this far less challenging, but a mistake would have been costly and difficult to correct while also exceeding the project budget. Instead, I chose to use a prototype PCB, which gave me greater flexibility to modify and refine the circuit as I went.",
+            "Over time, I have learned the importance of modular design and its ability to improve serviceability. I used to focus solely on preventing damage in the first place, often paying the price with difficult repairs. On this project, every component can be individually replaced. The custom PCB and microcontroller are connected with JST MX1.25mm connectors and the demultiplexers use socket adapters.",
           ],
         },
       ],
@@ -569,7 +569,7 @@ export const artworks: Artwork[] = [
     supportImage: supportWirelessSync,
     supportImageWidthPercent: 50,
     supportCaption: "Five synchronized sensor nodes arranged for the timing test.",
-    summary: "A protocol and firmware stack for synchronizing timers across multiple microcontrollers over a wireless link, enabling distributed sensing and actuation with sub-millisecond alignment.",
+    summary: "TODO",
     problem: "How to match the timers on two microcontrollers wirelessly?",
     requirements: [
       "Synchronization accuracy of 1 microsecond",
@@ -602,19 +602,19 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    researchConclusion: "The network protocols highlighted the importance of timestamping close to the radio event. For two devices, a master-reference scheme with hardware-assisted timestamps offered a more direct path to the required precision.",
+    researchConclusion: "In the end, the approach I selected operates on the same principle as TPSN. With RBS I did not want to include an additional transmitter and the advancements of FTSP were not useful to an application of three microcontrollers.",
     finalApproach: "A beacon node broadcasted reference timestamps over a 2.4 GHz link. Slave nodes recorded local timer values on receipt and applied a linear regression to estimate and correct clock skew.",
     finalApproachDetails: {
       howItWorks: [
         { type: "text", content: "My synchronization protocol uses one master device whose timer is immutable while all other devices correct themselves to match it. Each device contains two timers: one counter and the other free-running. The free-running timer is set with a somewhat arbitrary wrap point; currently using 50,000. The receivers shrink or extend this capture/compare register in order to match the master device. On each overflow, the counter is incremented. To timestamp an event I leveraged Nordic’s Programmable Peripheral Interconnect (PPI) system. It is a system that allows configuring hardware events and tasks to occur without CPU intervention, effectively eliminating timing jitter. With this, I can capture the value of both timers simultaenously and combine them for the complete timestamp." },
         { type: "text", content: "Using the idea of timestamping immediately before transmission and upon reception, I delved into the nRF52840 radio architecture to understand how I could achieve the timing precision required for this project. Leveraging the PPI system, along with the radio sequence diagram shown below, was critical to the success of this approach." },
-        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes", displayWidthPercent: 70 },
+        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes", displayWidthPercent: 100 },
         { type: "text", content: "On the transmitter side, I invoke the transmitter enable (TXEN) task and start a timer which ends after the transmitter ramp-up time (TXRU) is completed. When the timer ends, two tasks are executed. The timestamp to be sent to the receiver is captured and another timer begins to start the radio START task in exactly 10 microseconds with the PPI system. During this delay, the timestamp is written to the outgoing packet." },
         { type: "text", content: "On the receiver side, its timestamp is captured at the ADDRESS event. Therefore, when calculating the offsets, the delays in the transmitter timestamp up to this point must be accounted for. This includes the 10 microseconds between TXRU completion and START, as well as the time elapsed from START to the receiver’s ADDRESS. I measured the latter delay directly with a logic analyzer and found it to be 29.5 microseconds, resulting in a total delay of 39.5 microseconds. The complete process is summarized in the diagram below." },
-        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench", displayWidthPercent: 70 },
-        { type: "text", content: "TODO" },
+        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench", displayWidthPercent: 100 },
       ],
       challenges: [
+        "The automatic synchronization requirement created an interesting challenge when synchronizing the counter. If the master device has been powered on for an extended period, its counter count can grow beyond what the receivers can correct. This is because the counter can only be incremented by one or reset to zero. To match the master counter, the receiver must reset its counter then increment it to match. This process can take longer than the free-running timer’s wraparound period, causing additional increments to occur before synchronization is complete. To address this, I synchronize the counter in two stages. The majority of the counts are incremented in the first stage except what is guaranteed to be correctable in the second stage.",
         "I chose Nordic’s nRF52 series of microcontrollers for this project because of the company’s strong reputation and its proprietary Enhanced ShockBurst (ESB) radio protocol. However, integrating the protocol with time synchronization proved to be a significant technical challenge. ESB requires exclusive control of the radio peripheral, while time synchronization requires direct, low-level access to the same hardware. To resolve this conflict, I implemented Nordic’s Multiprotocol Service Layer (MPSL) timeslot feature, which temporarily yields control of reserved peripherals. This also simplified correction event scheduling. Initially, achieving the system requirement of microsecond-level accuracy required correction events every few milliseconds because the timers operated at different tick rates. To reduce the frequency of these corrections, I use linear regression to estimate the clock drift rate and applied corrections between the master correction events. This extended the interval between master corrections from milliseconds to tens of minutes.",
         "ESB presented another challenge. It modifies the default radio settings, causing my timestamps to be ignored by the receiving device. After exploring my options, I determined that I would need to replicate the ESB message format when transmitting the timestamp. I scoured the nRF52 datasheet, which was useful for understanding the standard radio packet format but provided little information about ESB itself. I then turned to the nRF24 series datasheet, which documented the legacy ShockBurst protocol in greater detail, but even this information was insufficient. Ultimately, I had to reverse-engineer the format by tracing through the source code.",
         "Another challenge I encountered was an unusual race condition. The counter would occasionally be one increment too small while the free-running timer read zero. I initially implemented the free-running timer using the Nordic shortcut system, which is essentially a non-configurable version of the PPI system. I eventually discovered that the shortcut system has a shorter propagation delay, causing the free-running timer to reset ever so slightly before the counter could be incremented. Reconfiguring the free-running timer to use the PPI system equalized the propagation delays, resolving the issue.",

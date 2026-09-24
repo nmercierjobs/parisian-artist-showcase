@@ -67,7 +67,7 @@ const ArtworkDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{artwork.title} — Émile Laurent</title>
+        <title>{artwork.title} — Noah Mercier</title>
         <meta
           name="description"
           content={`${artwork.title} by Émile Laurent. ${artwork.summary.substring(0, 150)}...`}
@@ -160,9 +160,9 @@ const ArtworkDetail = () => {
                             </li>
                           ))}
                         </ol>
-                        <div className="mt-6 space-y-4">
+                        <div className="mt-4 space-y-5">
                           {(Array.isArray(artwork.researchConclusion) ? artwork.researchConclusion : [artwork.researchConclusion]).map((paragraph, index) => (
-                            <p key={index} className="rounded-lg bg-background px-0 py-4 text-foreground/80">
+                            <p key={index} className="rounded-lg bg-background px-0 text-foreground">
                               {paragraph}
                             </p>
                           ))}
@@ -171,7 +171,7 @@ const ArtworkDetail = () => {
                     ) : key === "finalApproach" ? (
                       artwork.cameraFinalApproachDetails ? (
                         <div className="mt-4 space-y-12">
-                          <p>TODO</p>
+                          <p>With the conceptual approach established, I needed to translate my plan into a program. Through extensive research of the scientific literature, I developed the following approach: select a region of interest (ROI), subdivide the point cloud into square subregions, calculate their normal vectors, filter out non-planar subregions, and combine the remaining points. Once this process is complete, the normal vector of the resulting trimmed plane can be calculated, allowing robust measurements of height and orientation to be extracted.</p>
                           {artwork.cameraFinalApproachDetails.map((section) => (
                             <section key={section.title}>
                               <h3 className="font-display text-2xl font-medium text-foreground lg:text-3xl">{section.title}</h3>

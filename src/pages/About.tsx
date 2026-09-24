@@ -31,7 +31,7 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About — Émile Laurent</title>
+        <title>About — Noah Mercier</title>
         <meta
           name="description"
           content="Learn about Émile Laurent, a Paris-based visual artist whose work explores color, light and the beauty of everyday moments through oil painting."
