@@ -79,7 +79,7 @@ const ArtworkDetail = () => {
           {/* Hero Image - Contained with rounded corners */}
           <div className="px-6 lg:px-10">
             <div
-              className={`relative mx-auto max-w-full overflow-hidden rounded-2xl ${artwork.cameraFinalApproachDetails ? "aspect-[592/750]" : "aspect-[3/4] lg:aspect-auto lg:h-[85vh]"}`}
+              className={`relative mx-auto max-w-full overflow-hidden rounded-2xl ${artwork.cameraFinalApproachDetails ? "aspect-[3/4] lg:aspect-auto lg:h-[85vh]" : "aspect-[3/4] lg:aspect-auto lg:h-[85vh]"}`}
               style={{
                 width: `${artwork.detailImageWidthPercent}%`,
                 opacity: 0,

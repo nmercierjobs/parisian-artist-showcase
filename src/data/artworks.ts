@@ -15,7 +15,7 @@ import torqueSegments from "@/assets/torque-segments.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
 import cameraRegionOfInterest from "/images/3d_camera/ROI.png";
-import cameraSubdivision from "@/assets/camera-subdivision.jpg";
+import cameraSubdivision from "/images/3d_camera/normals_4_3.png";
 import cameraNormalEstimation from "/images/3d_camera/summed_area_table.png";
 import cameraNormalField from "/images/3d_camera/covariance_matrix_stylized.png";
 import cameraFilteredCloud from "/images/3d_camera/kurvature.png";
@@ -225,7 +225,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The goal of breaking the surface into smaller chunks is to identify and remove undesirable regions. For example, if a branch or leaf is present in the image, the corresponding regions can be excluded so they do not influence the plane fit. The subregion size essentially determines the resolution at which surface variation can be captured. Smaller regions capture finer details but too small and the measurement noise becomes problematic. In practice, I found that a 7×7 pixel subregion provided a good tradeoff for this application." },
           { type: "text", content: "There is also a question of step size, or how far the subregion moves between measurements. Initially, I subdivided the surface and shifted the region by the entire width for each subsequent measurement. However, shifting the region by only 1 pixel proved far more effective at capturing surface detail, since adjacent regions overlap and provide much denser coverage of the surface." },
-          { type: "image", image: { src: cameraSubdivision, width: 1015, height: 759, alt: "Diagram of depth image subdivided into overlapping subregions", displayWidthPercent: 50 } },
+          { type: "image", image: { src: cameraSubdivision, width: 1015, height: 759, alt: "Diagram of depth image subdivided into overlapping subregions", displayWidthPercent: 80 } },
         ],
       },
       {
@@ -276,8 +276,16 @@ export const artworks: Artwork[] = [
         ],
         topics: [
           { title: "Dot Projector", text: "The D435 uses a projector that shines thousands of dots onto the scene to improve performance. I discovered the default power is 150 milliwatts but can be increased to 360 for a reasonable reduction in the depth noise. Intel also provided a whitepaper that outlined further reducing depth noise with an extra external dot projector. I was intrigued and wanted to test the performance gains myself but the available dot projectors are too expensive. To overcome this, I purchased a set of broken xbox kinects for cheap and scrapped them for their dot projectors. These turned out to be on the weaker side and provided minimal improvement." },
-          { title: "Post-Processing Filters", text: "TODO",},
-          { title: "Configuration Presets", text: "Intel provides a set of configuration files that adjust various settings in the stereo-matching algorithm. These settings can also be modified manually — I have experimented with doing so — but Intel provides no documentation describing their individual functions. Some of the available presets include high accuracy, high density, and hand tracking. I use the high accuracy preset for whatever additional robustness it may provide", additionalParagraphs: ["TODO"] },
+          { 
+            title: "Post-Processing Filters",
+            text: "The realsense api exposes a number of filters that can be applied to the point cloud. Useful to me was the spatial filtering and decimation. The spatial filter applies an exponential moving average to the entire point cloud while preserving edges. A modest performance hit to implement, but worth the depth noise attenuation. On the other hand, decimation averages the depth values in a 2x2 to 8x8 region to reduce the overall number of points.",
+            additionalParagraphs: ["Decimation was critical to achieving the 90 Hz requirement but implementing it was not straightforward. Because the number of points within the ROI varies with distance, a decimation factor that is appropriate at the minimum distance becomes excessive at the maximum distance. To overcome this, I apply the decimation dynamically where the greatest decimation occurs at the minimum distance and progressively reduce it until no decimation is needed at the maximum distance."],
+          },
+          { 
+            title: "Configuration Presets",
+            text: "Intel provides a set of configuration files that adjust various settings in the stereo-matching algorithm. These settings can also be modified manually — I have experimented with doing so — but Intel provides no documentation describing their individual functions. Some of the available presets include high accuracy, high density, and hand tracking. I use the high accuracy preset for whatever additional robustness it may provide",
+            additionalParagraphs: ["Another parameter, called the A-factor, is used to tune the linearity of the depth measurements. Without this adjustment, Intel demonstrates in a whitepaper that the measured distance oscillates about the true distance by approximately 0.5–1%, depending on the preset. Selecting the appropriate value for this parameter is reported to reduce this oscillation by up to a factor of 4. I implemented the value advised for the high accuracy preset."] 
+          },
           { title: "Optical Filters", text: "My interest in applying an optical filter was to increase the contrast of the dot projector. Intel demonstrated a reduction in depth noise by up to a factor of 3. I briefly tested a long-pass filter, but further testing would be needed to conclusively determine its impact. Ultimately, after achieving sufficient results through the other optimizations, I abandoned this approach." },
         ],
       },
@@ -288,7 +296,7 @@ export const artworks: Artwork[] = [
     id: "2",
     title: "Steer-by-wire Bicycle",
     slug: "steer-by-wire-bicycle",
-    image: "/images/reverse_black.gif",
+    image: "/parisian-artist-showcase/images/reverse_black.gif",
     detailImage: `${import.meta.env.BASE_URL}artworks/equilibre-instable.jpg`,
     detailImageWidthPercent: 100,
     supportImage: supportSteerBike,

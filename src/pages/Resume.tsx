@@ -53,7 +53,7 @@ const Resume = () => {
 
       <Layout>
         <main className="page-transition px-6 py-10 lg:px-10 lg:py-12">
-          <article className="mx-auto max-w-4xl -translate-x-[70px] origin-top scale-[1.10]">
+          <article className="mx-auto max-w-4xl -translate-x-[70px] origin-top scale-[1.25] font-[arial]">
   
             <address className="mt-4 not-italic text-sm leading-6 text-muted-foreground sm:mt-0 sm:text-right">
               <a className="block transition-colors hover:text-foreground" href="tel:+19252865209">
@@ -72,7 +72,7 @@ const Resume = () => {
                 <p>Davis, CA</p>
                 <p>University of California</p>
               </div>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground/90">
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground">
                 <li>B.S.E. in Mechanical Engineering, June 2026. In-Major GPA: 3.8</li>
                 <li>Led a team of 6 students on a joint senior design project by implementing effective scheduling, frequent status updates to avoid confusion, and establishing clear resposibilites to ensure equal contribution</li>
               </ul>
@@ -87,10 +87,10 @@ const Resume = () => {
                 <p className="sm:ml-6">Self-Employed</p>
                 <p className="sm:text-right">2022 – Present</p>
               </div>
-              <p className="mt-2 text-sm leading-6 text-foreground/90">
+              <p className="mt-2 text-sm leading-6 text-foreground">
                 Procurement of second-hand recalled consumer products and submission to retailers for refund or replacement
               </p>
-              <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground/90">
+              <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground">
                 <li>Automated product sourcing with web scraping, increasing second-year earnings by 212%</li>
                 <li>Improved sourcing further using a custom optical character recognition (OCR) search program, increasing third-year earnings by an additional 63%</li>
                 <li>Optimized profit margins using profit per hour calculations to reduce workload by 357%</li>
@@ -107,7 +107,7 @@ const Resume = () => {
                     <h4 className="text-sm font-semibold text-foreground">
                       {project.title} <span className="font-normal text-muted-foreground">({project.meta})</span>
                     </h4>
-                    <ul className="mt-2 list-disc space-y-2 pl-7 text-sm leading-6 text-foreground/90">
+                    <ul className="mt-2 list-disc space-y-2 pl-7 text-sm leading-6 text-foreground">
                       {project.details.map((detail) => <li key={detail}>{detail}</li>)}
                     </ul>
                   </div>
@@ -119,7 +119,7 @@ const Resume = () => {
               <h2 className="mb-4 border-b border-foreground/60 pb-2 font-display text-sm font-semibold uppercase text-foreground">
                 Languages and Technologies
               </h2>
-              <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-foreground/90">
+              <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-foreground">
                 <li>C, Python, MATLAB, R, SQL; BLAS, LAPACK</li>
                 <li>Nordic nRF, STM32, Arduino, RaspberryPi</li>
                 <li>SolidWorks, Autodesk Fusion, Linux, Zephyr, Excel</li>
