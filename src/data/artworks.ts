@@ -1,4 +1,3 @@
-import support3dCamera from "/images/normals_4_3.png";
 import supportSteerBike from "/images/bike_cad_4_3.png";
 import wirelessHowItWorks1 from "/images/tx_final.png";
 import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
@@ -129,9 +128,9 @@ export interface Artwork {
   image: string;
   detailImage: string;
   detailImageWidthPercent: number;
-  supportImage: string;
-  supportImageWidthPercent: number;
-  supportCaption: string;
+  supportImage?: string;
+  supportImageWidthPercent?: number;
+  supportCaption?: string;
   summary: string;
   problem: string;
   requirements: string[];
@@ -153,9 +152,6 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/chromatic-tension.jpg`,
     detailImageWidthPercent: 100,
-    supportImage: support3dCamera,
-    supportImageWidthPercent: 50,
-    supportCaption: "..Normal vectors visualized using 7x7 pixel subregions",
     summary: "TODO",
     problem: "How do you measure an object's height above a flat surface while in motion?",
     requirements: [
