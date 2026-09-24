@@ -20,12 +20,12 @@ const sections = [
 const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; className?: string }) => (
   <div
     className={`max-w-full mx-auto overflow-hidden rounded-xl ${className}`}
-    style={{ width: `${image.displayWidthPercent}%` }}
+    style={{ width: `${image.displayWidthPercent}%`, padding: image.framePaddingPx ? `${image.framePaddingPx}px` : undefined }}
   >
     <ImageReveal
       src={image.src}
       alt={image.alt}
-      className="h-full w-full object-cover"
+      className={`h-full w-full ${image.framePaddingPx ? "object-contain" : "object-cover"}`}
       style={{ aspectRatio: `${image.width} / ${image.height}` }}
     />
   </div>

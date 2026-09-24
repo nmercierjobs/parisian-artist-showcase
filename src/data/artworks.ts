@@ -43,6 +43,8 @@ export interface CaseStudyImage {
   height: number;
   alt: string;
   displayWidthPercent: number;
+  /** Inner inset (px) so rounded corners don't clip image edges */
+  framePaddingPx?: number;
 }
 
 export interface BicycleDesignTopic {
@@ -218,7 +220,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The first part of the program selects a region of interest (ROI) in the image to the desired real-world size. Implementing this proved challenging because 3D cameras operate according to the pinhole camera principle in which the point-to-point distance increases with depth. Consequently, each quadrant of the ROI can consist of a different number of points." },
           { type: "text", content: "To address this, I implemented a function that iterates upward, downward, leftward, and rightward from the center row and column to determine the pixel dimensions of the ROI for each frame. To improve robustness, the function iterates along the entire row or column with the median distance used. My application has a maximum operating distance of 1.5 meters which provides a lower bound on the ROI’s dimensions. I leveraged this constraint to optimize the iteration process by initializing each search at this minimum dimension rather than starting from the center. This reduces the number of iterations required, helping meet the 90 Hz sampling requirement." },
-          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 40 } },
+          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 40, framePaddingPx: 8 } },
         ],
       },
       {
