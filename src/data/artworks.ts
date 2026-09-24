@@ -12,7 +12,7 @@ import usbTorqueSensorAssembly from "/images/decoded_stylized.png";
 import usbTorqueSensorValidation from "/images/COM0_waveform.png";
 
 import torqueSegments from "@/assets/torque-segments.jpg";
-import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
+import wirelessAccuracyPlaceholder from "@/assets/wireless-accuracy-placeholder.png";
 
 import cameraRegionOfInterest from "/images/3d_camera/ROI.png";
 import cameraSubdivision from "/images/3d_camera/normals_4_3.png";
@@ -144,6 +144,7 @@ export interface Artwork {
   torqueSensorFinalApproachDetails?: TorqueSensorFinalApproachDetails;
   cameraFinalApproachDetails?: CameraApproachSection[];
   results: string;
+  resultsImage?: CaseStudyImage;
 }
 
 export const artworks: Artwork[] = [
@@ -580,9 +581,6 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1549289524-06cf8837ace5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/paris-layers.jpg`,
     detailImageWidthPercent: 100,
-    supportImage: supportWirelessSync,
-    supportImageWidthPercent: 50,
-    supportCaption: "Five synchronized sensor nodes arranged for the timing test.",
     summary: "TODO",
     problem: "How to match the timers on two microcontrollers wirelessly?",
     requirements: [
@@ -635,6 +633,13 @@ export const artworks: Artwork[] = [
       ],
     },
     results: "TODO",
+    resultsImage: {
+      src: wirelessAccuracyPlaceholder,
+      width: 600,
+      height: 500,
+      alt: "add accuracy photo",
+      displayWidthPercent: 60,
+    },
   },
 ];
 
