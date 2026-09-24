@@ -11,7 +11,7 @@ import bicycleChallenges from "/images/shaft_angle_error.png";
 import usbTorqueSensorAssembly from "/images/decoded_stylized.png";
 import usbTorqueSensorValidation from "/images/COM0_waveform.png";
 
-import supportTorqueSensor from "@/assets/support-torque-sensor.jpg";
+import torqueSegments from "@/assets/torque-segments.jpg";
 import supportWirelessSync from "@/assets/support-wireless-sync.jpg";
 
 import cameraRegionOfInterest from "/images/3d_camera/ROI.png";
@@ -105,7 +105,7 @@ export interface TorqueSensorFinalApproachDetails {
   assemblyImage: CaseStudyImage;
   introParagraphs: string[];
   topics: [
-    { title: string; paragraphs: string[]; link?: TorqueSensorLink },
+    { title: string; paragraphs: string[]; link?: TorqueSensorLink; endImage?: CaseStudyImage },
     { title: string; paragraphs: string[]; image: CaseStudyImage; closingText: string; link?: TorqueSensorLink },
     { title: string; paragraphs: string[]; link?: TorqueSensorLink },
   ];
@@ -461,9 +461,6 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/fragments-of-silence.jpg`,
     detailImageWidthPercent: 100,
-    supportImage: supportTorqueSensor,
-    supportImageWidthPercent: 50,
-    supportCaption: "Strain-gauge shaft and 3D-printed enclosure with USB-C interface.",
     summary: "TODO",
     problem: "How can torque measurements collected using a sensor be graphed and analyzed?",
     requirements: [
@@ -527,6 +524,13 @@ export const artworks: Artwork[] = [
             "The screen has a total of 6 digits with only 5 of them in use by the sensor. Since my requirement is only up to 200 N·m I only needed to decode 4 of these digits. This reduced the number of segment pins I would need to measure from 10 to 8. The segment pins used 4 common pins for a total of 32 individual segments I would need to measure. To accomplish this, I implemented two 8-channel demultiplexers with one used to select among the 4 common pins and the other the 8 segment pins. I could have purchased a 4-channel demultiplexer for the common pins but the 8-channel was cheaper.",
             "The toughest part was measuring the segment voltages. These LCD screens must be driven with an AC voltage because prolonged DC damages the screen. I did a lot of testing with op amps, diodes, and comparators before realizing I made a mistake. I assumed that the AC drive voltage requirement meant that the voltage must alternate between a positive and negative voltage. The screen was actually set up to produce an AC voltage between 3.6v and 0v. With a DC bias why isn't the screen damaged? Because the polarity between the common and segments is alternated creating an average dc voltage of zero. With this, I was able to greatly simplify the circuit by just using voltage dividers to reduce the voltage to a maximum of 3.3v. I sampled both segment and common voltages independently with the adc on an STM32 and computed the difference digitally.",
           ],
+          endImage: {
+            src: torqueSegments,
+            width: 500,
+            height: 500,
+            alt: "Demultiplexer and voltage-divider circuit for measuring LCD segments",
+            displayWidthPercent: 40,
+          },
         },
         {
           title: "When To Sample",
