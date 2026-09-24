@@ -112,7 +112,15 @@ const ArtworkDetail = () => {
                 {sections.map(({ key, label }) => (
                   <section key={key} id={key}>
                     <h2 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
-                      {key === "finalApproach" && artwork.cameraFinalApproachDetails ? "Chosen approach: 3D Camera" : label}
+                      {key === "finalApproach"
+                        ? artwork.cameraFinalApproachDetails
+                          ? "Chosen approach: 3D Camera"
+                          : artwork.torqueSensorFinalApproachDetails
+                            ? "Chosen Approach: Decoded Torque Adapter"
+                            : artwork.finalApproachDetails
+                              ? "Chosen Approach: TPSN"
+                              : label
+                        : label}
                     </h2>
                     {key === "summary" ? (
                       <div className="mt-4">
