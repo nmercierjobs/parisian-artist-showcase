@@ -137,7 +137,7 @@ const ArtworkDetail = () => {
                           <ImageReveal
                             src={artwork.supportImage}
                             alt={`${artwork.title} supporting view`}
-                            className="aspect-[4/3] w-full object-cover"
+                            className={`${artwork.cameraFinalApproachDetails ? "aspect-[1015/759] object-contain" : "aspect-[4/3] object-cover"} w-full`}
                           />
                           <p className="mt-2 text-sm text-muted-foreground italic">
                             {artwork.supportCaption}
