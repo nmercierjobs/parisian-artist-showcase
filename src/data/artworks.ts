@@ -20,6 +20,7 @@ import cameraNormalEstimation from "/images/3d_camera/summed_area_table.png";
 import cameraNormalField from "/images/3d_camera/covariance_matrix_stylized.png";
 import cameraFilteredCloud from "/images/3d_camera/kurvature.png";
 import cameraNormalFilter from "/images/3d_camera/projected_height.png";
+import postProcessingFilterExample from "@/assets/post-processing-filter-example.png.asset.json";
 
 
 export interface Approach {
@@ -119,7 +120,7 @@ export type CameraApproachBlock =
 export interface CameraApproachSection {
   title: string;
   blocks: CameraApproachBlock[];
-  topics?: { title: string; text: string; additionalParagraphs?: string[] }[];
+  topics?: { title: string; text: string; additionalParagraphs?: string[]; imageBeforeAdditionalParagraphs?: CaseStudyImage }[];
 }
 
 export interface Artwork {
@@ -279,6 +280,7 @@ export const artworks: Artwork[] = [
           { 
             title: "Post-Processing Filters",
             text: "The realsense api exposes a number of filters that can be applied to the point cloud. Useful to me was the spatial filtering and decimation. The spatial filter applies an exponential moving average to the entire point cloud while preserving edges. A modest performance hit to implement, but worth the depth noise attenuation. On the other hand, decimation averages the depth values in a 2x2 to 8x8 region to reduce the overall number of points.",
+            imageBeforeAdditionalParagraphs: { src: postProcessingFilterExample.url, width: 600, height: 500, alt: "add filter example", displayWidthPercent: 60 },
             additionalParagraphs: ["Decimation was critical to achieving the 90 Hz requirement but implementing it was not straightforward. Because the number of points within the ROI varies with distance, a decimation factor that is appropriate at the minimum distance becomes excessive at the maximum distance. To overcome this, I apply the decimation dynamically where the greatest decimation occurs at the minimum distance and progressively reduce it until no decimation is needed at the maximum distance."],
           },
           { 
