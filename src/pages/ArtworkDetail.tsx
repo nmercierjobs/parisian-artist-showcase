@@ -406,6 +406,9 @@ const ArtworkDetail = () => {
                         {artwork.resultsImage && (
                           <CaseStudyPhoto image={artwork.resultsImage} className="mt-5" />
                         )}
+                        {artwork.resultsAfterImage && (
+                          <p className="mt-5">{artwork.resultsAfterImage}</p>
+                        )}
                       </div>
                     ) : (
                       <p className="mt-4">{artwork[key]}</p>
