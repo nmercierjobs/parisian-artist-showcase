@@ -145,6 +145,7 @@ export interface Artwork {
   torqueSensorFinalApproachDetails?: TorqueSensorFinalApproachDetails;
   cameraFinalApproachDetails?: CameraApproachSection[];
   results: string;
+  resultsExtra?: string[];
   resultsImage?: CaseStudyImage;
   resultsAfterImage?: string;
 }
@@ -466,6 +467,7 @@ export const artworks: Artwork[] = [
       },
     },
     results: "TODO",
+    resultsExtra: ["TODO", "TODO"],
   },
   {
     id: "3",
