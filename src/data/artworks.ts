@@ -572,7 +572,7 @@ export const artworks: Artwork[] = [
         },
       ],
     },
-    results: "TODO",
+    results: "The total cost of all materials for the finished product amounted to approximately $80. The torque adapter is rated for ±1% accuracy over a 10–200 N·m range, with user reports providing verification of these specifications. Although the measuring range did not fully meet the requirement, I expect operation below the rated minimum torque to introduce an acceptable level of error. Fitting all of the components within the original housing was successful, but the final assembly was a very tight fit. This could be improved by using a smaller microcontroller, such as the XIAO nRF52840, which is nearly one-third the size of the WeAct STM32F446RE used in this project. Alternatively, the demultiplexers could be eliminated entirely, since the microcontroller has enough ADC channels to interface with the display directly. However, I retained them to allow for potential future expansion. Beyond meeting the goals and requirements, the most valuable outcome for me was gaining a stronger understanding of circuit design, programming, and microcontrollers.",
   },
   {
     id: "4",
