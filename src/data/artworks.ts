@@ -145,6 +145,7 @@ export interface Artwork {
   torqueSensorFinalApproachDetails?: TorqueSensorFinalApproachDetails;
   cameraFinalApproachDetails?: CameraApproachSection[];
   results: string;
+  resultsExtra?: string[];
   resultsImage?: CaseStudyImage;
   resultsAfterImage?: string;
 }
@@ -465,7 +466,12 @@ export const artworks: Artwork[] = [
         closingText: "Towards completion, I installed the motor driver revealing that its ABS side panel acted as an amplifier for the motor’s vibrations. The amplification was substantial, easily doubling the volume. At this point, available funds were dwindling, so I limited the solutions to those that required no additional cost. I first tried stiffening the panel by gluing pieces of scrap ABS between the internal ribs, providing a modest improvement. I also considered longer pulse widths and microstepping, with the latter reducing the sound to an acceptable level.",
       },
     },
-    results: "TODO",
+    results: "Quickly configurable steering gain from 1 to 2 in increments of 0.1, along with reverse steering, was successfully achieved. The motor and gearbox were correctly specified to meet the requirements, but the SG filter revealed that the researched velocity was inaccurate and should have been at least 95 RPM. This resulted in noticeable wheel lag during large, sharp turns. Correcting this would be straightforward by changing the bevel gear ratio, but the budget had already been exceeded by about $75. More importantly, the design was intended for straight-line driving, where the lag was not noticeable. The input delay requirement was met with a total of 15 ms and using O-rings for steering resistance was very successful. That said, the combination of low steering inertia and input delay made the steering feel unnatural. However, after a few minutes of driving, you quickly adapt to the steering response and it feels normal.",
+    resultsExtra: 
+    [
+      "The adaptable design decisions were very useful to accommodate problems. Tolerancing the encoder mounts for accurate positioning was critical, the fork shaft and motor mount design allowed easily upsizing the gears, and the LCD display was useful to display error messages.  Adding the ability to zero the encoder was difficult and caused it to output some bad data. The SG filter was successful in catching this and prevented damage to the bike and user. Using the filtered positional data also eliminated measurement noise permitting smaller motor increments. This, combined with microstepping, reduced vibrations to an acceptable level. ",
+      "In the end, the mechatronics approach was the best choice with the given budget. I underestimated the time I needed to spend designing, tolerancing, and fabricating the mechanical components present with this design to avoid issues. The purely mechanical approaches would have been far more time-consuming, difficult to repair, and likely to exceed the budget. If I were to improve the current design I would reduce the gear ratio for successful operation under all conditions and a higher resolution encoder to further reduce vibrations. Or, with more money, I would love to implement force feedback to the steering and use a BLDC motor with belt drive for silent operation."
+    ],
   },
   {
     id: "3",

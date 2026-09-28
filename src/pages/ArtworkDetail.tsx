@@ -403,6 +403,9 @@ const ArtworkDetail = () => {
                     ) : key === "results" ? (
                       <div className="mt-4">
                         <p>{artwork.results}</p>
+                        {artwork.resultsExtra?.map((paragraph, index) => (
+                          <p key={index} className="mt-5">{paragraph}</p>
+                        ))}
                         {artwork.resultsImage && (
                           <CaseStudyPhoto image={artwork.resultsImage} className="mt-5" />
                         )}
