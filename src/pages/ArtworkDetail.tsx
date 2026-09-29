@@ -158,7 +158,21 @@ const ArtworkDetail = () => {
                         <ol className="mt-4 list-decimal list-inside space-y-4">
                           {artwork.research.map((approach, index) => (
                             <li key={index}>
-                              <span className="font-medium text-foreground">{approach.title}</span>
+                              <span className="font-medium text-foreground">
+                                {approach.title}
+                                {approach.learnMorePath && (
+                                  <>
+                                    {" ("}
+                                    <Link
+                                      to={approach.learnMorePath}
+                                      className="underline decoration-foreground/40 underline-offset-4 transition-colors hover:text-muted-foreground"
+                                    >
+                                      Learn more
+                                    </Link>
+                                    {")"}
+                                  </>
+                                )}
+                              </span>
                               <p className="-mt-4 rounded-lg bg-background px-0 py-4 text-foreground/80">
                                 {approach.text}
                               </p>
