@@ -158,7 +158,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/chromatic-tension.jpg`,
     detailImageWidthPercent: 100,
-    summary: "TODO",
+    summary: "I built a novel sensor capable of measuring height and orientation above the ground in outdoor environments. Similar to how humans perceive depth, a 3D camera uses two different images to construct a model of its surroundings. I use one of these cameras to model the ground which can be used to calculate the sensor’s height and orientation. However, the camera cannot distinguish between the ground, rocks, twigs, and sticks. Using complex algebra, I break the model into small squares and analyze each one to determine whether it belongs to the ground. Removing these obstacles allowed me to achieve millimeter-level accuracy under real-world conditions. Through a variety of program optimizations, I was also able to achieve 90 measurements per second.",
     problem: "How do you measure an object's height above a flat surface while in motion?",
     requirements: [
       "Used over outdoor surfaces: Sidewalks, roads, etc",
@@ -296,8 +296,12 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    results: "TODO",
-    resultsExtra: ["TODO", "TODO"],
+    results: "All in all, I achieved height and orientation measurements to a semi-planar surface at angles of incidence up to 40°. By leveraging summed-area tables, histograms, and dynamic resolution the 90 Hz requirement was successfully met. Millimeter-level accuracy was achieved by detecting and removing obstacles that did not belong to the main surface with a contamination tolerance up to 50%. And, the total system form factor is 1.8 times smaller than required with a total cost way under budget at $206.",
+    resultsExtra:
+    [
+      "The techniques used to meet these requirements do have some limitations. Distinguishing subregions belonging to different planes using projected height has limited resolving power, as noise and surface variation inflate the measurements. Likewise, sorting normal vectors with a histogram is similarly constrained by its substantial memory requirement. The current implementation, using 1°×1°×1° voxels, consumes nearly 8 GB. In contrast, filtering non-planar subregions based on their variance introduced no significant limitations and was both simple to implement and highly effective.",
+      "The methodology I applied is sound but I could make improvements to the current design. Despite the reasonable depth resolution of the D435 camera (848x480) a small ROI quickly becomes sparse past around 1.5 meters. In retrospect, a higher resolution camera would have been preferable. In addition, configuring the ROI in the program is also a bit time-consuming and could be refined. Possible improvements aside, I am very satisfied with the final performance. Success or failure what really matters to me is that I learn something in the process. This project was a wonderful excuse to hone my linear algebra and programming skills."
+    ],
   },
   {
     id: "2",
@@ -481,7 +485,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/fragments-of-silence.jpg`,
     detailImageWidthPercent: 100,
-    summary: "TODO",
+    summary: "Being able to measure torque is useful because, with some additional information and a bit of math, you can determine how much energy is required to turn something. However, quality torque sensors that can connect to a computer — also called rotary load cells — are very expensive, so I built my own. Using an inexpensive torque adapter, I added computer connectivity by decoding its 7-segment LCD display with a microcontroller and custom circuitry, all for just $80.",
     problem: "How can torque measurements collected using a sensor be graphed and analyzed?",
     requirements: [
       "±3% Accuracy",
@@ -598,7 +602,7 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1549289524-06cf8837ace5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/paris-layers.jpg`,
     detailImageWidthPercent: 100,
-    summary: "TODO",
+    summary: "Wireless communication is unreliable. Typical radio frequencies such as 2.4 GHz are shared by many devices making them susceptible to interference. Frequency hopping can be used to improve reliability by periodically changing the transmission frequency. However, effective implementation requires both communicating devices to be synchronized so they can switch to the same frequency at the right time. Matching timers with wireless communication is tricky because any variability in sending or recieving timestamps leads to very poor accuracy. By capturing timestamps at the very end of the transmission process and the very beginning of the reception process, I minimized this variability and achieved an accuracy of 250 nanoseconds.",
     problem: "How to match the timers on two microcontrollers wirelessly?",
     requirements: [
       "Synchronization accuracy of 1 microsecond",
