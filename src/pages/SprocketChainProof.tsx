@@ -13,7 +13,7 @@ import equation3 from "/images/reverse_bike/eqn3.png";
 // Adjust these values to scale the two diagrams independently.
 const DIAGRAM_WIDTH_PERCENT = {
   mechanism: 80,
-  proof: 80,
+  proof: 100,
 };
 
 // Width of each equation image as a percentage of the article column.
