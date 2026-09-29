@@ -1,4 +1,3 @@
-import { useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -60,13 +59,6 @@ const EquationImage = ({ src, alt, widthPercent }: { src: string; alt: string; w
 );
 
 const SprocketChainProof = () => {
-  // Arriving here (for example from the "Learn more" link) always starts at the top.
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, []);
-
   return (
     <>
       <Helmet>
