@@ -84,7 +84,7 @@ const SprocketChainProof = () => {
               Steer-by-wire Bicycle
             </Link>
 
-            <h1 className="mt-8 font-display text-3xl font-semibold tracking-tight text-foreground lg:text-4xl">
+            <h1 className="mt-8 font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
               Sprocket and Chain Approach to Gain
             </h1>
 
