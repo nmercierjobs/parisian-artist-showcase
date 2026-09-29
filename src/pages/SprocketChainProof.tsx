@@ -6,18 +6,6 @@ import ImageReveal from "@/components/ImageReveal";
 import mechanismPlaceholder from "@/assets/sprocket-proof-placeholder-1.png";
 import proofPlaceholder from "@/assets/sprocket-proof-placeholder-2.png";
 
-const definitions = [
-  ["a", "Arc length"],
-  ["R", "Radius of the sun gear"],
-  ["r", "Radius of the planet gear"],
-  ["x", "Distance between centers"],
-  ["α", "Angle of arm rotation"],
-  ["β", "Counterclockwise rotation of the planet"],
-  ["ω", "Rotation of the sun"],
-  ["δ", "Clockwise rotation of the sun"],
-  ["b", "Angular segment"],
-];
-
 const ProofImage = ({ src, width, height, alt }: { src: string; width: number; height: number; alt: string }) => (
   <div className="mx-auto mt-8 w-full max-w-3xl overflow-hidden rounded-xl">
     <ImageReveal src={src} alt={alt} className="h-full w-full object-cover" style={{ aspectRatio: `${width} / ${height}` }} />
@@ -48,8 +36,7 @@ const SprocketChainProof = () => (
           </Link>
 
           <header className="mt-10 border-b border-border pb-10">
-            <p className="text-sm font-medium uppercase text-muted-foreground">Mechanical concept</p>
-            <h1 className="mt-3 font-display text-4xl font-medium text-foreground lg:text-5xl">Sprocket and Chain Proof</h1>
+            <h1 className="font-display text-4xl font-medium text-foreground lg:text-5xl">Sprocket and Chain Proof</h1>
           </header>
 
           <div className="mt-10 space-y-8 text-base leading-relaxed text-foreground lg:text-lg lg:leading-loose">
@@ -66,26 +53,6 @@ const SprocketChainProof = () => (
                 The following is a proof of the sprocket dimensions to create the desired gear ratio of 1 to 2. Stage 1 has been simplified as the planet rotating about an internal gear. The chain connecting the planet and sun has also been omitted.
               </p>
               <ProofImage src={proofPlaceholder} width={1607} height={1599} alt="Placeholder for the sprocket dimension proof diagram" />
-
-              <div className="mt-8 overflow-x-auto">
-                <table className="w-full border-collapse text-left text-sm sm:text-base">
-                  <caption className="sr-only">Variables used in the sprocket dimension proof</caption>
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th scope="col" className="py-3 pr-6 font-semibold">Parameter</th>
-                      <th scope="col" className="py-3 font-semibold">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {definitions.map(([symbol, description]) => (
-                      <tr key={symbol} className="border-b border-border/70">
-                        <th scope="row" className="py-3 pr-6 font-serif text-lg font-normal">{symbol}</th>
-                        <td className="py-3">{description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
 
               <p className="mt-8">
                 Consider the clockwise rotation of the arm through angle α, which effectively rotates the planet through angle α as well. This creates the clockwise rotation δ of the sun. Similarly, the planet rolls along arc length a and creates the counterclockwise rotation β on the planet and ω on the sun.
