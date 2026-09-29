@@ -54,26 +54,6 @@ const SprocketChainProof = () => (
               </p>
               <ProofImage src={proofPlaceholder} width={1607} height={1599} alt="Placeholder for the sprocket dimension proof diagram" />
 
-              <div className="mt-8 overflow-x-auto">
-                <table className="w-full border-collapse text-left text-sm sm:text-base">
-                  <caption className="sr-only">Variables used in the sprocket dimension proof</caption>
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th scope="col" className="py-3 pr-6 font-semibold">Parameter</th>
-                      <th scope="col" className="py-3 font-semibold">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {definitions.map(([symbol, description]) => (
-                      <tr key={symbol} className="border-b border-border/70">
-                        <th scope="row" className="py-3 pr-6 font-serif text-lg font-normal">{symbol}</th>
-                        <td className="py-3">{description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
               <p className="mt-8">
                 Consider the clockwise rotation of the arm through angle α, which effectively rotates the planet through angle α as well. This creates the clockwise rotation δ of the sun. Similarly, the planet rolls along arc length a and creates the counterclockwise rotation β on the planet and ω on the sun.
               </p>
