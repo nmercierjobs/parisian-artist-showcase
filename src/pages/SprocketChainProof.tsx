@@ -3,8 +3,8 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import ImageReveal from "@/components/ImageReveal";
-import mechanismPlaceholder from "@/assets/sprocket-proof-placeholder-1.png";
-import proofPlaceholder from "@/assets/sprocket-proof-placeholder-2.png";
+import mechanismPlaceholder from "/images/reverse_bike/sprocket_and_chain_diagram.png";
+import proofPlaceholder from "/images/reverse_bike/sprocket_and_chain_proof.png";
 
 const ProofImage = ({ src, width, height, alt }: { src: string; width: number; height: number; alt: string }) => (
   <div className="mx-auto mt-8 w-full max-w-3xl overflow-hidden rounded-xl">
@@ -44,7 +44,7 @@ const SprocketChainProof = () => (
             </section>
 
             <section className="pt-8">
-              <h2 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Dimension Proof</h2>
+              <h2 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Proof</h2>
               <p className="mt-4">
                 The following is a proof of the sprocket dimensions to create the desired gear ratio of 1 to 2. Stage 1 has been simplified as the planet rotating about an internal gear. The chain connecting the planet and sun has also been omitted.
               </p>
@@ -58,7 +58,7 @@ const SprocketChainProof = () => (
             <section className="pt-8">
               <h2 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Derivation</h2>
               <p className="mt-4">
-                The desired quantity is the ratio of the <em>net</em> rotation in the sun compared to the rotation of the arm. The fundamental property linking the rotations is the equivalence of the arc lengths. The following relationship expresses the net rotation of the sun in terms of the two arc lengths.
+                The desired quantity is the ratio of the <em>net</em> rotation of the sun compared to the rotation of the arm. The fundamental property linking the rotations is the equivalence of the arc lengths. The following relationship expresses the net rotation of the sun in terms of the two arc lengths.
               </p>
               <Equation>(ω − δ)R = a − b</Equation>
               <p>The arc length a is defined by the radius of the internal sprocket and the angle of the arm. Arc length b is the result of the effective rotation of the planet by the arm.</p>
