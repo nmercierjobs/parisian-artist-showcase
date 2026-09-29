@@ -6,18 +6,6 @@ import ImageReveal from "@/components/ImageReveal";
 import mechanismPlaceholder from "@/assets/sprocket-proof-placeholder-1.png";
 import proofPlaceholder from "@/assets/sprocket-proof-placeholder-2.png";
 
-const definitions = [
-  ["a", "Arc length"],
-  ["R", "Radius of the sun gear"],
-  ["r", "Radius of the planet gear"],
-  ["x", "Distance between centers"],
-  ["α", "Angle of arm rotation"],
-  ["β", "Counterclockwise rotation of the planet"],
-  ["ω", "Rotation of the sun"],
-  ["δ", "Clockwise rotation of the sun"],
-  ["b", "Angular segment"],
-];
-
 const ProofImage = ({ src, width, height, alt }: { src: string; width: number; height: number; alt: string }) => (
   <div className="mx-auto mt-8 w-full max-w-3xl overflow-hidden rounded-xl">
     <ImageReveal src={src} alt={alt} className="h-full w-full object-cover" style={{ aspectRatio: `${width} / ${height}` }} />
