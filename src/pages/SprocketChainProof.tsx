@@ -5,6 +5,17 @@ import Layout from "@/components/layout/Layout";
 import ImageReveal from "@/components/ImageReveal";
 import mechanismPlaceholder from "@/assets/sprocket-proof-placeholder-1.png";
 import proofPlaceholder from "@/assets/sprocket-proof-placeholder-2.png";
+import equation1 from "@/assets/equation-1.png";
+import equation2 from "@/assets/equation-2.png";
+import equation3 from "@/assets/equation-3.png";
+
+// Width of each equation image as a percentage of the article column.
+// Adjust these values to scale each equation independently.
+const EQUATION_WIDTH_PERCENT = {
+  netRotation: 60,
+  arcLengths: 60,
+  gain: 60,
+};
 
 const ProofImage = ({ src, width, height, alt }: { src: string; width: number; height: number; alt: string }) => (
   <div className="mx-auto mt-8 w-full max-w-3xl overflow-hidden rounded-xl">
@@ -12,10 +23,15 @@ const ProofImage = ({ src, width, height, alt }: { src: string; width: number; h
   </div>
 );
 
-const Equation = ({ children }: { children: React.ReactNode }) => (
-  <p className="my-8 overflow-x-auto text-center font-serif text-xl text-foreground sm:text-2xl" aria-label={`Equation: ${String(children)}`}>
-    {children}
-  </p>
+const EquationImage = ({ src, alt, widthPercent }: { src: string; alt: string; widthPercent: number }) => (
+  <div className="my-8 flex justify-center overflow-x-auto">
+    <img
+      src={src}
+      alt={alt}
+      style={{ width: `${widthPercent}%` }}
+      className="h-auto rounded-lg"
+    />
+  </div>
 );
 
 const SprocketChainProof = () => (
@@ -60,11 +76,11 @@ const SprocketChainProof = () => (
               <p className="mt-4">
                 The desired quantity is the ratio of the <em>net</em> rotation in the sun compared to the rotation of the arm. The fundamental property linking the rotations is the equivalence of the arc lengths. The following relationship expresses the net rotation of the sun in terms of the two arc lengths.
               </p>
-              <Equation>(ω − δ)R = a − b</Equation>
+              <EquationImage src={equation1} alt="Equation: (ω − δ)R = a − b" widthPercent={EQUATION_WIDTH_PERCENT.netRotation} />
               <p>The arc length a is defined by the radius of the internal sprocket and the angle of the arm. Arc length b is the result of the effective rotation of the planet by the arm.</p>
-              <Equation>a = α(x + r)　　b = αr</Equation>
+              <EquationImage src={equation2} alt="Equation: a = α(x + r), b = αr" widthPercent={EQUATION_WIDTH_PERCENT.arcLengths} />
               <p>Combining these relationships and simplifying gives the following conclusion, where the negative sign indicates that the output is in the opposite direction of the arm.</p>
-              <Equation>Gain = (ω − δ) / α = −x / R</Equation>
+              <EquationImage src={equation3} alt="Equation: Gain = (ω − δ) / α = −x / R" widthPercent={EQUATION_WIDTH_PERCENT.gain} />
               <p>
                 Interestingly, a gain of 1 is not possible. To fix this, a gear reduction after the sun gear would be needed. Another concern is whether the mechanism is too long. Using #25 chains, a 10-tooth planet sprocket, and a 25-tooth sun sprocket, the total length would be approximately 3.5 inches. Very reasonable.
               </p>
