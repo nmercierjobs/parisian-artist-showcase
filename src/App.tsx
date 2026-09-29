@@ -8,6 +8,7 @@ import Work from "./pages/Work";
 import About from "./pages/About";
 import Resume from "./pages/Resume";
 import ArtworkDetail from "./pages/ArtworkDetail";
+import SprocketChainProof from "./pages/SprocketChainProof";
 import NotFound from "./pages/NotFound";
 import ScrollProgress from "./components/ScrollProgress";
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Work />} />
             <Route path="/about" element={<About />} />
             <Route path="/resume" element={<Resume />} />
+            <Route path="/projects/steer-by-wire-bicycle/sprocket-chain-proof" element={<SprocketChainProof />} />
             <Route path="/projects/:slug" element={<ArtworkDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

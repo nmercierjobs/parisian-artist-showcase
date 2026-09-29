@@ -28,6 +28,7 @@ export interface Approach {
   title: string;
   text: string;
   subPoints: [string, string];
+  learnMorePath?: string;
 }
 
 export type FinalApproachBlock =
@@ -321,8 +322,9 @@ export const artworks: Artwork[] = [
     ],
     research: [
       {
-        title: "Planetary gearbox - Gain  (Learn more)",
+        title: "Planetary gearbox - Gain",
         text: "Replace the ring gear with a chain to allow translating the planet gear and changing the amount it rotates",
+        learnMorePath: "/projects/steer-by-wire-bicycle/sprocket-chain-proof",
         subPoints: [
           "Key advantage: Continuous gain adjustments",
           "Main concern: System complexity",
