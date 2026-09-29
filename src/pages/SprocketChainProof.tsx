@@ -35,10 +35,6 @@ const SprocketChainProof = () => (
             Steer-by-wire Bicycle
           </Link>
 
-          <header className="mt-10 border-b border-border pb-10">
-            <h1 className="font-display text-4xl font-medium text-foreground lg:text-5xl">Sprocket and Chain Proof</h1>
-          </header>
-
           <div className="mt-10 space-y-8 text-base leading-relaxed text-foreground lg:text-lg lg:leading-loose">
             <section>
               <p>
