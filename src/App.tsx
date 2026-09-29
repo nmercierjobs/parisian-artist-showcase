@@ -11,6 +11,7 @@ import ArtworkDetail from "./pages/ArtworkDetail";
 import SprocketChainProof from "./pages/SprocketChainProof";
 import NotFound from "./pages/NotFound";
 import ScrollProgress from "./components/ScrollProgress";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <HashRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Work />} />
             <Route path="/about" element={<About />} />
