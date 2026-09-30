@@ -181,7 +181,7 @@ const ArtworkDetail = () => {
         <title>{artwork.title} — Noah Mercier</title>
         <meta
           name="description"
-          content={`${artwork.title} by Émile Laurent. ${artwork.summary.replace(/\*\*/g, "").substring(0, 150)}...`}
+          content={`${artwork.title} by Noah Mercier. ${artwork.summary.replace(/\*\*/g, "").substring(0, 150)}...`}
         />
       </Helmet>
 

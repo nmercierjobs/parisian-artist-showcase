@@ -34,7 +34,7 @@ const projects = [
     title: "Wireless MCU Timer Synchronization",
     meta: "2025 · C · nRF52",
     details: [
-      "Eliminated non-deterministic delays using programmable hardware interconnects, achieving an accuracy of 250 ns exceeding the 1 us requirement",
+      "Eliminated non-deterministic delays using programmable hardware interconnects, achieving an accuracy of 250 ns exceeding the 1 μs requirement",
       "Measured and corrected relative clock drift rate with linear regression, extending correction events from milliseconds to tens of minutes",
     ],
   },
@@ -74,7 +74,7 @@ const Resume = () => {
               </div>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-foreground">
                 <li>B.S.E. in Mechanical Engineering, June 2026. In-Major GPA: 3.8</li>
-                <li>Led a team of 6 students on a joint senior design project by implementing effective scheduling, frequent status updates to avoid confusion, and establishing clear resposibilites to ensure equal contribution</li>
+                <li>Led a team of 6 students on a joint senior design project by implementing effective scheduling, frequent status updates to avoid confusion, and establishing clear responsibilities to ensure equal contribution</li>
               </ul>
             </section>
 
@@ -121,7 +121,7 @@ const Resume = () => {
               </h2>
               <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-foreground">
                 <li>C, Python, MATLAB, R, SQL; BLAS, LAPACK</li>
-                <li>Nordic nRF, STM32, Arduino, RaspberryPi</li>
+                <li>Nordic nRF, STM32, Arduino, Raspberry Pi</li>
                 <li>SolidWorks, Autodesk Fusion, Linux, Zephyr, Excel</li>
               </ul>
             </section>
