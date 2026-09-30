@@ -1,4 +1,3 @@
-import supportSteerBike from "/images/bike_cad_4_3.png";
 import wirelessHowItWorks1 from "/images/tx_final.png";
 import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
 import bicycleMechanicalOverview from "/images/bike_cad_components.png";
