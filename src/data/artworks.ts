@@ -485,7 +485,7 @@ export const artworks: Artwork[] = [
     detailImage: `${import.meta.env.BASE_URL}artworks/fragments-of-silence.jpg`,
     detailImageWidthPercent: 100,
     summary: "Being able to measure torque is useful because, with some additional information and a bit of math, you can determine how much energy is required to turn something. However, quality torque sensors that can connect to a computer — also called rotary load cells — are very expensive, so I built my own. Using an inexpensive torque adapter, I added computer connectivity by decoding its 7-segment LCD display with a microcontroller and custom circuitry, all for just $80.",
-    problem: "How can torque measurements collected using a sensor be graphed and analyzed?",
+    problem: "How to interface a torque sensor with a computer through its LCD display?",
     requirements: [
       "±3% Accuracy",
       "Measuring range from 0-200Nm",
@@ -602,36 +602,37 @@ export const artworks: Artwork[] = [
     detailImage: `${import.meta.env.BASE_URL}artworks/paris-layers.jpg`,
     detailImageWidthPercent: 100,
     summary: "Wireless communication is unreliable. Typical radio frequencies such as 2.4 GHz are shared by many devices making them susceptible to interference. Frequency hopping can be used to improve reliability by periodically changing the transmission frequency. However, effective implementation requires both communicating devices to be synchronized so they can switch to the same frequency at the right time. Matching timers with wireless communication is tricky because any variability in sending or recieving timestamps leads to very poor accuracy. By capturing timestamps at the very end of the transmission process and the very beginning of the reception process, I minimized this variability and achieved an accuracy of 250 nanoseconds.",
-    problem: "How to match the timers on two microcontrollers wirelessly?",
+    problem: "How to match the timers on three nordic nrf52 series microcontrollers, wirelessly?",
     requirements: [
       "Synchronization accuracy of 1 microsecond",
       "Automatic synchronization on power up",
       "Correction events every 1 minute",
     ],
-    researchIntro: ["TODO", "TODO", "TODO", "TODO"],
+    researchIntro: 
+    [
+      "Wireless communication can be broken into the following components:", 
+      "Send time: The time spent constructing the message and physically transmitting it.",
+      "Propagation time: The time for the message to transmit through the air.",
+      "Receive time: The time spent processing the message.",
+      "The time at each stage varies a bit making synchronization challenging. For most applications the uncertainty in the propagation time is negligible so most methods focus on the send and receive times."
+    ],
     research: [
       {
         title: "Reference Broadcast Synchronization (RBS)",
-        text: "Uses an additional transmitter with two receivers to eliminate send time variability. The transmitter emits a signal that both receivers timestamp and then exchange to determine one another’s offset",
+        text: "Uses an additional transmitter with 2+ receivers to eliminate send time variability. The transmitter emits a signal that both receivers timestamp and then exchange to determine one another’s offset.",
         subPoints: [
-          "Eliminates sender-side uncertainty by using a shared reference broadcast",
-          "Requires two receivers to exchange timestamps after the broadcast",
         ],
       },
       {
         title: "Timing-sync Protocol for Sensor Networks (TPSN)",
-        text: "Minimizes both send and receive time variability by timestamping packets as close as possible to the actual transmission and reception events. Designed for synchronizing a large network of microcontrollers",
+        text: "Minimizes both send and receive time variability by timestamping packets as close as possible to the actual transmission and reception events.",
         subPoints: [
-          "Timestamping happens at the radio hardware level to remove software latency",
-          "Suitable for synchronizing many nodes in a sensor network",
         ],
       },
       {
         title: "Flooding Time Synchronization Protocol (FTSP)",
         text: "Similar to TPSN with advancements made to make large-scale synchronization more reliable.",
         subPoints: [
-          "Builds on TPSN but adds robustness for larger networks",
-          "Uses multiple reference beacons to tolerate node failures",
         ],
       },
     ],
