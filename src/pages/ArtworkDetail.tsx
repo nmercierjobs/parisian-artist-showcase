@@ -32,12 +32,26 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
   </div>
 );
 
-// Words to emphasize in project text, e.g. "the direction you turn".
-const EMPHASIS_PATTERN =
-  /\b(direction|amount)(?= you turn)|\brelative(?= mechanical simplicity)|\bsquare(?= of the ratio)/g;
+// Phrases to bold in project text, e.g. "NEMA 24 motor".
+const BOLD_PHRASES = ["NEMA 24 motor", "CL86T motor driver", "36 V battery"];
 
-// Bolds the emphasized words and italicizes "relative", leaving every other
-// word exactly as written.
+// Emphasis rules. Each rule matches exactly the text to emphasize, leaving
+// every other word exactly as written.
+const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
+  { source: "\\b(?:direction|amount)(?= you turn)", style: "bold" },
+  { source: "\\brelative(?= mechanical simplicity)", style: "italic" },
+  { source: "\\bsquare(?= of the ratio)", style: "italic" },
+  ...BOLD_PHRASES.map((phrase) => ({
+    source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+    style: "bold" as const,
+  })),
+];
+
+const EMPHASIS_PATTERN = new RegExp(
+  EMPHASIS_RULES.map((rule) => `(${rule.source})`).join("|"),
+  "g",
+);
+
 const EmphasizedText = ({ text }: { text: string }) => {
   const nodes: ReactNode[] = [];
   let cursor = 0;
@@ -46,14 +60,16 @@ const EmphasizedText = ({ text }: { text: string }) => {
     if (start > cursor) {
       nodes.push(<span key={`plain-${cursor}`}>{text.slice(cursor, start)}</span>);
     }
+    const matchedRule = match.slice(1).findIndex((group) => group !== undefined);
+    const style = EMPHASIS_RULES[matchedRule]?.style ?? "bold";
     nodes.push(
-      match[1] ? (
+      style === "bold" ? (
         <strong key={`bold-${start}`} className="font-semibold">
           {match[0]}
         </strong>
       ) : (
         <em key={`italic-${start}`}>{match[0]}</em>
-      )
+      ),
     );
     cursor = start + match[0].length;
   }
@@ -336,9 +352,13 @@ const ArtworkDetail = () => {
                               {artwork.bicycleFinalApproachDetails.electrical.topics.map((topic) => (
                                 <div key={topic.title}>
                                   <h4 className="font-semibold text-foreground">{topic.title}</h4>
-                                  <p className="mt-2">{topic.text}</p>
+                                  <p className="mt-2">
+                                    <RichText text={topic.text} />
+                                  </p>
                                    {topic.additionalParagraphs?.map((paragraph, index) => (
-                                     <p key={index} className="mt-5">{paragraph}</p>
+                                     <p key={index} className="mt-5">
+                                       <RichText text={paragraph} />
+                                     </p>
                                    ))}
                                   {topic.image && <CaseStudyPhoto image={topic.image} className="mt-5" />}
                                   {topic.steps && (
