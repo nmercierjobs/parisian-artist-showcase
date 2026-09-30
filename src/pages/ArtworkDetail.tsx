@@ -57,6 +57,8 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "Least Median of Squares \\(LMedS\\):", style: "bold" },
   { source: "Least Trimmed Squares\\(LTS\\):", style: "bold" },
   { source: "\\bTheil–Sen(?=:)", style: "bold" },
+  // Scoped to the AC-drive explanation so other uses of "average" stay regular.
+  { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
   ...BOLD_PHRASES.map((phrase) => ({
     source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     style: "bold" as const,
@@ -454,21 +456,25 @@ const ArtworkDetail = () => {
                                   if (link && paragraph.includes(link.text)) {
                                     const splitAt = paragraph.lastIndexOf(link.text);
                                     return (
-                                      <p key={paragraphIndex}>
-                                        {paragraph.slice(0, splitAt)}
-                                        <a
-                                          href={link.href}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="underline underline-offset-2 hover:text-muted-foreground"
-                                        >
-                                          {link.text}
-                                        </a>
-                                        {paragraph.slice(splitAt + link.text.length)}
-                                      </p>
-                                    );
-                                  }
-                                  return <p key={paragraphIndex}>{paragraph}</p>;
+                                       <p key={paragraphIndex}>
+                                         <RichText text={paragraph.slice(0, splitAt)} />
+                                         <a
+                                           href={link.href}
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           className="underline underline-offset-2 hover:text-muted-foreground"
+                                         >
+                                           {link.text}
+                                         </a>
+                                         <RichText text={paragraph.slice(splitAt + link.text.length)} />
+                                       </p>
+                                     );
+                                   }
+                                   return (
+                                     <p key={paragraphIndex}>
+                                       <RichText text={paragraph} />
+                                     </p>
+                                   );
                                 })}
                               </div>
                               {"endImage" in topic && topic.endImage && (
