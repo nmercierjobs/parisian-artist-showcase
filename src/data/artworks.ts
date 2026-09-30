@@ -173,7 +173,7 @@ export const artworks: Artwork[] = [
     research: [
       {
         title: "Inertial measuring unit (IMU)",
-        text: "Measures acceleration, angular velocity, and heading to determine positional information",
+        text: "Measures acceleration, angular velocity, and heading to determine positional information.",
         subPoints: [
           "Key advantage: Cheap",
           "Main concern: Measurements drift over time",
@@ -181,7 +181,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Simultaneous localization and mapping (SLAM)",
-        text: "Uses 3D camera to map the environment improving IMU measurements",
+        text: "Uses 3D camera to map the environment improving IMU measurements.",
         subPoints: [
           "Key advantage: Reduced measurement drift",
           "Main concern: Measurement drift still occurs",
@@ -197,7 +197,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Distance sensor",
-        text: "Measures distances from three points to the ground to define a plane. Height is determined by projecting the sensor-to-plane vector onto the plane’s normal vector",
+        text: "Measures distances from three points to the ground to define a plane. Height is determined by projecting the sensor-to-plane vector onto the plane’s normal vector.",
         subPoints: [
           "Key advantage: No measurement drift",
           "Main concern: Robustness",
@@ -384,7 +384,7 @@ export const artworks: Artwork[] = [
       mechanical: {
         intro: "My design philosophy is to maximize adaptability to help tackle the inevitable issues and changes. This was especially imperative to achieve the budget requirement. The following list outlines the major mechanical components and how they were designed with this principle in mind.",
         steps: [
-          "Additional Head Tube: Attachment point kept as long as possible in case removal and reattachement were required.",
+          "Additional Head Tube: Attachment point kept as long as possible in case removal and reattachment were required.",
           "Encoder Shaft: Press fit with a three ten-thousandths interference for easy repositioning and removal. Both shaft lengths were made longer to account for any changes in encoder mounting position.",
           "Encoder Mount: Slot implemented for back and forth variability in the final encoder shaft location.",
           "Encoder Mount Extender: Width toleranced for encoder mount side to side movement to account for misalignment of the weld.",
@@ -484,17 +484,17 @@ export const artworks: Artwork[] = [
     image: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/fragments-of-silence.jpg`,
     detailImageWidthPercent: 100,
-    summary: "Being able to measure torque is useful because, with some additional information and a bit of math, you can determine how much energy is required to turn something. However, quality torque sensors that can connect to a computer — also called rotary load cells — are very expensive, so I built my own. Using an inexpensive torque adapter, I added computer connectivity by decoding its 7-segment LCD display with a microcontroller and custom circuitry, all for just $80.",
+    summary: "Being able to measure torque is useful because, with some additional information and a bit of math, you can determine how much energy is required to turn something. However, quality torque sensors that can connect to a computer — also called rotary load cells — are very expensive, so I built my own. Using an inexpensive torque adapter, I added computer connectivity by decoding its 7-segment LCD display with a microcontroller and custom circuitry.",
     problem: "How to interface a torque sensor with a computer through its LCD display?",
     requirements: [
       "±3% Accuracy",
-      "Measuring range from 0-200Nm",
+      "Measuring range from 0-200 N·m",
       "Material costs under $100",
     ],
     research: [
       {
         title: "Rotary load cell",
-        text: "Purchase a ready-made load cell capable of computer communication",
+        text: "Purchase a ready-made load cell capable of computer communication.",
         subPoints: [
           "Key advantage: Requires no modifications",
           "Main concern: Cost",
@@ -502,23 +502,23 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Custom load cell",
-        text: "Create and calibrate a load cell myself utilizing a Wheatstone bridge",
+        text: "Create and calibrate a load cell myself utilizing a Wheatstone bridge.",
         subPoints: [
           "Key advantage: Inexpensive",
           "Main concern: Calibration accuracy",
         ],
       },
       {
-        title: "Torque Adapter",
-        text: "Purchase a torque adapter with LCD screen and record measurements manually",
+        title: "Manual Torque Adapter",
+        text: "Purchase a torque adapter with LCD screen and record measurements manually.",
         subPoints: [
           "Key advantage: Requires no modifications",
           "Main concern: Time consuming to use",
         ],
       },
       {
-        title: "Torque Adapter",
-        text: "Decode the LCD screen on a torque adapter with a microcontroller",
+        title: "Decoded Torque Adapter",
+        text: "Decode the LCD screen on a torque adapter with a microcontroller.",
         subPoints: [
           "Key advantage: Inexpensive",
           "Main concern: Limited resources on the subject",
@@ -531,7 +531,7 @@ export const artworks: Artwork[] = [
       introParagraphs: 
       [
         "To simplify the project, I wanted to find a torque adapter that used a static display. I purchased four different models, selected for their unique features: the Durofix RM602-4A, Powerbuilt 940962, ANPUDS, and ThreeH. The Durofix had a backlight, the ANPUDS had a color screen, and the remaining models had different screen sizes. Unfortunately, after disassembling them, I discovered that all four used multiplexed displays. Purchasing them was not a waste, however, as I also wanted to characterize the displays’ responsiveness and refresh rates. I assembled a test rig in which I dropped a 1/2-inch socket onto the end of a socket wrench and recorded the displays in slow motion. To identify the start of the impulse, I built a simple circuit that illuminated an LED when the socket contacted the wrench. This proved extremely informative, with the ANPUDS model being substantially more responsive than the others. I later measured its frame rate directly at 60 fps and suspected that the remaining displays operated at 30 fps.", 
-        "Stuck with multiplexed displays I decoded the ANPUDS screen through trial and error by applying a small dc voltage across the pins. Here is the completed table:",
+        "Stuck with multiplexed displays I decoded the ANPUDS screen through trial and error by applying a small DC voltage across the pins. Here is the completed table:",
       ],
       assemblyImage: {
         src: usbTorqueSensorAssembly,
@@ -641,7 +641,7 @@ export const artworks: Artwork[] = [
     finalApproachDetails: {
       howItWorks: [
         { type: "text", content: "My synchronization protocol uses one master device whose timer is immutable while all other devices correct themselves to match it. Each device contains two timers: one counter and the other free-running. The free-running timer is set with a somewhat arbitrary wrap point; currently using 50,000. The receivers shrink or extend this capture/compare register in order to match the master device. On each overflow, the counter is incremented. To timestamp an event I leveraged Nordic’s Programmable Peripheral Interconnect (PPI) system. It is a system that allows configuring hardware events and tasks to occur without CPU intervention, effectively eliminating timing jitter. With this, I can capture the value of both timers simultaneously and combine them for the complete timestamp." },
-        { type: "text", content: "Using the idea of timestamping immediately before transmission and upon reception, I delved into the nRF52840 radio architecture to understand how I could achieve the timing precision required for this project. Leveraging the PPI system, along with the radio sequence diagram shown below, was critical to the success of this approach." },
+        { type: "text", content: "Using the idea of timestamping immediately before transmission and upon reception, I delved into the nRF52 radio architecture to understand how I could achieve the timing precision required for this project. Leveraging the PPI system, along with the radio sequence diagram shown below, was critical to the success of this approach." },
         { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes", displayWidthPercent: 100 },
         { type: "text", content: "On the transmitter side, I invoke the transmitter enable (TXEN) task and start a timer which ends after the transmitter ramp-up time (TXRU) is completed. When the timer ends, two tasks are executed. The timestamp to be sent to the receiver is captured and another timer begins to start the radio START task in exactly 10 microseconds with the PPI system. During this delay, the timestamp is written to the outgoing packet." },
         { type: "text", content: "On the receiver side, its timestamp is captured at the ADDRESS event. Therefore, when calculating the offsets, the delays in the transmitter timestamp up to this point must be accounted for. This includes the 10 microseconds between TXRU completion and START, as well as the time elapsed from START to the receiver’s ADDRESS. I measured the latter delay directly with a logic analyzer and found it to be 29.5 microseconds, resulting in a total delay of 39.5 microseconds. The complete process is summarized in the diagram below." },
@@ -649,7 +649,7 @@ export const artworks: Artwork[] = [
       ],
       challenges: [
         "The automatic synchronization requirement created an interesting challenge when synchronizing the counter. If the master device has been powered on for an extended period, its counter count can grow beyond what the receivers can correct. This is because the counter can only be incremented by one or reset to zero. To match the master counter, the receiver must reset its counter then increment it to match. This process can take longer than the free-running timer’s wraparound period, causing additional increments to occur before synchronization is complete. To address this, I synchronize the counter in two stages. The majority of the counts are incremented in the first stage except what is guaranteed to be correctable in the second stage.",
-        "I chose Nordic’s nRF52 series of microcontrollers for this project because of the company’s strong reputation and its proprietary Enhanced ShockBurst (ESB) radio protocol. However, integrating the protocol with time synchronization proved to be a significant technical challenge. ESB requires exclusive control of the radio peripheral, while time synchronization requires direct, low-level access to the same hardware. To resolve this conflict, I implemented Nordic’s Multiprotocol Service Layer (MPSL) timeslot feature, which temporarily yields control of reserved peripherals. This also simplified correction event scheduling. Initially, achieving the system requirement of microsecond-level accuracy required correction events every few milliseconds because the timers operated at different tick rates. To reduce the frequency of these corrections, I use linear regression to estimate the clock drift rate and apply corrections between the master correction events. This extended the interval between master corrections from milliseconds to tens of minutes.",
+        "I chose Nordic’s nRF52 series of microcontrollers for this project because of the company’s strong reputation and its proprietary Enhanced ShockBurst (ESB) radio protocol. However, integrating the protocol with time synchronization proved to be a significant technical challenge. ESB requires exclusive control of the radio peripheral, while time synchronization requires direct, low-level access to the same hardware. To resolve this conflict, I implemented Nordic’s Multiprotocol Service Layer (MPSL) timeslot feature, which temporarily yields control of reserved peripherals. This also simplified correction event scheduling. Initially, achieving the system requirement of microsecond-level accuracy required correction events every few milliseconds because the timers operate at slightly different tick rates. To reduce the frequency of these corrections, I use linear regression to estimate the clock drift rate and apply corrections in between the master correction events. This extended the interval between master corrections from milliseconds to tens of minutes.",
         "ESB presented another challenge. It modifies the default radio settings, causing my timestamps to be ignored by the receiving device. After exploring my options, I determined that I would need to replicate the ESB message format when transmitting the timestamp. I scoured the nRF52 datasheet, which was useful for understanding the standard radio packet format but provided little information about ESB itself. I then turned to the nRF24 series datasheet, which documented the legacy ShockBurst protocol in greater detail, but even this information was insufficient. Ultimately, I had to reverse-engineer the format by tracing through the source code.",
         "Another challenge I encountered was an unusual race condition. The counter would occasionally be one increment too small while the free-running timer read zero. I initially implemented the free-running timer using the Nordic shortcut system, which is essentially a non-configurable version of the PPI system. I eventually discovered that the shortcut system has a shorter propagation delay, causing the free-running timer to reset ever so slightly before the counter could be incremented. Reconfiguring the free-running timer to use the PPI system equalized the propagation delays, resolving the issue.",
       ],
