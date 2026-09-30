@@ -61,6 +61,10 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
   // Scoped to the frame-timing sentence so other uses of "any" stay regular.
   { source: "\\bany(?= of the COM waveforms)", style: "italic" },
+  // Timestamp labels.
+  { source: "Send time:", style: "bold" },
+  { source: "Propagation time:", style: "bold" },
+  { source: "Receive time:", style: "bold" },
   ...BOLD_PHRASES.map((phrase) => ({
     source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     style: "bold" as const,
@@ -498,7 +502,7 @@ const ArtworkDetail = () => {
                               {artwork.finalApproachDetails.howItWorks.map((block, index) => (
                                 block.type === "text" ? (
                                   <p key={index} className="text-foreground">
-                                    {block.content}
+                                    <RichText text={block.content} />
                                   </p>
                                 ) : (
                                   <div
@@ -523,7 +527,9 @@ const ArtworkDetail = () => {
                             </h3>
                             <div className="space-y-6">
                               {artwork.finalApproachDetails.challenges.map((challenge, index) => (
-                                <p key={index} className="text-foreground">{challenge}</p>
+                                <p key={index} className="text-foreground">
+                                  <RichText text={challenge} />
+                                </p>
                               ))}
                             </div>
                           </div>
