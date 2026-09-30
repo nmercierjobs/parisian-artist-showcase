@@ -59,6 +59,8 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "\\bTheil–Sen(?=:)", style: "bold" },
   // Scoped to the AC-drive explanation so other uses of "average" stay regular.
   { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
+  // Scoped to the frame-timing sentence so other uses of "any" stay regular.
+  { source: "\\bany(?= of the COM waveforms)", style: "italic" },
   ...BOLD_PHRASES.map((phrase) => ({
     source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     style: "bold" as const,
