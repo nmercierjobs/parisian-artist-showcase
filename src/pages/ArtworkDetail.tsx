@@ -19,17 +19,25 @@ const sections = [
 ];
 
 const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; className?: string }) => (
-  <div
-    className={`max-w-full mx-auto overflow-hidden rounded-xl ${className}`}
-    style={{ width: `${image.displayWidthPercent}%`, padding: image.framePaddingPx ? `${image.framePaddingPx}px` : undefined }}
+  <figure
+    className={`mx-auto max-w-full ${className}`}
+    style={{ width: `${image.displayWidthPercent}%` }}
   >
-    <ImageReveal
-      src={image.src}
-      alt={image.alt}
-      className={`h-full w-full ${image.framePaddingPx ? "object-contain" : "object-cover"}`}
-      style={{ aspectRatio: `${image.width} / ${image.height}` }}
-    />
-  </div>
+    <div
+      className="overflow-hidden rounded-xl"
+      style={{ padding: image.framePaddingPx ? `${image.framePaddingPx}px` : undefined }}
+    >
+      <ImageReveal
+        src={image.src}
+        alt={image.alt}
+        className={`h-full w-full ${image.framePaddingPx ? "object-contain" : "object-cover"}`}
+        style={{ aspectRatio: `${image.width} / ${image.height}` }}
+      />
+    </div>
+    <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">
+      {image.alt}
+    </figcaption>
+  </figure>
 );
 
 // Phrases to bold in project text, e.g. "NEMA 24 motor".
@@ -188,8 +196,8 @@ const ArtworkDetail = () => {
         <div className="page-transition flex min-h-screen flex-col py-16 lg:py-24">
           {/* Hero Image - Contained with rounded corners */}
           <div className="px-6 lg:px-10">
-            <div
-              className={`relative mx-auto max-w-full overflow-hidden rounded-2xl ${artwork.cameraFinalApproachDetails ? "aspect-[3/4] lg:aspect-auto lg:h-[85vh]" : "aspect-[3/4] lg:aspect-auto lg:h-[85vh]"}`}
+            <figure
+              className="mx-auto max-w-full"
               style={{
                 width: `${artwork.detailImageWidthPercent}%`,
                 opacity: 0,
@@ -197,12 +205,17 @@ const ArtworkDetail = () => {
                 animationDelay: "0ms"
               }}
             >
-              <ImageReveal
-                src={artwork.detailImage}
-                alt={artwork.title}
-                className="h-full w-full object-cover"
-              />
-            </div>
+              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl lg:aspect-auto lg:h-[85vh]">
+                <ImageReveal
+                  src={artwork.detailImage}
+                  alt={artwork.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">
+                {artwork.title}
+              </figcaption>
+            </figure>
           </div>
 
           {/* Content Section - Full page width */}
@@ -238,7 +251,7 @@ const ArtworkDetail = () => {
                       <div className="mt-4">
                         {/* Supporting Image - Half page width, floated within the text */}
                         {artwork.supportImage && (
-                        <div
+                        <figure
                           className="float-right ml-6 mb-4 max-w-full shrink-0 overflow-hidden rounded-xl"
                           style={{
                             width: `${artwork.supportImageWidthPercent}%`,
@@ -252,10 +265,10 @@ const ArtworkDetail = () => {
                             alt={`${artwork.title} supporting view`}
                             className={`${artwork.cameraFinalApproachDetails ? "aspect-[1015/759] object-contain" : "aspect-[4/3] object-cover"} w-full`}
                           />
-                          <p className="mt-2 text-sm text-muted-foreground italic">
-                            {artwork.supportCaption}
-                          </p>
-                        </div>
+                          <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">
+                            {artwork.supportCaption || `${artwork.title} supporting view`}
+                          </figcaption>
+                        </figure>
                         )}
                         <RichText text={artwork.summary} />
                       </div>
@@ -521,18 +534,23 @@ const ArtworkDetail = () => {
                                     <RichText text={block.content} />
                                   </p>
                                 ) : (
-                                  <div
+                                  <figure
                                     key={index}
-                                    className="mx-auto max-w-full overflow-hidden rounded-xl"
+                                    className="mx-auto max-w-full"
                                     style={{ width: `${block.displayWidthPercent}%` }}
                                   >
-                                    <ImageReveal
-                                      src={block.src}
-                                      alt={block.alt}
-                                      className="w-full object-cover"
-                                      style={{ aspectRatio: `${block.width} / ${block.height}` }}
-                                    />
-                                  </div>
+                                    <div className="overflow-hidden rounded-xl">
+                                      <ImageReveal
+                                        src={block.src}
+                                        alt={block.alt}
+                                        className="w-full object-cover"
+                                        style={{ aspectRatio: `${block.width} / ${block.height}` }}
+                                      />
+                                    </div>
+                                    <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">
+                                      {block.alt}
+                                    </figcaption>
+                                  </figure>
                                 )
                               ))}
                             </div>
