@@ -281,7 +281,7 @@ const ArtworkDetail = () => {
                           {artwork.research.map((approach, index) => (
                             <li key={index}>
                               <span className="font-medium text-foreground">
-                                {approach.title}
+                                <RichText text={approach.title} />
                                 {approach.learnMorePath && (
                                   <>
                                     {" ("}
