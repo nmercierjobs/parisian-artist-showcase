@@ -82,7 +82,7 @@ const About = () => {
               <div className="mb-6 h-px w-full bg-border" />
 
               {/* Bio Text */}
-              <div className="space-y-5 text-sm leading-relaxed text-foreground/80">
+              <div className="space-y-5 text-sm leading-relaxed text-foreground">
                 <p>
                   1st paragraph
                 </p>

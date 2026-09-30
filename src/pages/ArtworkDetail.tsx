@@ -175,10 +175,10 @@ const ArtworkDetail = () => {
                                   </>
                                 )}
                               </span>
-                              <p className="-mt-4 rounded-lg bg-background px-0 py-4 text-foreground/80">
+                              <p className="-mt-4 rounded-lg bg-background px-0 py-4 text-foreground">
                                 {approach.text}
                               </p>
-                              <ul className="-mt-2 list-disc list-inside space-y-1 pl-10 text-foreground/80">
+                              <ul className="-mt-2 list-disc list-inside space-y-1 pl-10 text-foreground">
                                 {approach.subPoints.map((point, pIndex) => (
                                   <li key={pIndex}>{point}</li>
                                 ))}
@@ -413,7 +413,7 @@ const ArtworkDetail = () => {
                         </div>
                       ) : (
                         <div className="mt-4 rounded-lg bg-background p-0">
-                          <p className="text-foreground/80">{artwork.finalApproach}</p>
+                          <p className="text-foreground">{artwork.finalApproach}</p>
                         </div>
                       )
                     ) : key === "results" ? (
