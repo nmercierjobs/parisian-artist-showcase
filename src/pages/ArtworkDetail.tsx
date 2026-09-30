@@ -33,7 +33,13 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
 );
 
 // Phrases to bold in project text, e.g. "NEMA 24 motor".
-const BOLD_PHRASES = ["NEMA 24 motor", "CL86T motor driver", "36V battery", "Savitzy-Golay filter"];
+const BOLD_PHRASES = [
+  "NEMA 24 motor",
+  "CL86T motor driver",
+  "36V battery",
+  "Intel Realsense D435",
+  "Raspberry Pi 5 Compute Module",
+];
 
 // Emphasis rules. Each rule matches exactly the text to emphasize, leaving
 // every other word exactly as written.
@@ -41,6 +47,20 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "\\b(?:direction|amount)(?= you turn)", style: "bold" },
   { source: "\\brelative(?= mechanical simplicity)", style: "italic" },
   { source: "\\bsquare(?= of the ratio)", style: "italic" },
+  // Scoped so only "I call this the projected height." is bolded, leaving the
+  // other uses of "projected height" in the 3D Camera write-up untouched.
+  { source: "(?<=\\bI call this the )projected height", style: "bold" },
+  // Scoped so the hyphenated "Theil-Sen approach" is bolded while the en-dash
+  // "Theil–Sen" method mention in prose is not.
+  { source: "\\bTheil-Sen(?= approach)", style: "bold" },
+  // Estimator list labels.
+  { source: "Least Median of Squares \\(LMedS\\):", style: "bold" },
+  { source: "Least Trimmed Squares\\(LTS\\):", style: "bold" },
+  { source: "\\bTheil–Sen(?=:)", style: "bold" },
+  // Scoped to the AC-drive explanation so other uses of "average" stay regular.
+  { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
+  // Scoped to the frame-timing sentence so other uses of "any" stay regular.
+  { source: "\\bany(?= of the COM waveforms)", style: "italic" },
   ...BOLD_PHRASES.map((phrase) => ({
     source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     style: "bold" as const,
@@ -283,10 +303,16 @@ const ArtworkDetail = () => {
                               <div className="mt-4 space-y-5">
                                 {section.blocks.map((block, index) =>
                                   block.type === "text" ? (
-                                    <p key={index}>{block.content}</p>
+                                    <p key={index}>
+                                      <RichText text={block.content} />
+                                    </p>
                                   ) : block.type === "list" ? (
                                     <ul key={index} className="list-disc space-y-2 pl-6">
-                                      {block.points.map((point) => <li key={point}>{point}</li>)}
+                                      {block.points.map((point) => (
+                                        <li key={point}>
+                                          <RichText text={point} />
+                                        </li>
+                                      ))}
                                     </ul>
                                   ) : (
                                     <CaseStudyPhoto key={index} image={block.image} />
@@ -432,21 +458,25 @@ const ArtworkDetail = () => {
                                   if (link && paragraph.includes(link.text)) {
                                     const splitAt = paragraph.lastIndexOf(link.text);
                                     return (
-                                      <p key={paragraphIndex}>
-                                        {paragraph.slice(0, splitAt)}
-                                        <a
-                                          href={link.href}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="underline underline-offset-2 hover:text-muted-foreground"
-                                        >
-                                          {link.text}
-                                        </a>
-                                        {paragraph.slice(splitAt + link.text.length)}
-                                      </p>
-                                    );
-                                  }
-                                  return <p key={paragraphIndex}>{paragraph}</p>;
+                                       <p key={paragraphIndex}>
+                                         <RichText text={paragraph.slice(0, splitAt)} />
+                                         <a
+                                           href={link.href}
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           className="underline underline-offset-2 hover:text-muted-foreground"
+                                         >
+                                           {link.text}
+                                         </a>
+                                         <RichText text={paragraph.slice(splitAt + link.text.length)} />
+                                       </p>
+                                     );
+                                   }
+                                   return (
+                                     <p key={paragraphIndex}>
+                                       <RichText text={paragraph} />
+                                     </p>
+                                   );
                                 })}
                               </div>
                               {"endImage" in topic && topic.endImage && (
