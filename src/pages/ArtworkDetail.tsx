@@ -33,7 +33,13 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
 );
 
 // Phrases to bold in project text, e.g. "NEMA 24 motor".
-const BOLD_PHRASES = ["NEMA 24 motor", "CL86T motor driver", "36 V battery"];
+const BOLD_PHRASES = [
+  "NEMA 24 motor",
+  "CL86T motor driver",
+  "36 V battery",
+  "Intel Realsense D435",
+  "Raspberry Pi 5 Compute Module",
+];
 
 // Emphasis rules. Each rule matches exactly the text to emphasize, leaving
 // every other word exactly as written.
@@ -41,6 +47,12 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "\\b(?:direction|amount)(?= you turn)", style: "bold" },
   { source: "\\brelative(?= mechanical simplicity)", style: "italic" },
   { source: "\\bsquare(?= of the ratio)", style: "italic" },
+  // Scoped so only "I call this the projected height." is bolded, leaving the
+  // other uses of "projected height" in the 3D Camera write-up untouched.
+  { source: "(?<=\\bI call this the )projected height", style: "bold" },
+  // Scoped so the hyphenated "Theil-Sen approach" is bolded while the en-dash
+  // "Theil–Sen" entry in the estimator list is not.
+  { source: "\\bTheil-Sen(?= approach)", style: "bold" },
   ...BOLD_PHRASES.map((phrase) => ({
     source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     style: "bold" as const,
