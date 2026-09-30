@@ -26,7 +26,7 @@ import postProcessingFilterExample from "@/assets/post-processing-filter-example
 export interface Approach {
   title: string;
   text: string;
-  subPoints: [string, string];
+  subPoints: string[];
   learnMorePath?: string;
 }
 

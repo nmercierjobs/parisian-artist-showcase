@@ -61,6 +61,9 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
   // Scoped to the frame-timing sentence so other uses of "any" stay regular.
   { source: "\\bany(?= of the COM waveforms)", style: "italic" },
+  // Scoped to the nRF24 datasheet sentence so "Enhanced ShockBurst (ESB)" elsewhere
+  // in the write-up stays regular.
+  { source: "\\bShockBurst(?= protocol in greater detail)", style: "italic" },
   // Timestamp labels.
   { source: "Send time:", style: "bold" },
   { source: "Propagation time:", style: "bold" },
