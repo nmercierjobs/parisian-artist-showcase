@@ -1,6 +1,6 @@
 import wirelessHowItWorks1 from "/images/tx_final.png";
 import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
-import bicycleMechanicalOverview from "/images/bike_cad_components.png";
+import bicycleMechanicalOverview from "/images/reverse_bike/bike_cad.png";
 import bicycleElectricalSystem from "/images/UI.png";
 import bicycleSoftwareControlLoop from "/images/sg_gif.gif";
 import bicycleSoftwareTuning from "/images/least_squares_matrix.png";
@@ -153,13 +153,13 @@ export interface Artwork {
 export const artworks: Artwork[] = [
   {
     id: "1",
-    title: "3D Camera Distance Sensor",
-    slug: "3d-camera-distance-sensor",
+    title: "3D Camera Height Sensor",
+    slug: "3d-camera-height-sensor",
     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80",
     detailImage: `${import.meta.env.BASE_URL}artworks/chromatic-tension.jpg`,
     detailImageWidthPercent: 100,
     summary: "I built a novel sensor capable of measuring height and orientation above the ground in outdoor environments. Similar to how humans perceive depth, a 3D camera uses two different images to construct a model of its surroundings. I use one of these cameras to model the ground which can be used to calculate the sensor’s height and orientation. However, the camera cannot distinguish between the ground, rocks, twigs, and sticks. Using complex algebra, I break the model into small squares and analyze each one to determine whether it belongs to the ground. Removing these obstacles allowed me to achieve millimeter-level accuracy under real-world conditions. Through a variety of program optimizations, I was also able to achieve 90 measurements per second.",
-    problem: "How do you measure an object's height above a flat surface while in motion?",
+    problem: "How to measure an object's height and orientation above a flat surface?",
     requirements: [
       "Used over outdoor surfaces: Sidewalks, roads, etc",
       "All electronics must be mounted on the object",
@@ -322,8 +322,8 @@ export const artworks: Artwork[] = [
     ],
     research: [
       {
-        title: "Planetary gearbox - Gain",
-        text: "Replace the ring gear with a chain to allow translating the planet gear and changing the amount it rotates",
+        title: "Sprocket and chain gearbox - Gain",
+        text: "My own invention that converts a steering arc into a rotation. It operates on a similar principle to a planetary gearbox where instead the ring gear is replaced with a chain. This allows the distance to the planet gear to vary, changing the gear ratio.",
         learnMorePath: "/projects/steer-by-wire-bicycle/sprocket-chain-proof",
         subPoints: [
           "Key advantage: Continuous gain adjustments",
@@ -332,7 +332,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Expanding pulley - Gain",
-        text: "A series of cams expands or contracts the pulley segments, changing the pulley ratio",
+        text: "A series of cams expands or contracts the pulley segments, changing the pulley ratio.",
         subPoints: [
           "Key advantage: Continuous gain adjustments",
           "Main concern: Manufacturing complexity",
@@ -340,7 +340,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Variable speed belt drive - Gain",
-        text: "Two cone-shaped pulleys oriented in opposite directions connected with a belt. Shifting the belt’s position along the pulleys changes the pulley ratio",
+        text: "Two cone-shaped pulleys oriented in opposite directions connected with a belt. Shifting the belt’s position along the pulleys changes the pulley ratio.",
         subPoints: [
           "Key advantage: Continuous gain adjustments",
           "Main concern: Gain setting repeatability",
@@ -348,7 +348,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Hydraulic - Reversing",
-        text: "Use a series of solenoid valves with hydraulic actuators to reverse flow direction. Connect actuators to pinions",
+        text: "Use a series of solenoid valves with hydraulic actuators to reverse flow direction. Connect actuators to pinions.",
         subPoints: [
           "Key advantage: Instantaneous adjustment",
           "Main concern: Cost",
@@ -356,7 +356,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Idler gears - Reversing",
-        text: "Add the ability to toggle an additional idler gear into the gear train to reverse the output rotation",
+        text: "Add the ability to toggle an additional idler gear into the gear train to reverse the output rotation.",
         subPoints: [
           "Key advantage: Simplicity",
           "Main concern: Consistent gear meshing when toggling",
@@ -364,14 +364,14 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Steer-by-wire",
-        text: "Use a motor to steer the wheel based on the handlebar input measured by a rotary encoder",
+        text: "Uses a motor to steer the wheel based on the handlebar input measured by a rotary encoder.",
         subPoints: [
           "Key advantage: Combines gain and reversing subsystems",
           "Main concern: Excessive position error",
         ],
       },
     ],
-    researchConclusion: "Initially, I chose the planetary gearbox paired with the idler gears methods because the math was very unique and challenging. I am proud of the idea for its relative mechanical simplicity and it is something I really wanted to realize. But, is it the right approach? As I delved deeper analyzing the forces it became clear that many additional components would be required to guarantee sucess. And, any mistakes in the design or manufacture would be costly and potentially cause the project to exceed its budget. As a result, I transitioned to the steer-by-wire system which trades much of the mechanical complexity for software complexity.",
+    researchConclusion: "Initially, I chose the sprocket and chain method paired with the idler gears methods because the math was very unique and challenging. I am proud of the idea for its relative mechanical simplicity and it is something I really wanted to realize. But, is it the right approach? As I delved deeper analyzing the forces it became clear that many additional components would be required to guarantee sucess. And, any mistakes in the design or manufacture would be costly and potentially cause the project to exceed its budget. As a result, I transitioned to the steer-by-wire system which trades much of the mechanical complexity for software complexity.",
     finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia, these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
     bicycleFinalApproachDetails: {
       summaryPoints: [
@@ -394,7 +394,7 @@ export const artworks: Artwork[] = [
         topics: [
           { title: "Bevel Gears", text: "A high-quality set of gears was not feasible within the available budget. I therefore selected a pair with a 1.5 mm module and unity (1:1) gear ratio. Calculations indicated that the gears were undersized for the expected loading. That said, the low number of operating cycles, low cost, and ease of replacement made for an acceptable tradeoff. I consider this analysis to have been successful but, for reasons discussed later, the gears were ultimately replaced with a set using a 2 mm module. I chose to mesh the gears at the top to reduce the overall assembly height resulting in a more compact design." },
           { title: "Steering Feel", text: "Steering feel was anticipated to be very strange in the absence of the fork and wheel inertia. I wanted to incorporate force feedback with an additional stepper motor but it was too expensive. I considered approaches that would match the inertia but everything that would work looked terrible. My original designs used a simple bolt perpendicular to the head tube to vary the amount of friction on the inner sleeve. I quickly abandoned this when I realized I could just replace the headset bearings with o-rings which worked spectacularly well." },
-          { title: "Gearbox Selection", text: "Learning all I could about optimizing motion control systems led me to discover a critical component: a gearbox. For the most responsive motion control system, the inertia of the motor’s rotor should be equivalent to load inertia. In practice, having an inertia ratio be 5 or less is sufficent. How do you match the inertias? With a gearbox! Nowhere is this spectacular property taught and it’s a crime. A gearbox reduces or increases inertia by the square of the ratio. With a nema 24 motor I managed an inertia ratio of 2.4 using a 20:1 gear reduction. At the planned 1500rpm max motor operating speed this exceeded the velocity requirement at 75rpm. A nema 34 motor did not cost much more and could have achieved the ideal inertia ratio, but a cardboard mockup revealed it would be excessively large for the bike." },
+          { title: "Gearbox Selection", text: "Learning all I could about optimizing motion control systems led me to discover a critical component: a gearbox. For the most responsive motion control system, the inertia of the motor’s rotor should be equivalent to load inertia. In practice, having an inertia ratio be 5 or less is sufficient. How do you match the inertias? With a gearbox! Nowhere is this spectacular property taught and it’s a crime. A gearbox reduces or increases inertia by the square of the ratio. With a nema 24 motor I managed an inertia ratio of 2.4 using a 20:1 gear reduction. At the planned 1500rpm max motor operating speed this exceeded the velocity requirement at 75rpm. A nema 34 motor did not cost much more and could have achieved the ideal inertia ratio, but a cardboard mockup revealed it would be excessively large for the bike." },
           { title: "Failures", text: "The two mounts used to bolt the motor driver to the frame are awful. I don’t know what I was thinking. You need one hand to hold the driver, one to tighten the bolts, and another using pliers to position the nut. The only redeeming factor is that there is not much reason to remove it after install as all connectors are removeable. On the other hand, I initially assumed the angle the top frame bar makes with the original head tube is 90 degrees. It is not; I measured it to be approximately 87 degrees. Thankfully I discovered this before I welded the motor mount into position." },
           { title: "Safety", text: "The bevel gears look cool. Against my better judgment, I justified leaving them exposed on the basis that being cognizant of their danger was an acceptable risk. However, it became clear that other users were not as aware of the danger they posed, which brought me to my senses and prompted the addition of a cover." },
         ],
@@ -414,7 +414,7 @@ export const artworks: Artwork[] = [
           { title: "Driver Selection", text: "I chose the CL86T motor driver over other nema 34 models for its slightly less terrible programming software. The software exposes a wide variety of configuration parameters most of which have no description. I meticulously researched descriptions for them and managed to piece everything together with documentation provided on the original manufacturers website (leadshine). Of note, this gave me a set of PID parameters I could configure and I discovered the driver filtered inputs for 15ms which I set to zero to help achieve the input delay requirement." },
           { title: "Battery Selection", 
             text: "The upsized driver also provided an opportunity to experiment with higher drive voltages. Increasing the voltage allows current to build more quickly in the motor windings, improving acceleration. Testing with a power supply demonstrated a substantial improvement when increasing the voltage from 24 V to 36 V, while further increases yielded little additional benefit.", 
-            additionalParagraphs: ["Higher voltage also helps maintain torque at high speeds. With the selected gearbox, the available torque at maximum speed was approximately twice the required torque, so additional high-speed torque was unnecessary. Based on these findings, a 36 V battery was selected. Specifically, a tool battery was chosen for its cost-effectiveness and the ability to extend runtime by swapping batteries."] },
+            additionalParagraphs: ["Higher voltage also helps maintain torque at high speeds. With the selected gearbox, the available torque at maximum speed was approximately twice the required torque, so additional high-speed torque was unnecessary. Based on these findings, a 36V battery was selected. Specifically, a tool battery was chosen for its cost-effectiveness and the ability to extend runtime by swapping batteries."] },
           {
             title: "User Interface",
             text: "All components were selected based on cost, with the exception of the LCD, which was chosen for its flexibility in displaying information. The functionality of each component is described below:",
@@ -448,7 +448,7 @@ export const artworks: Artwork[] = [
             "My LOESS implementation was slightly faster",
             "LOESS is easier to implement",
           ],
-          textBeforeThirdImage: "With these findings, I ultimately preferred the LOESS approach but I later discovered it requires double precision which Arduino does not support. Thus, the SG filter was used in the final program. The following graphs depict the results when measuring the maximum expected user steering velocity and acceleration.",
+          textBeforeThirdImage: "With these findings, I ultimately preferred the LOESS approach but I later discovered it requires double precision which Arduino does not support. Thus, the Savitzy-Golay filter was used in the final program. The following graphs depict the results when measuring the maximum expected user steering velocity and acceleration.",
           thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture", displayWidthPercent: 100 },
           closingText: "A drawback of this filter is that it introduces some latency due to sampling at the midpoint. The sampling point can be changed to the most recent data point but if a sudden input change occurs the qunatities will be overestimated. Configuring the sampling spacing and number of points was tricky. The least latency possible was desired but acceleration required a sizable window to capture enough detail. After much trial and error a sampling interval of 2.8ms was selected with a 19 point window resulting in a latency of 12ms; far below the requirement.",
         },

@@ -33,7 +33,7 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
 );
 
 // Phrases to bold in project text, e.g. "NEMA 24 motor".
-const BOLD_PHRASES = ["NEMA 24 motor", "CL86T motor driver", "36 V battery"];
+const BOLD_PHRASES = ["NEMA 24 motor", "CL86T motor driver", "36V battery", "Savitzy-Golay filter"];
 
 // Emphasis rules. Each rule matches exactly the text to emphasize, leaving
 // every other word exactly as written.

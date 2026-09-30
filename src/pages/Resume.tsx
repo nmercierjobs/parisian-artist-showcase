@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 
 const projects = [
   {
-    title: "3D Camera Distance Sensor",
+    title: "3D Camera Height Sensor",
     meta: "2025 · C · RPi5",
     details: [
       "Achieved distance measurements to a semi-planar surface with an angle of incidence up to 40° at 90 Hz with millimeter accuracy",
