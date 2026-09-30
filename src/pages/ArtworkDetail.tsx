@@ -32,9 +32,9 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
   </div>
 );
 
-// Words to emphasize in project intros, e.g. "the direction you turn".
+// Words to emphasize in project text, e.g. "the direction you turn".
 const EMPHASIS_PATTERN =
-  /\b(direction|amount)(?= you turn)|\brelative(?= mechanical simplicity)/g;
+  /\b(direction|amount)(?= you turn)|\brelative(?= mechanical simplicity)|\bsquare(?= of the ratio)/g;
 
 // Bolds the emphasized words and italicizes "relative", leaving every other
 // word exactly as written.
@@ -322,7 +322,9 @@ const ArtworkDetail = () => {
                               {artwork.bicycleFinalApproachDetails.mechanical.topics.map((topic) => (
                                 <div key={topic.title}>
                                   <h4 className="font-semibold text-foreground">{topic.title}</h4>
-                                  <p className="mt-2">{topic.text}</p>
+                                  <p className="mt-2">
+                                    <RichText text={topic.text} />
+                                  </p>
                                 </div>
                               ))}
                             </div>
