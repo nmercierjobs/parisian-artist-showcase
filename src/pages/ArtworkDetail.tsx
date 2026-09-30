@@ -62,7 +62,7 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "Least Trimmed Squares \\(LTS\\):", style: "bold" },
   { source: "\\bTheil–Sen:", style: "bold" },
   // Scoped to the AC-drive explanation so other uses of "average" stay regular.
-  { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
+  { source: "\\baverage(?=\\s+[Dd][Cc] voltage of zero)", style: "italic" },
   // Scoped to the frame-timing sentence so other uses of "any" stay regular.
   { source: "\\bany(?= of the COM waveforms)", style: "italic" },
   // Scoped to the nRF24 datasheet sentence so "Enhanced ShockBurst (ESB)" elsewhere
