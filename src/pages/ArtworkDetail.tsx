@@ -280,7 +280,7 @@ const ArtworkDetail = () => {
                         <ol className="mt-4 list-decimal list-inside space-y-4">
                           {artwork.research.map((approach, index) => (
                             <li key={index}>
-                              <span className="font-medium text-foreground">
+                              <span className="font-bold text-foreground">
                                 <RichText text={approach.title} />
                                 {approach.learnMorePath && (
                                   <>
