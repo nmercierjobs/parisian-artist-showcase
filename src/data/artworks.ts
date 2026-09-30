@@ -138,6 +138,7 @@ export interface Artwork {
   problem: string;
   requirements: string[];
   research: Approach[];
+  researchIntro?: string[];
   researchConclusion: string | string[];
   finalApproach: string;
   finalApproachDetails?: FinalApproachDetails;
@@ -607,9 +608,8 @@ export const artworks: Artwork[] = [
       "Automatic synchronization on power up",
       "Correction events every 1 minute",
     ],
+    researchIntro: ["TODO", "TODO", "TODO", "TODO"],
     research: [
-      {
-        title: "Reference Broadcast Synchronization (RBS)",
         text: "Uses an additional transmitter with two receivers to eliminate send time variability. The transmitter emits a signal that both receivers timestamp and then exchange to determine one another’s offset",
         subPoints: [
           "Eliminates sender-side uncertainty by using a shared reference broadcast",
