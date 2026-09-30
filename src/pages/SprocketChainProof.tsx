@@ -37,25 +37,31 @@ const ProofImage = ({
   alt: string;
   widthPercent: number;
 }) => (
-  <div className="mx-auto mt-8 overflow-hidden rounded-xl" style={{ width: `${widthPercent}%` }}>
-    <ImageReveal
-      src={src}
-      alt={alt}
-      className="h-full w-full object-cover"
-      style={{ aspectRatio: `${width} / ${height}` }}
-    />
-  </div>
+  <figure className="mx-auto mt-8" style={{ width: `${widthPercent}%` }}>
+    <div className="overflow-hidden rounded-xl">
+      <ImageReveal
+        src={src}
+        alt={alt}
+        className="h-full w-full object-cover"
+        style={{ aspectRatio: `${width} / ${height}` }}
+      />
+    </div>
+    <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">{alt}</figcaption>
+  </figure>
 );
 
 const EquationImage = ({ src, alt, widthPercent }: { src: string; alt: string; widthPercent: number }) => (
-  <div className="my-8 flex justify-center overflow-x-auto">
-    <img
-      src={src}
-      alt={alt}
-      style={{ width: `${widthPercent}%` }}
-      className="h-auto rounded-lg"
-    />
-  </div>
+  <figure className="my-8 text-center">
+    <div className="flex justify-center overflow-x-auto">
+      <img
+        src={src}
+        alt={alt}
+        style={{ width: `${widthPercent}%` }}
+        className="h-auto rounded-lg"
+      />
+    </div>
+    <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">{alt}</figcaption>
+  </figure>
 );
 
 const SprocketChainProof = () => {
