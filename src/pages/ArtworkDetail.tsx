@@ -34,7 +34,6 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
 
 // Phrases to bold in project text, e.g. "NEMA 24 motor".
 const BOLD_PHRASES = [
-  "NEMA 24 motor",
   "CL86T motor driver",
   "36 V battery",
   "Intel RealSense D435",

@@ -404,7 +404,7 @@ export const artworks: Artwork[] = [
         topics: [
           { 
             title: "Motor Selection", 
-            text: "Driven by a desire to maximize motor performance, I wanted to understand every available avenue for improvement. I had already selected a NEMA 24 motor that met the torque requirement, but I wanted a plan for increasing performance if the initial design proved insufficient. This led me down a rabbit hole of textbooks and whitepapers covering thermal optimization, current rise time, closed-loop operation, and stepping modes.",
+            text: "Driven by a desire to maximize motor performance, I wanted to understand every available avenue for improvement. I had already selected a **NEMA 24 motor** that met the torque requirement, but I wanted a plan for increasing performance if the initial design proved insufficient. This led me down a rabbit hole of textbooks and whitepapers covering thermal optimization, current rise time, closed-loop operation, and stepping modes.",
             additionalParagraphs: 
             [
               "At its core, a motor’s performance is fundamentally limited by its temperature and magnetic saturation. I found reports of magnetic saturation occurring in stepper motors at approximately twice the rated current. Cooling at twice the current would not be feasible with the budget but I reasoned the lower duty cycle of this application would withstand some additional current without modification. Thus, I upsized the motor driver to a NEMA 34 which was capable of supplying additional current at a negligible upcharge.",
