@@ -23,7 +23,7 @@ const MobileHeader = () => {
             Noah Mercier
           </h1>
           <p className="text-xs text-muted-foreground">
-            Jack Of All Trades Engineer
+            Jack of All Trades Engineer
           </p>
         </NavLink>
 

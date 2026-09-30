@@ -74,7 +74,7 @@ const About = () => {
                   Hello, I'm Noah
                 </h1>
                 <p className="mt-1 text-base text-muted-foreground">
-                  Jack Of All Trades Engineer
+                  Jack of All Trades Engineer
                 </p>
               </div>
 

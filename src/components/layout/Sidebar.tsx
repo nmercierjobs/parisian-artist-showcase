@@ -28,7 +28,7 @@ const Sidebar = () => {
             Noah Mercier
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Jack Of All Trades Engineer
+            Jack of All Trades Engineer
           </p>
         </NavLink>
       </div>

@@ -36,8 +36,8 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
 const BOLD_PHRASES = [
   "NEMA 24 motor",
   "CL86T motor driver",
-  "36V battery",
-  "Intel Realsense D435",
+  "36 V battery",
+  "Intel RealSense D435",
   "Raspberry Pi 5 Compute Module",
   // 3D Camera approach labels under "Approaches Considered".
   "Inertial measuring unit (IMU)",
@@ -60,7 +60,7 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   { source: "\\bTheil-Sen(?= approach)", style: "bold" },
   // Estimator list labels.
   { source: "Least Median of Squares \\(LMedS\\):", style: "bold" },
-  { source: "Least Trimmed Squares\\(LTS\\):", style: "bold" },
+  { source: "Least Trimmed Squares \\(LTS\\):", style: "bold" },
   { source: "\\bTheil–Sen:", style: "bold" },
   // Scoped to the AC-drive explanation so other uses of "average" stay regular.
   { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
