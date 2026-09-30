@@ -31,6 +31,21 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
   </div>
 );
 
+// Renders a string, turning **double asterisk** segments into bold text.
+const RichText = ({ text }: { text: string }) => (
+  <>
+    {text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
+      part.startsWith("**") && part.endsWith("**") ? (
+        <strong key={index} className="font-semibold">
+          {part.slice(2, -2)}
+        </strong>
+      ) : (
+        <span key={index}>{part}</span>
+      )
+    )}
+  </>
+);
+
 const ArtworkDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -70,7 +85,7 @@ const ArtworkDetail = () => {
         <title>{artwork.title} — Noah Mercier</title>
         <meta
           name="description"
-          content={`${artwork.title} by Émile Laurent. ${artwork.summary.substring(0, 150)}...`}
+          content={`${artwork.title} by Émile Laurent. ${artwork.summary.replace(/\*\*/g, "").substring(0, 150)}...`}
         />
       </Helmet>
 
@@ -147,7 +162,7 @@ const ArtworkDetail = () => {
                           </p>
                         </div>
                         )}
-                        {artwork.summary}
+                        <RichText text={artwork.summary} />
                       </div>
                     ) : key === "requirements" ? (
                       <ul className="mt-4 list-disc list-inside space-y-2">

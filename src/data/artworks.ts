@@ -310,7 +310,8 @@ export const artworks: Artwork[] = [
     image: "/parisian-artist-showcase/images/reverse_black.gif",
     detailImage: `${import.meta.env.BASE_URL}artworks/equilibre-instable.jpg`,
     detailImageWidthPercent: 100,
-    summary: "TODO",
+    summary:
+      "Steering can be changed in just two ways: the **direction** you turn and the **amount** you turn.",
     problem: "How to make a bicycle wheel move twice as much as the handlebars and in the opposite direction?",
     requirements: [
       "Steering gain of 1 and 2",
