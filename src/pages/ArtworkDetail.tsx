@@ -33,9 +33,11 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
 );
 
 // Words to emphasize in project intros, e.g. "the direction you turn".
-const EMPHASIS_PATTERN = /\b(direction|amount)(?= you turn)/g;
+const EMPHASIS_PATTERN =
+  /\b(direction|amount)(?= you turn)|\brelative(?= mechanical simplicity)/g;
 
-// Bolds the emphasized words, leaving every other word exactly as written.
+// Bolds the emphasized words and italicizes "relative", leaving every other
+// word exactly as written.
 const EmphasizedText = ({ text }: { text: string }) => {
   const nodes: ReactNode[] = [];
   let cursor = 0;
@@ -45,9 +47,13 @@ const EmphasizedText = ({ text }: { text: string }) => {
       nodes.push(<span key={`plain-${cursor}`}>{text.slice(cursor, start)}</span>);
     }
     nodes.push(
-      <strong key={`bold-${start}`} className="font-semibold">
-        {match[0]}
-      </strong>
+      match[1] ? (
+        <strong key={`bold-${start}`} className="font-semibold">
+          {match[0]}
+        </strong>
+      ) : (
+        <em key={`italic-${start}`}>{match[0]}</em>
+      )
     );
     cursor = start + match[0].length;
   }
@@ -57,14 +63,17 @@ const EmphasizedText = ({ text }: { text: string }) => {
   return <>{nodes}</>;
 };
 
-// Renders a string, turning **double asterisk** segments into bold text.
+// Renders a string, turning **double asterisk** segments into bold text and
+// *single asterisk* segments into italics.
 const RichText = ({ text }: { text: string }) => (
   <>
-    {text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
+    {text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).map((part, index) =>
       part.startsWith("**") && part.endsWith("**") ? (
         <strong key={index} className="font-semibold">
           {part.slice(2, -2)}
         </strong>
+      ) : part.startsWith("*") && part.endsWith("*") ? (
+        <em key={index}>{part.slice(1, -1)}</em>
       ) : (
         <EmphasizedText key={index} text={part} />
       )
@@ -243,7 +252,7 @@ const ArtworkDetail = () => {
                         <div className="mt-4 space-y-5">
                           {(Array.isArray(artwork.researchConclusion) ? artwork.researchConclusion : [artwork.researchConclusion]).map((paragraph, index) => (
                             <p key={index} className="rounded-lg bg-background px-0 text-foreground">
-                              {paragraph}
+                              <RichText text={paragraph} />
                             </p>
                           ))}
                         </div>
