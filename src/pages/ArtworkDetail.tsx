@@ -287,7 +287,7 @@ const ArtworkDetail = () => {
                                     {" ("}
                                     <Link
                                       to={approach.learnMorePath}
-                                      className="underline decoration-foreground/40 underline-offset-4 transition-colors hover:text-muted-foreground"
+                                      className="text-[#0000EE] underline decoration-[#0000EE] underline-offset-2 hover:text-[#551A8B] hover:decoration-[#551A8B]"
                                     >
                                       Learn more
                                     </Link>
