@@ -260,6 +260,15 @@ const ArtworkDetail = () => {
                       </ul>
                     ) : key === "research" ? (
                       <>
+                        {artwork.researchIntro && (
+                          <div className="mt-4 space-y-5">
+                            {artwork.researchIntro.map((paragraph, index) => (
+                              <p key={index} className="rounded-lg bg-background px-0 text-foreground">
+                                <RichText text={paragraph} />
+                              </p>
+                            ))}
+                          </div>
+                        )}
                         <ol className="mt-4 list-decimal list-inside space-y-4">
                           {artwork.research.map((approach, index) => (
                             <li key={index}>

@@ -138,6 +138,7 @@ export interface Artwork {
   problem: string;
   requirements: string[];
   research: Approach[];
+  researchIntro?: string[];
   researchConclusion: string | string[];
   finalApproach: string;
   finalApproachDetails?: FinalApproachDetails;
@@ -607,6 +608,7 @@ export const artworks: Artwork[] = [
       "Automatic synchronization on power up",
       "Correction events every 1 minute",
     ],
+    researchIntro: ["TODO", "TODO", "TODO", "TODO"],
     research: [
       {
         title: "Reference Broadcast Synchronization (RBS)",
