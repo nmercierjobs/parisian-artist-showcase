@@ -295,7 +295,9 @@ const ArtworkDetail = () => {
                               <div className="mt-4 space-y-5">
                                 {section.blocks.map((block, index) =>
                                   block.type === "text" ? (
-                                    <p key={index}>{block.content}</p>
+                                    <p key={index}>
+                                      <RichText text={block.content} />
+                                    </p>
                                   ) : block.type === "list" ? (
                                     <ul key={index} className="list-disc space-y-2 pl-6">
                                       {block.points.map((point) => <li key={point}>{point}</li>)}
