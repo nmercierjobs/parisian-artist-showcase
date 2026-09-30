@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -31,6 +32,31 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
   </div>
 );
 
+// Words to emphasize in project intros, e.g. "the direction you turn".
+const EMPHASIS_PATTERN = /\b(direction|amount)(?= you turn)/g;
+
+// Bolds the emphasized words, leaving every other word exactly as written.
+const EmphasizedText = ({ text }: { text: string }) => {
+  const nodes: ReactNode[] = [];
+  let cursor = 0;
+  for (const match of text.matchAll(EMPHASIS_PATTERN)) {
+    const start = match.index ?? 0;
+    if (start > cursor) {
+      nodes.push(<span key={`plain-${cursor}`}>{text.slice(cursor, start)}</span>);
+    }
+    nodes.push(
+      <strong key={`bold-${start}`} className="font-semibold">
+        {match[0]}
+      </strong>
+    );
+    cursor = start + match[0].length;
+  }
+  if (cursor < text.length) {
+    nodes.push(<span key={`plain-${cursor}`}>{text.slice(cursor)}</span>);
+  }
+  return <>{nodes}</>;
+};
+
 // Renders a string, turning **double asterisk** segments into bold text.
 const RichText = ({ text }: { text: string }) => (
   <>
@@ -40,7 +66,7 @@ const RichText = ({ text }: { text: string }) => (
           {part.slice(2, -2)}
         </strong>
       ) : (
-        <span key={index}>{part}</span>
+        <EmphasizedText key={index} text={part} />
       )
     )}
   </>
