@@ -1,4 +1,3 @@
-import supportSteerBike from "/images/bike_cad_4_3.png";
 import wirelessHowItWorks1 from "/images/tx_final.png";
 import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
 import bicycleMechanicalOverview from "/images/bike_cad_components.png";
@@ -311,9 +310,6 @@ export const artworks: Artwork[] = [
     image: "/parisian-artist-showcase/images/reverse_black.gif",
     detailImage: `${import.meta.env.BASE_URL}artworks/equilibre-instable.jpg`,
     detailImageWidthPercent: 100,
-    supportImage: supportSteerBike,
-    supportImageWidthPercent: 50,
-    supportCaption: "Handlebar torque sensor and fork actuator mounted on the test frame.",
     summary: "TODO",
     problem: "How to make a bicycle wheel move twice as much as the handlebars and in the opposite direction?",
     requirements: [

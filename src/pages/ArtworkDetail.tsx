@@ -111,17 +111,19 @@ const ArtworkDetail = () => {
               <div className="mt-10 space-y-10 text-base leading-relaxed text-foreground lg:text-lg lg:leading-loose">
                 {sections.map(({ key, label }) => (
                   <section key={key} id={key}>
-                    <h2 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
-                      {key === "finalApproach"
-                        ? artwork.cameraFinalApproachDetails
-                          ? "Chosen approach: 3D Camera"
-                          : artwork.torqueSensorFinalApproachDetails
-                            ? "Chosen Approach: Decoded Torque Adapter"
-                            : artwork.finalApproachDetails
-                              ? "Chosen Approach: TPSN"
-                              : label
-                        : label}
-                    </h2>
+                    {key !== "summary" && (
+                      <h2 className="font-display text-2xl font-medium tracking-tight text-foreground lg:text-3xl">
+                        {key === "finalApproach"
+                          ? artwork.cameraFinalApproachDetails
+                            ? "Chosen approach: 3D Camera"
+                            : artwork.torqueSensorFinalApproachDetails
+                              ? "Chosen Approach: Decoded Torque Adapter"
+                              : artwork.finalApproachDetails
+                                ? "Chosen Approach: TPSN"
+                                : label
+                          : label}
+                      </h2>
+                    )}
                     {key === "summary" ? (
                       <div className="mt-4">
                         {/* Supporting Image - Half page width, floated within the text */}
