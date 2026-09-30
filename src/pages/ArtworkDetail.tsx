@@ -51,8 +51,12 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   // other uses of "projected height" in the 3D Camera write-up untouched.
   { source: "(?<=\\bI call this the )projected height", style: "bold" },
   // Scoped so the hyphenated "Theil-Sen approach" is bolded while the en-dash
-  // "Theil–Sen" entry in the estimator list is not.
+  // "Theil–Sen" method mention in prose is not.
   { source: "\\bTheil-Sen(?= approach)", style: "bold" },
+  // Estimator list labels.
+  { source: "Least Median of Squares \\(LMedS\\):", style: "bold" },
+  { source: "Least Trimmed Squares\\(LTS\\):", style: "bold" },
+  { source: "\\bTheil–Sen(?=:)", style: "bold" },
   ...BOLD_PHRASES.map((phrase) => ({
     source: phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
     style: "bold" as const,
@@ -300,7 +304,11 @@ const ArtworkDetail = () => {
                                     </p>
                                   ) : block.type === "list" ? (
                                     <ul key={index} className="list-disc space-y-2 pl-6">
-                                      {block.points.map((point) => <li key={point}>{point}</li>)}
+                                      {block.points.map((point) => (
+                                        <li key={point}>
+                                          <RichText text={point} />
+                                        </li>
+                                      ))}
                                     </ul>
                                   ) : (
                                     <CaseStudyPhoto key={index} image={block.image} />
