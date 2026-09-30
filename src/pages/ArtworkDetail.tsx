@@ -39,6 +39,11 @@ const BOLD_PHRASES = [
   "36V battery",
   "Intel Realsense D435",
   "Raspberry Pi 5 Compute Module",
+  // 3D Camera approach labels under "Approaches Considered".
+  "Inertial measuring unit (IMU)",
+  "Simultaneous localization and mapping (SLAM)",
+  "Real time kinematic GPS",
+  "Distance sensor",
 ];
 
 // Emphasis rules. Each rule matches exactly the text to emphasize, leaving
