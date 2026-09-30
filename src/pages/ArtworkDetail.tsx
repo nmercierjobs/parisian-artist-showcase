@@ -72,6 +72,19 @@ const RichText = ({ text }: { text: string }) => (
   </>
 );
 
+// Renders a numbered-list item such as "Encoder Shaft: press fit…" with its
+// leading label (everything up to the first colon) bolded.
+const LabeledStep = ({ text }: { text: string }) => {
+  const separator = text.indexOf(": ");
+  if (separator === -1) return <RichText text={text} />;
+  return (
+    <>
+      <strong className="font-semibold">{text.slice(0, separator + 1)}</strong>
+      <RichText text={text.slice(separator + 1)} />
+    </>
+  );
+};
+
 const ArtworkDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -290,7 +303,9 @@ const ArtworkDetail = () => {
                             <p className="mt-4">{artwork.bicycleFinalApproachDetails.mechanical.intro}</p>
                             <ol className="mt-4 list-decimal space-y-2 pl-6">
                               {artwork.bicycleFinalApproachDetails.mechanical.steps.map((step) => (
-                                <li key={step}>{step}</li>
+                                <li key={step}>
+                                  <LabeledStep text={step} />
+                                </li>
                               ))}
                             </ol>
                             <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.mechanical.image} className="mt-6" />
