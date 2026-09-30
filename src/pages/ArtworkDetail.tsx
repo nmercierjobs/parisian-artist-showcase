@@ -56,7 +56,7 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   // Estimator list labels.
   { source: "Least Median of Squares \\(LMedS\\):", style: "bold" },
   { source: "Least Trimmed Squares\\(LTS\\):", style: "bold" },
-  { source: "\\bTheil–Sen(?=:)", style: "bold" },
+  { source: "\\bTheil–Sen:", style: "bold" },
   // Scoped to the AC-drive explanation so other uses of "average" stay regular.
   { source: "\\baverage(?= dc voltage of zero)", style: "italic" },
   // Scoped to the frame-timing sentence so other uses of "any" stay regular.
