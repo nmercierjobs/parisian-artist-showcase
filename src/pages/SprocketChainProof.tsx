@@ -13,7 +13,7 @@ import equation3 from "/images/reverse_bike/eqn3.png";
 // Adjust these values to scale the two diagrams independently.
 const DIAGRAM_WIDTH_PERCENT = {
   mechanism: 80,
-  proof: 100,
+  proof: 90,
 };
 
 // Width of each equation image as a percentage of the article column.
@@ -95,7 +95,7 @@ const SprocketChainProof = () => {
                   src={mechanismPlaceholder}
                   width={745}
                   height={821}
-                  alt="Placeholder for the sprocket and chain steering mechanism diagram"
+                  alt="Mechanical approach to continuously variable bicycle steering gain"
                   widthPercent={DIAGRAM_WIDTH_PERCENT.mechanism}
                 />
               </section>
@@ -109,7 +109,7 @@ const SprocketChainProof = () => {
                   src={proofPlaceholder}
                   width={1607}
                   height={1599}
-                  alt="Placeholder for the sprocket dimension proof diagram"
+                  alt="Superposition of rotations created by steering and rolling of the planet sprocket"
                   widthPercent={DIAGRAM_WIDTH_PERCENT.proof}
                 />
 
@@ -123,11 +123,11 @@ const SprocketChainProof = () => {
                 <p className="mt-4">
                   The desired quantity is the ratio of the <em>net</em> rotation of the sun compared to the rotation of the arm. The fundamental property linking the rotations is the equivalence of the arc lengths. The following relationship expresses the net rotation of the sun in terms of the two arc lengths.
                 </p>
-                <EquationImage src={equation1} alt="Equation: (ω − δ)R = a − b" widthPercent={EQUATION_WIDTH_PERCENT.netRotation} />
+                <EquationImage src={equation1} alt="" widthPercent={EQUATION_WIDTH_PERCENT.netRotation} />
                 <p>The arc length a is defined by the radius of the internal sprocket and the angle of the arm. Arc length b is the result of the effective rotation of the planet by the arm.</p>
-                <EquationImage src={equation2} alt="Equation: a = α(x + r), b = αr" widthPercent={EQUATION_WIDTH_PERCENT.arcLengths} />
+                <EquationImage src={equation2} alt="" widthPercent={EQUATION_WIDTH_PERCENT.arcLengths} />
                 <p>Combining these relationships and simplifying gives the following conclusion. The negative sign indicates that the output is in the opposite direction of the arm.</p>
-                <EquationImage src={equation3} alt="Equation: Gain = (ω − δ) / α = −x / R" widthPercent={EQUATION_WIDTH_PERCENT.gain} />
+                <EquationImage src={equation3} alt="" widthPercent={EQUATION_WIDTH_PERCENT.gain} />
                 <p>
                   Interestingly, a gain of 1 is not possible. To fix this, a gear reduction after the sun gear would be needed. Another concern is whether the mechanism is too long. Using #25 chains, a 10-tooth planet sprocket, and a 25-tooth sun sprocket, the total length would be approximately 3.5 inches. Very reasonable.
                 </p>

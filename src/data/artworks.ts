@@ -1,25 +1,27 @@
-import wirelessHowItWorks1 from "/images/tx_final.png";
-import wirelessHowItWorks2 from "/images/mcu_sync_simplified.png";
-import bicycleMechanicalOverview from "/images/reverse_bike/bike_cad.png";
-import bicycleElectricalSystem from "/images/UI.png";
-import bicycleSoftwareControlLoop from "/images/sg_gif.gif";
-import bicycleSoftwareTuning from "/images/least_squares_matrix.png";
-import bicycleSoftwareValidation from "/images/combined_graphs_no_header.png";
-import bicycleSoftwareIntegration from "/images/program_flowchart.png";
-import bicycleChallenges from "/images/shaft_angle_error.png";
-import usbTorqueSensorAssembly from "/images/decoded_stylized.png";
-import usbTorqueSensorValidation from "/images/COM0_waveform.png";
-
-import torqueSegments from "@/assets/torque-segments.jpg";
-import usbTorqueResultsPlaceholder from "/images/torque_adapter/bill_of_materials.png";
-import wirelessAccuracyPlaceholder from "@/assets/wireless-accuracy-placeholder.png";
-
 import cameraRegionOfInterest from "/images/3d_camera/ROI.png";
 import cameraSubdivision from "/images/3d_camera/normals_4_3.png";
 import cameraNormalEstimation from "/images/3d_camera/summed_area_table.png";
 import cameraNormalField from "/images/3d_camera/covariance_matrix_stylized.png";
 import cameraFilteredCloud from "/images/3d_camera/kurvature.png";
 import cameraNormalFilter from "/images/3d_camera/projected_height.png";
+
+import bicycleMechanicalOverview from "/images/reverse_bike/bike_cad.png";
+import bicycleSoftwareTuning from "/images/reverse_bike/least_squares_matrix.png";
+import bicycleSoftwareValidation from "/images/reverse_bike/combined_graphs_no_header.png";
+import bicycleSoftwareIntegration from "/images/reverse_bike/program_flowchart.png";
+import bicycleSoftwareControlLoop from "/images/reverse_bike/sg_gif.gif";
+import bicycleChallenges from "/images/reverse_bike/shaft_angle_error.png";
+import bicycleElectricalSystem from "/images/reverse_bike/UI.png";
+
+import usbTorqueSensorAssembly from "/images/torque_adapter/decoded_stylized.png";
+import usbTorqueSensorValidation from "/images/torque_adapter/COM0_waveform.png";
+import usbTorqueResultsPlaceholder from "/images/torque_adapter/bill_of_materials.png";
+
+import wirelessHowItWorks1 from "/images/time_sync/tx_final.png";
+import wirelessHowItWorks2 from "/images/time_sync/mcu_sync_simplified.png";
+
+import torqueSegments from "@/assets/torque-segments.jpg";
+import wirelessAccuracyPlaceholder from "@/assets/wireless-accuracy-placeholder.png";
 import postProcessingFilterExample from "@/assets/post-processing-filter-example.png";
 
 
@@ -223,7 +225,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The first part of the program selects a region of interest (ROI) in the image to the desired real-world size. Implementing this proved challenging because 3D cameras operate according to the pinhole camera principle in which the point-to-point distance increases with depth. Consequently, each quadrant of the ROI can consist of a different number of points." },
           { type: "text", content: "To address this, I implemented a function that iterates upward, downward, leftward, and rightward from the center row and column to determine the pixel dimensions of the ROI for each frame. To improve robustness, the function iterates along the entire row or column with the median distance used. My application has a maximum operating distance of 1.5 meters which provides a lower bound on the ROI’s dimensions. I leveraged this constraint to optimize the iteration process by initializing each search at this minimum dimension rather than starting from the center. This reduces the number of iterations required, helping meet the 90 Hz sampling requirement." },
-          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Schematic of a camera depth frame with a selected ground region of interest", displayWidthPercent: 40, framePaddingPx: 8 } },
+          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Example of iteration procedure used to determine the dimensions, in pixels, of the desired region of interest", displayWidthPercent: 40, framePaddingPx: 8 } },
         ],
       },
       {
@@ -231,7 +233,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The goal of breaking the surface into smaller chunks is to identify and remove undesirable regions. For example, if a branch or leaf is present in the image, the corresponding regions can be excluded so they do not influence the plane fit. The subregion size essentially determines the resolution at which surface variation can be captured. Smaller regions capture finer details but too small and the measurement noise becomes problematic. In practice, I found that a 7×7 pixel subregion provided a good tradeoff for this application." },
           { type: "text", content: "There is also a question of step size, or how far the subregion moves between measurements. Initially, I subdivided the surface and shifted the region by the entire width for each subsequent measurement. However, shifting the region by only 1 pixel proved far more effective at capturing surface detail, since adjacent regions overlap and provide much denser coverage of the surface." },
-          { type: "image", image: { src: cameraSubdivision, width: 1015, height: 759, alt: "Diagram of depth image subdivided into overlapping subregions", displayWidthPercent: 80 } },
+          { type: "image", image: { src: cameraSubdivision, width: 1015, height: 759, alt: "Normal vectors applied to 7x7 pixel subregions over a U-shaped region of interest", displayWidthPercent: 80 } },
         ],
       },
       {
@@ -239,18 +241,18 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "I chose the principal component analysis (PCA) plane-fit approach to determine the normal vectors. I initially considered more robust methods, however, they were not feasible given the required sampling rate and I did not want to pursue approaches that relied on randomization. PCA provides a least-squares fit by calculating the orthogonal eigenvectors of the covariance matrix. In other words, it identifies the directions of variance with the direction of least variance used as the normal vector to the fitted plane." },
           { type: "text", content: "A critical optimization I incorporated to achieve the 90 Hz requirement was the use of summed-area tables to compute the normal vectors for each subregion. To implement this, an array of cumulative sums is precomputed where each element contains the sum of all values above and to the left of it. Example below." },
-          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Diagram of local plane fitting and normal vectors on depth samples", displayWidthPercent: 50 } },
+          { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Construction of a summed-area table example", displayWidthPercent: 50 } },
           { type: "text", content: "Using a summed-area table, the sum of any rectangular region — or in this case square — can be computed using only addition and subtraction of the four corner elements. This eliminates the need to iterate over every pixel within the region each time a sum is required. In my implementation, I created nine separate summed-area tables to substantially accelerate the computation of the covariance matrices for the subregions. The summation breakdown of a covariance matrix is shown below. When processing the entire depth image (848 × 480 pixels), this optimization reduces the number of required operations by approximately 10× when using 7 × 7 pixel subregions." },
-          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Point-cloud visualization of computed surface normal vectors", displayWidthPercent: 70 } },
+          { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Covariance matrix broken down into summations for optimization of subregion computations with summed-area tables", displayWidthPercent: 70 } },
         ],
       },
       {
         title: "Filtering",
         blocks: [
           { type: "text", content: "With the directional variances already calculated, filtering non-planar subregions is quite straight-forward. If the proportion of variance in the direction of the normal vector is small compared to the total variance, the region can be considered planar. In other words, the fraction of the smallest eigenvalue to the sum of all eigenvalues." },
-          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Illustration comparing raw depth samples with filtered ground candidates", displayWidthPercent: 40 } },
+          { type: "image", image: { src: cameraFilteredCloud, width: 2172, height: 724, alt: "Equation used to determine if a subregion is planar", displayWidthPercent: 40 } },
           { type: "text", content: "There is also a need to distinguish regions that are planar but not coplanar with the majority plane. To determine the plane a subregion lies on I use the magnitude of the camera-to-normal vector projected onto the normal of the subregion, as shown below. I call this the projected height. This approach is only valid when applied to a set of normal vectors orientated in the same direction." },
-          { type: "image", image: { src: cameraNormalFilter, width: 752, height: 361, alt: "Diagram showing aligned surface normals retained and inconsistent normals rejected", displayWidthPercent: 80 } },
+          { type: "image", image: { src: cameraNormalFilter, width: 752, height: 361, alt: "Projection of the camera-to-normal vector onto the normal vector used to determine subregion coplanarity", displayWidthPercent: 80 } },
         ],
       },
       {
@@ -285,7 +287,7 @@ export const artworks: Artwork[] = [
           { 
             title: "Post-Processing Filters",
             text: "The RealSense API exposes a number of filters that can be applied to the point cloud. Useful to me were the spatial filtering and decimation. The spatial filter applies an exponential moving average to the entire point cloud while preserving edges. A modest performance hit to implement, but worth the depth noise attenuation. On the other hand, decimation averages the depth values in a 2x2 to 8x8 region to reduce the overall number of points.",
-            imageBeforeAdditionalParagraphs: { src: postProcessingFilterExample, width: 600, height: 500, alt: "add filter example", displayWidthPercent: 60 },
+            imageBeforeAdditionalParagraphs: { src: postProcessingFilterExample, width: 600, height: 500, alt: "Point cloud example without (left) and with (right) spatial filter and decimation", displayWidthPercent: 60 },
             additionalParagraphs: ["Decimation was critical to achieving the 90 Hz requirement but implementing it was not straightforward. Because the number of points within the ROI varies with distance, a decimation factor that is appropriate at the minimum distance becomes excessive at the maximum distance. To overcome this, I apply the decimation dynamically where the greatest decimation occurs at the minimum distance and progressively reduce it until no decimation is needed at the maximum distance."],
           },
           { 
@@ -391,7 +393,7 @@ export const artworks: Artwork[] = [
           "Fork Shaft: Plug welded to forks for easier removal. Both shafts lengths were made longer for changes in the position or bevel gear ratio.",
           "Motor Mounts: Utilized the full slot width of the motor brackets to allow gearbox or bevel gear ratio changes.",
         ],
-        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Steer-by-wire bicycle mechanical components arranged for assembly", displayWidthPercent: 100 },
+        image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Major mechanical components designed and fabricated", displayWidthPercent: 100 },
         topics: [
           { title: "Bevel Gears", text: "A high-quality set of gears was not feasible within the available budget. I therefore selected a pair with a 1.5 mm module and unity (1:1) gear ratio. Calculations indicated that the gears were undersized for the expected loading. That said, the low number of operating cycles, low cost, and ease of replacement made for an acceptable tradeoff. I consider this analysis to have been successful but, for reasons discussed later, the gears were ultimately replaced with a set using a 2 mm module. I chose to mesh the gears at the top to reduce the overall assembly height resulting in a more compact design." },
           { title: "Steering Feel", text: "Steering feel was anticipated to be very strange in the absence of the fork and wheel inertia. I wanted to incorporate force feedback with an additional stepper motor but it was too expensive. I considered approaches that would match the inertia but everything that would work looked terrible. My original designs used a simple bolt perpendicular to the head tube to vary the amount of friction on the inner sleeve. I quickly abandoned this when I realized I could just replace the headset bearings with o-rings which worked spectacularly well." },
@@ -419,7 +421,7 @@ export const artworks: Artwork[] = [
           {
             title: "User Interface",
             text: "All components were selected based on cost, with the exception of the LCD, which was chosen for its flexibility in displaying information. The functionality of each component is described below:",
-            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "Steer-by-wire bicycle electrical system arranged as a signal chain", displayWidthPercent: 100 },
+            image: { src: bicycleElectricalSystem, width: 2058, height: 764, alt: "User interface to control steering mode (left) and accessory functions (right)", displayWidthPercent: 100 },
             steps: [
               "Increases gain.",
               "Changes steering mode between normal and reverse.",
@@ -439,9 +441,9 @@ export const artworks: Artwork[] = [
           title: "Filtering",
           textBeforeFirstImage: "I wanted to monitor the input steering velocity and acceleration for safety, debugging, and verification that the design requirements were satisfied. I initially implemented finite-difference differentiation of the encoder measurements but encountered the noise amplification inherent to numerical differentiation. I therefore explored several filtering techniques including moving averages, Gaussian filters, and regression-based approaches. I ultimately selected the regression-based method for its ability to better preserve the underlying signal.",
           additionalTextBeforeFirstImage: "The Savitzky-Golay (SG) filter curve fits a window of the data, samples the middle of the curve, and applies derivatives at the same location. The genius of the filter is its ability to precompute the majority of calculations with the trade-off that the data points need to be equally spaced. Locally Estimated Scatterplot Smoothing (LOESS) regression is essentially the same filter without the need for equally spaced data points but the requirement to recompute the least-squares solution for every window. The example below illustrates an application using a 4th-order polynomial and 45-point window size.",
-          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Bench setup representing the bicycle steering control loop", displayWidthPercent: 100 },
+          firstImage: { src: bicycleSoftwareControlLoop, width: 688, height: 279, alt: "Example of Savitzky-Golay filter using 4-th order regression on a sliding window of 45 points", displayWidthPercent: 100 },
           textBeforeSecondImage: "I had experience with least-squares quadratic regression so I chose to use the LOESS method. To optimize the approach, I computed each summation as a running sum where the next iteration subtracts the oldest value and adds the new value, substantially reducing the number of operations.",
-          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Bicycle steering controller being tuned from recorded response plots", displayWidthPercent: 45 },
+          secondImage: { src: bicycleSoftwareTuning, width: 1743, height: 902, alt: "Quadratic regression matrix", displayWidthPercent: 45 },
           textBeforeList: "The implementation was very successful but I had become fascinated with adding weight functions to improve the filtering power. Implementing weight functions with LOESS required forgoing my optimization so I circled back to the SG approach. Comparing and contrasting the approaches I came to the following conclusions:",
           points: [
             "My application did not require extra filtering power",
@@ -450,7 +452,7 @@ export const artworks: Artwork[] = [
             "LOESS is easier to implement",
           ],
           textBeforeThirdImage: "With these findings, I ultimately preferred the LOESS approach but I later discovered it requires double precision which Arduino does not support. Thus, the Savitzky-Golay filter was used in the final program. The following graphs depict the results when measuring the maximum expected user steering velocity and acceleration.",
-          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Steer-by-wire bicycle mounted in a bench validation fixture", displayWidthPercent: 100 },
+          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Maximum input steering velocity and accleration measured with a rotary encoder and using the Savitzky-Golay filter", displayWidthPercent: 100 },
           closingText: "A drawback of this filter is that it introduces some latency due to sampling at the midpoint. The sampling point can be changed to the most recent data point but if a sudden input change occurs the quantities will be overestimated. Configuring the sampling spacing and number of points was tricky. The least latency possible was desired but acceleration required a sizable window to capture enough detail. After much trial and error, a sampling interval of 2.8 ms was selected with a 19-point window resulting in a latency of 12ms; far below the requirement.",
         },
         tuning: {
@@ -460,13 +462,13 @@ export const artworks: Artwork[] = [
         integration: {
           title: "Complete Picture",
           intro: "The following flowchart brings these individual components together to illustrate the overall program operation.",
-          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Integrated steer-by-wire bicycle prototype in the workshop", displayWidthPercent: 40 },
+          image: { src: bicycleSoftwareIntegration, width: 947, height: 1661, alt: "Program flowchart", displayWidthPercent: 40 },
           closingText: "The zero button is checked first and, when activated, resets the wheel position to ±90 degrees. To meet the SG filter requirement for equally spaced sampling intervals, the program then waits for a new encoder measurement. Once a measurement is received, any updates to the gain or steering mode are sent on the LCD. These settings are only applied at this stage when the steering has returned to the zero position. The next stage advances the filter window by one point and calculates the filtered position, velocity, and acceleration. Before advancing to the final stage, conditional and safety checks must be completed. First, it is checked whether the wheel will remain within the ±90° limit and whether the steering wheel has moved the minimum required amount (0.175°) to activate the motor. Second, the safety checks are performed. If any safety check fails, an error code is sent to the display and execution is halted. If the checks are satisfied, the required number of command pulses is sent to the motor driver, accounting for the microstep setting, gain configuration, steering mode, and gear ratio.",
         },
       },
       challenges: {
         intro: "In the early testing phase, I noticed plastic deformation at the roots of many gear teeth and excessive wear of the faces. The wear pattern, shown below, indicated the gears were meshing at too shallow of an angle. This was peculiar as I had confirmed the shafts to be at the required 90 degrees. Analyzing further, I was able to determine that the gears themselves were improperly manufactured and meshed at around 85 degrees. The gears were replaced with a set having a 2 mm module to better withstand misalignment.",
-        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Steer-by-wire bicycle steering assembly during troubleshooting", displayWidthPercent: 60 },
+        image: { src: bicycleChallenges, width: 685, height: 504, alt: "Effect of a shallow meshing angle on bevel gears", displayWidthPercent: 60 },
         closingText: "Towards completion, I installed the motor driver revealing that its ABS side panel acted as an amplifier for the motor’s vibrations. The amplification was substantial, easily doubling the volume. At this point, available funds were dwindling, so I limited the solutions to those that required no additional cost. I first tried stiffening the panel by gluing pieces of scrap ABS between the internal ribs, providing a modest improvement. I also considered longer pulse widths and microstepping, with the latter reducing the sound to an acceptable level.",
       },
     },
@@ -537,7 +539,7 @@ export const artworks: Artwork[] = [
         src: usbTorqueSensorAssembly,
         width: 1354,
         height: 1162,
-        alt: "Custom USB torque sensor assembly with machined housing and signal-conditioning electronics",
+        alt: "Multiplexed LCD configuration for ANPUDS Torque Adapter",
         displayWidthPercent: 60,
       },
       topics: [
@@ -551,7 +553,7 @@ export const artworks: Artwork[] = [
             src: torqueSegments,
             width: 500,
             height: 500,
-            alt: "Demultiplexer and voltage-divider circuit for measuring LCD segments",
+            alt: "Custom circuit to measure each segment in the 7-segment display",
             displayWidthPercent: 40,
           },
         },
@@ -569,7 +571,7 @@ export const artworks: Artwork[] = [
             src: usbTorqueSensorValidation,
             width: 921,
             height: 218,
-            alt: "USB torque sensor calibration setup with motor, load arm, and measurement equipment",
+            alt: "Example of COM waveform from microcontroller datasheet",
             displayWidthPercent: 90,
           },
           closingText: "Using this information and the known frame rate of 60 fps I could time my program to sample each segment at precisely the right moment letting me achieve the full sampling rate.",
@@ -642,10 +644,10 @@ export const artworks: Artwork[] = [
       howItWorks: [
         { type: "text", content: "My synchronization protocol uses one master device whose timer is immutable while all other devices correct themselves to match it. Each device contains two timers: one counter and the other free-running. The free-running timer is set with a somewhat arbitrary wrap point; currently using 50,000. The receivers shrink or extend this capture/compare register in order to match the master device. On each overflow, the counter is incremented. To timestamp an event I leveraged Nordic’s Programmable Peripheral Interconnect (PPI) system. It is a system that allows configuring hardware events and tasks to occur without CPU intervention, effectively eliminating timing jitter. With this, I can capture the value of both timers simultaneously and combine them for the complete timestamp." },
         { type: "text", content: "Using the idea of timestamping immediately before transmission and upon reception, I delved into the nRF52 radio architecture to understand how I could achieve the timing precision required for this project. Leveraging the PPI system, along with the radio sequence diagram shown below, was critical to the success of this approach." },
-        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Beacon node broadcasting reference timestamps to three slave nodes", displayWidthPercent: 100 },
+        { type: "image", src: wirelessHowItWorks1, width: 1808, height: 880, alt: "Transmitter sequence diagram for Nordic nRF52 series radio", displayWidthPercent: 100 },
         { type: "text", content: "On the transmitter side, I invoke the transmitter enable (TXEN) task and start a timer which ends after the transmitter ramp-up time (TXRU) is completed. When the timer ends, two tasks are executed. The timestamp to be sent to the receiver is captured and another timer begins to start the radio START task in exactly 10 microseconds with the PPI system. During this delay, the timestamp is written to the outgoing packet." },
         { type: "text", content: "On the receiver side, its timestamp is captured at the ADDRESS event. Therefore, when calculating the offsets, the delays in the transmitter timestamp up to this point must be accounted for. This includes the 10 microseconds between TXRU completion and START, as well as the time elapsed from START to the receiver’s ADDRESS. I measured the latter delay directly with a logic analyzer and found it to be 29.5 microseconds, resulting in a total delay of 39.5 microseconds. The complete process is summarized in the diagram below." },
-        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Row of synchronized wireless sensor nodes on a lab bench", displayWidthPercent: 100 },
+        { type: "image", src: wirelessHowItWorks2, width: 1920, height: 640, alt: "Timestamping process showing delays that need to be accounted for by the reciever", displayWidthPercent: 100 },
       ],
       challenges: [
         "The automatic synchronization requirement created an interesting challenge when synchronizing the counter. If the master device has been powered on for an extended period, its counter count can grow beyond what the receivers can correct. This is because the counter can only be incremented by one or reset to zero. To match the master counter, the receiver must reset its counter then increment it to match. This process can take longer than the free-running timer’s wraparound period, causing additional increments to occur before synchronization is complete. To address this, I synchronize the counter in two stages. The majority of the counts are incremented in the first stage except what is guaranteed to be correctable in the second stage.",
@@ -659,7 +661,7 @@ export const artworks: Artwork[] = [
       src: wirelessAccuracyPlaceholder,
       width: 600,
       height: 500,
-      alt: "add accuracy photo",
+      alt: "Measured time synchronization accuracy with logic analyzer",
       displayWidthPercent: 60,
     },
   },
