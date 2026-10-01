@@ -103,7 +103,7 @@ const SprocketChainProof = () => {
               <section className="pt-8">
                 <h2 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Proof</h2>
                 <p className="mt-4">
-                  The following is a proof of the sprocket dimensions to create the desired gear ratio of 1 to 2. Stage 1 has been simplified as the planet rotating about an internal gear. The chain connecting the planet and sun has also been omitted.
+                  The following is a proof of the sprocket dimensions to create the desired gear ratio of 1 to 2. Stage 1 has been simplified to the planet rotating about an internal gear. The chain connecting the planet and sun has also been omitted.
                 </p>
                 <ProofImage
                   src={proofPlaceholder}
@@ -121,7 +121,7 @@ const SprocketChainProof = () => {
               <section className="pt-8">
                 <h2 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Derivation</h2>
                 <p className="mt-4">
-                  The desired quantity is the ratio of the <em>net</em> rotation of the sun compared to the rotation of the arm. The fundamental property linking the rotations is the equivalence of the arc lengths. The following relationship expresses the net rotation of the sun in terms of the two arc lengths.
+                  The desired quantity is the ratio of the <em>net</em> rotation of the sun to the rotation of the arm. The fundamental property linking the rotations is the equivalence of the arc lengths. The following relationship expresses the net rotation of the sun in terms of the two arc lengths.
                 </p>
                 <EquationImage src={equation1} alt="" widthPercent={EQUATION_WIDTH_PERCENT.netRotation} />
                 <p>The arc length a is defined by the radius of the internal sprocket and the angle of the arm. Arc length b is the result of the effective rotation of the planet by the arm.</p>

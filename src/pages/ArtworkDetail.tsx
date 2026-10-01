@@ -49,7 +49,7 @@ const BOLD_PHRASES = [
   // 3D Camera approach labels under "Approaches Considered".
   "Inertial measuring unit (IMU)",
   "Simultaneous localization and mapping (SLAM)",
-  "Real time kinematic GPS",
+  "Real-time kinematic GPS",
   "Distance sensor",
 ];
 

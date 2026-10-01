@@ -116,7 +116,7 @@ const MobileHeader = () => {
             }}
           >
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/noah-mercier-453940421/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/60 text-muted-foreground transition-all duration-300 hover:bg-secondary hover:text-foreground hover:scale-110"
