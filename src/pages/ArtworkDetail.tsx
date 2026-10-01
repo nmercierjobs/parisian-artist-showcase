@@ -212,9 +212,6 @@ const ArtworkDetail = () => {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <figcaption className="mt-2 text-sm italic leading-relaxed text-muted-foreground">
-                {artwork.title}
-              </figcaption>
             </figure>
           </div>
 
