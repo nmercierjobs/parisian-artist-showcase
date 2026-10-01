@@ -34,7 +34,7 @@ const CaseStudyPhoto = ({ image, className = "" }: { image: CaseStudyImage; clas
         style={{ aspectRatio: `${image.width} / ${image.height}` }}
       />
     </div>
-    <figcaption className="mt-2 figure-caption italic leading-relaxed text-muted-foreground">
+    <figcaption className="mt-2 figure-caption italic leading-relaxed text-foreground/90">
       {image.alt}
     </figcaption>
   </figure>
@@ -262,7 +262,7 @@ const ArtworkDetail = () => {
                             alt={`${artwork.title} supporting view`}
                             className={`${artwork.cameraFinalApproachDetails ? "aspect-[1015/759] object-contain" : "aspect-[4/3] object-cover"} w-full`}
                           />
-                          <figcaption className="mt-2 figure-caption italic leading-relaxed text-muted-foreground">
+                          <figcaption className="mt-2 figure-caption italic leading-relaxed text-foreground/90">
                             {artwork.supportCaption || `${artwork.title} supporting view`}
                           </figcaption>
                         </figure>
@@ -544,7 +544,7 @@ const ArtworkDetail = () => {
                                         style={{ aspectRatio: `${block.width} / ${block.height}` }}
                                       />
                                     </div>
-                                    <figcaption className="mt-2 figure-caption italic leading-relaxed text-muted-foreground">
+                                    <figcaption className="mt-2 figure-caption italic leading-relaxed text-foreground/90">
                                       {block.alt}
                                     </figcaption>
                                   </figure>

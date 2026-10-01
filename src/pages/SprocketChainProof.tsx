@@ -46,7 +46,7 @@ const ProofImage = ({
         style={{ aspectRatio: `${width} / ${height}` }}
       />
     </div>
-    <figcaption className="mt-2 figure-caption italic leading-relaxed text-muted-foreground">{alt}</figcaption>
+    <figcaption className="mt-2 figure-caption italic leading-relaxed text-foreground/90">{alt}</figcaption>
   </figure>
 );
 
@@ -60,7 +60,7 @@ const EquationImage = ({ src, alt, widthPercent }: { src: string; alt: string; w
         className="h-auto rounded-lg"
       />
     </div>
-    <figcaption className="mt-2 figure-caption italic leading-relaxed text-muted-foreground">{alt}</figcaption>
+    <figcaption className="mt-2 figure-caption italic leading-relaxed text-foreground/90">{alt}</figcaption>
   </figure>
 );
 
