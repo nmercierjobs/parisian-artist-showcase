@@ -89,7 +89,7 @@ const SprocketChainProof = () => {
             <div className="mt-10 space-y-8 text-base leading-relaxed text-foreground lg:text-lg lg:leading-loose">
               <section>
                 <p>
-                  My mechanical approach to continuously variable steering gain is to translate a steering arc into a rotation. At stage 1, sprocket A is fixed in place on the head tube to cause the planet sprocket to rotate when the handlebars are turned. This rotation is then moved to the sun sprocket on the head tube where it can be used to drive the wheel. Varying the distance x to the planet will increase the arc length it rotates through, altering the output rotation. For simplicity, the diagram below does not include the chain tensioner needed to vary the distance.
+                  My mechanical approach to continuously variable steering gain is to translate a steering arc into a rotation. At stage 1, sprocket A is fixed in place on the head tube to cause the planet sprocket to rotate when the handlebars are turned. This rotation is then transferred to the sun sprocket on the head tube where it can be used to drive the wheel. Varying the distance x to the planet will increase the arc length it rotates through, altering the output rotation. For simplicity, the diagram below does not include the chain tensioner needed to vary the distance.
                 </p>
                 <ProofImage
                   src={mechanismPlaceholder}
@@ -103,7 +103,7 @@ const SprocketChainProof = () => {
               <section className="pt-8">
                 <h2 className="font-display text-2xl font-medium text-foreground lg:text-3xl">Proof</h2>
                 <p className="mt-4">
-                  The following is a proof of the sprocket dimensions to create the desired gear ratio of 1 to 2. Stage 1 has been simplified to the planet rotating about an internal gear. The chain connecting the planet and sun has also been omitted.
+                  The following is a derivation of the sprocket dimensions required to create the desired gear ratio of 1 to 2. Stage 1 has been simplified to the planet rotating about an internal gear. The chain connecting the planet and sun has also been omitted.
                 </p>
                 <ProofImage
                   src={proofPlaceholder}
@@ -114,7 +114,7 @@ const SprocketChainProof = () => {
                 />
 
                 <p className="mt-8">
-                  Consider the clockwise rotation of the arm through angle α, which effectively rotates the planet through angle α as well. This creates the clockwise rotation δ of the sun. Similarly, the planet rolls along arc length a and creates the counterclockwise rotation β on the planet and ω on the sun.
+                  Consider the clockwise rotation of the arm through angle α, which effectively rotates the planet through angle α as well. This creates the clockwise rotation δ of the sun. Similarly, the planet rolls along arc length a and creates the counterclockwise rotation β of the planet and ω of the sun.
                 </p>
               </section>
 
@@ -129,7 +129,7 @@ const SprocketChainProof = () => {
                 <p>Combining these relationships and simplifying gives the following conclusion. The negative sign indicates that the output is in the opposite direction of the arm.</p>
                 <EquationImage src={equation3} alt="" widthPercent={EQUATION_WIDTH_PERCENT.gain} />
                 <p>
-                  Interestingly, a gain of 1 is not possible. To fix this, a gear reduction after the sun gear would be needed. Another concern is whether the mechanism is too long. Using #25 chains, a 10-tooth planet sprocket, and a 25-tooth sun sprocket, the total length would be approximately 3.5 inches. Very reasonable.
+                  Interestingly, a gain of 1 is not possible. To fix this, a gear reduction after the sun gear would be needed. Another concern is whether the mechanism is too long. Using #25 chain, a 10-tooth planet sprocket, and a 25-tooth sun sprocket, the total length would be approximately 3.5 inches. Very reasonable.
                 </p>
               </section>
             </div>
