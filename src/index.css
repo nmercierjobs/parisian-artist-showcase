@@ -130,6 +130,12 @@
     font-family: var(--font-body);
   }
 
+  /* Image captions - one place to tune caption size */
+  .figure-caption {
+    font-size: 12.75px; /* text-sm (12.25px) + 0.5px */
+  }
+
+
   /* Pill button style - simple and clean */
   .btn-pill {
     @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium;
