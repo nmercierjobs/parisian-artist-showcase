@@ -130,9 +130,10 @@
     font-family: var(--font-body);
   }
 
-  /* Image captions - one place to tune caption size */
+  /* Image captions - one place to tune caption size and color */
   .figure-caption {
-    font-size: 12.75px; /* text-sm (12.25px) + 0.5px */
+    font-size: 14.5px;
+    color: hsl(var(--foreground) / 0.95);
   }
 
 
