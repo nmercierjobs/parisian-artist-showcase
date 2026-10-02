@@ -5,6 +5,9 @@ import ImageReveal from "@/components/ImageReveal";
 
 const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
+// Adjust the portrait photo size here (percentage of its column width)
+const PORTRAIT_WIDTH_PERCENT = 100;
+
 const clients = [
   "Galerie Perrotin",
   "Château de Versailles",
@@ -46,6 +49,7 @@ const About = () => {
             <div 
               className="overflow-hidden rounded-2xl bg-card"
               style={{
+                width: `${PORTRAIT_WIDTH_PERCENT}%`,
                 opacity: 0,
                 animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                 animationDelay: "0ms"
