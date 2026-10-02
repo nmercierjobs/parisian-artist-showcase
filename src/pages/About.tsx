@@ -6,7 +6,7 @@ import ImageReveal from "@/components/ImageReveal";
 const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
 // Adjust the portrait photo size here (percentage of its column width)
-const PORTRAIT_WIDTH_PERCENT = 100;
+const PORTRAIT_WIDTH_PERCENT = 75;
 
 const clients = [
   "Galerie Perrotin",
@@ -65,7 +65,7 @@ const About = () => {
 
             {/* Bio Content */}
             <div 
-              className="flex flex-col justify-start"
+              className="flex flex-col justify-start w-[750px]"
               style={{
                 opacity: 0,
                 animation: "staggerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
