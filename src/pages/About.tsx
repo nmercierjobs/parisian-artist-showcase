@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Helmet } from "react-helmet-async";
 import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
