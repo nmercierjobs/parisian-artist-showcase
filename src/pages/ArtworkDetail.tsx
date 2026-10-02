@@ -77,6 +77,9 @@ const EMPHASIS_RULES: { source: string; style: "bold" | "italic" }[] = [
   // in the write-up stays regular.
   { source: "\\bShockBurst(?= protocol in greater detail)", style: "italic" },
   // Timestamp labels.
+  // Scoped to the closing sentence of the Filtering section so the other
+  // mentions of "Savitzky-Golay" in the write-up stay regular.
+  { source: "\\bSavitzky-Golay(?= filter was used in the final program)", style: "bold" },
   { source: "Send time:", style: "bold" },
   { source: "Propagation time:", style: "bold" },
   { source: "Receive time:", style: "bold" },
@@ -444,7 +447,7 @@ const ArtworkDetail = () => {
                                 <ul className="mt-3 list-disc space-y-1 pl-6">
                                   {artwork.bicycleFinalApproachDetails.software.control.points.map((point) => <li key={point}>{point}</li>)}
                                 </ul>
-                                <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.textBeforeThirdImage}</p>
+                                <p className="mt-5"><RichText text={artwork.bicycleFinalApproachDetails.software.control.textBeforeThirdImage} /></p>
                                 <CaseStudyPhoto image={artwork.bicycleFinalApproachDetails.software.control.thirdImage} className="mt-5" />
                                 <p className="mt-5">{artwork.bicycleFinalApproachDetails.software.control.closingText}</p>
                               </div>
