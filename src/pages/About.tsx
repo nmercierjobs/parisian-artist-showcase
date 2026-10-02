@@ -84,7 +84,7 @@ const About = () => {
                 <h1 className="font-display text-3xl font-medium tracking-tight text-foreground lg:text-4xl">
                   Hello, I'm Noah
                 </h1>
-                <p className="mt-1 text-base text-muted-foreground">
+                <p className="mt-1 text-[15px] text-muted-foreground">
                   Jack of All Trades Engineer
                 </p>
               </div>
@@ -93,7 +93,7 @@ const About = () => {
               <div className="mb-6 h-px w-full bg-border" />
 
               {/* Bio Text */}
-              <div className="space-y-5 text-sm leading-relaxed text-foreground font-[Arial] text-[15px]">
+              <div className="space-y-5 leading-relaxed text-foreground font-[Arial] text-[15px]">
                 <p>
                   Growing up, I have always built things with varying degrees of success. My early failures were caused by a lack of understanding of the underlying theory, so I chose to become an engineer to gain the ability to turn my ideas into successful creations. In that same spirit, I am drawn to the core engineering disciplines (mechanical, electrical, and software) so that I can recognize and execute the most effective approach to bringing my inventions to life.
                 </p>
