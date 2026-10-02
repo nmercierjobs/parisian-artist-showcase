@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Helmet } from "react-helmet-async";
 import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
@@ -44,7 +45,13 @@ const About = () => {
       <Layout>
         <div className="page-transition px-6 py-10 lg:px-10 lg:py-12">
           {/* Main Content Grid */}
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-12">
+          <div
+            className="grid gap-8 lg:grid-cols-[var(--about-cols)] lg:gap-12"
+            style={{
+              ["--about-cols" as string]:
+                `${(1.2 * PORTRAIT_WIDTH_PERCENT) / 100}fr 1fr`
+            } as CSSProperties}
+          >
             {/* Portrait */}
             <div 
               className="overflow-hidden rounded-2xl bg-card"
