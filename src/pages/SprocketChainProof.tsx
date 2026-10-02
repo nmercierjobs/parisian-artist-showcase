@@ -114,7 +114,7 @@ const SprocketChainProof = () => {
                 />
 
                 <p className="mt-8">
-                  Consider the clockwise rotation of the arm through angle α, which effectively rotates the planet through angle α as well. This creates the clockwise rotation δ of the sun. Similarly, the planet rolls along arc length a and creates the counterclockwise rotation β of the planet and ω of the sun.
+                  Consider the clockwise rotation of the arm through angle α, which effectively rotates the planet through angle α as well. This will then create the clockwise rotation δ of the sun via the connected chain. Similarly, the planet rolls along arc length a and creates the counterclockwise rotation β of the planet and ω of the sun.
                 </p>
               </section>
 

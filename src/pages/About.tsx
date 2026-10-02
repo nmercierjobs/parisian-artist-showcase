@@ -82,15 +82,15 @@ const About = () => {
               <div className="mb-6 h-px w-full bg-border" />
 
               {/* Bio Text */}
-              <div className="space-y-5 text-sm leading-relaxed text-foreground">
+              <div className="space-y-5 text-sm leading-relaxed text-foreground font-[Arial] text-[14px]">
                 <p>
-                  1st paragraph
+                  Growing up, I have always built things with varying degrees of success. My early failures were caused by a lack of understanding of the underlying theory, so I chose to become an engineer to gain the ability to turn my ideas into successful creations. In that same spirit, I am drawn to the core engineering disciplines (mechanical, electrical, and software) so that I can recognize and execute the most effective approach to bringing my inventions to life.
                 </p>
                 <p>
-                  2nd paragraph
+                  I love finding the best solution to a difficult problem. To me, that means copious research, hand calculations, and prototyping. I use all the resources at my disposal — textbooks, scientific articles, online courses, forums, datasheets, regulatory documentation, and whitepapers — to understand the problem and the approaches commonly used to solve it. I then dissect those approaches to understand why they are favored for their respective use cases, gauge their applicability to my problem, and determine what, if any, modifications may be necessary. Understanding math is fundamental to this process as it allows me to better understand my research, assess feasibility, and validate results. But, no amount of research or calculations can substitute for prototyping’s ability to reveal complications. Where this approach really shines is when complications inevitably arise. I have the knowledge to quickly diagnose the issue, the analytical skills to develop a solution, and the hands-on experience to bring it to life.
                 </p>
                 <p>
-                  3rd paragraph
+                  Stuff costs money, and I wanted the financial freedom and free time to really delve into my personal projects to expand my skillset beyond my mechanical engineering degree. This led me to pursue the ever-elusive notion of easy money. I began by reselling consumer products on eBay that I sourced from garage sales, expanded to flea markets, and have now switched gears to purchasing second-hand recalled consumer products and submitting them to retailers for a refund or replacement. I am currently achieving an hourly wage exceeding $100/hr albeit with limited annual earnings. I met my goal from the start but the challenge to keep improving is exciting.
                 </p>
                 <p>
                   4th paragraph

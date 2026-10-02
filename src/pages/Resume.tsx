@@ -10,9 +10,9 @@ const projects = [
     title: "3D Camera Height Sensor",
     meta: "2025 · C · RPi5",
     details: [
-      "Achieved distance measurements to a semi-planar surface with an angle of incidence up to 40° at 90 Hz with millimeter accuracy",
+      "Achieved height measurements to a semi-planar surface with an angle of incidence up to 40° at 90 Hz with millimeter accuracy",
       "Programmed normal vector calculation from scratch by computing the least-variance eigenvector of the covariance matrix using its singular value decomposition (SVD)",
-      "Robustified estimation by first subdividing point cloud into NxN regions and selecting the final plane as the largest set of coplanar subregions pointed in the same direction; tolerates up to 60% contamination",
+      "Robustified estimation by subdividing point cloud into small square regions and selecting the final plane as the largest set of coplanar subregions pointed in the same direction; tolerates up to 50% contamination",
       "Implemented Theil-Sen estimator for 2D kinematics applications, providing an added layer of redundancy and increasing contamination tolerance",
     ],
   },
@@ -58,7 +58,7 @@ const Resume = () => {
       <Layout>
         <main className="page-transition px-6 py-10 lg:px-10 lg:py-12">
           <article
-            className="mx-auto max-w-4xl -translate-x-[70px] origin-top scale-[1.25] font-[arial]"
+            className="mx-auto max-w-4xl -translate-x-[70px] origin-top scale-[1.2] font-[arial]"
             style={{ fontSize: `${RESUME_FONT_SIZE_PX}px` }}
           >
 
@@ -95,12 +95,12 @@ const Resume = () => {
                 <p className="sm:text-right">2022 – Present</p>
               </div>
               <p className="mt-2 leading-6 text-foreground">
-                Procurement of second-hand recalled consumer products and submission to retailers for refund or replacement
+                Procurement of second-hand recalled consumer products and submitted to retailers for refund or replacement
               </p>
               <ul className="mt-2 list-disc space-y-2 pl-5 leading-6 text-foreground">
                 <li>Automated product sourcing with web scraping, increasing second-year earnings by 212%</li>
                 <li>Improved sourcing further using a custom optical character recognition (OCR) search program, increasing third-year earnings by an additional 63%</li>
-                <li>Optimized profit margins using profit per hour calculations to reduce workload by 357%</li>
+                <li>Optimized profit margins using profit per hour calculations to reduce workload by 72%</li>
               </ul>
             </section>
 

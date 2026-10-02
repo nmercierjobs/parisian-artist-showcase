@@ -7,7 +7,7 @@ import cameraNormalFilter from "/images/3d_camera/projected_height.png";
 
 import bicycleMechanicalOverview from "/images/reverse_bike/bike_cad.png";
 import bicycleSoftwareTuning from "/images/reverse_bike/least_squares_matrix.png";
-import bicycleSoftwareValidation from "/images/reverse_bike/combined_graphs_no_header.png";
+import bicycleSoftwareValidation from "/images/reverse_bike/filter_v_a.png";
 import bicycleSoftwareIntegration from "/images/reverse_bike/program_flowchart.png";
 import bicycleSoftwareControlLoop from "/images/reverse_bike/sg_gif.gif";
 import bicycleChallenges from "/images/reverse_bike/shaft_angle_error.png";
@@ -167,7 +167,7 @@ export const artworks: Artwork[] = [
       "Used over outdoor surfaces: Sidewalks, roads, etc",
       "All electronics must be mounted on the object",
       "Frequently speeds up, slows down, and rotates",
-      "Can record measurements at least 30 times each second",
+      "Can record measurements at least 90 times each second",
       "Height accurate to within 5 millimeters",
       "Smaller than a hard drive",
       "Costs under $500"
@@ -191,7 +191,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Real-time kinematic GPS",
-        text: "A fixed base station uses its known position to calculate satellite measurement errors and transmits corrections to the mounted GPS to achieve the required positioning accuracy.",
+        text: "A fixed base station uses its known position to calculate satellite measurement errors and transmits corrections to the on-board GPS, achieving the required position accuracy.",
         subPoints: [
           "Key advantage: No measurement drift",
           "Main concern: Cost",
@@ -199,7 +199,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Distance sensor",
-        text: "Measures distances from three points to the ground to define a plane. Height is determined by projecting the sensor-to-plane vector onto the plane’s normal vector.",
+        text: "Using three distance sensors, the distance to three points can be measured and used to define a plane. Height and orientation can be determined from the plane’s normal vector.",
         subPoints: [
           "Key advantage: No measurement drift",
           "Main concern: Robustness",
@@ -217,7 +217,7 @@ export const artworks: Artwork[] = [
         title: "Hardware",
         blocks: [
           { type: "text", content: "Among the companies that offer a 3D camera capable of 90 Hz are Intel RealSense, Luxonis, and Stereolabs. They are all reputable brands with differing ideal use cases, but for this application it did not really matter. They all met the accuracy requirement and were more or less the same size. I ended up selecting the Intel RealSense D435 camera simply because I managed to get a used one for $60. In retrospect, I would buy another as the whitepapers and support they provide are very informative." },
-          { type: "text", content: "To meet the size requirements, I explored single-board computer (SBC) options to pair with the camera. At the time, the most performant option in the typical SBC form factor was the Orange Pi 6. However, when paired with the camera, the combined size exceeded the requirement. Instead, I discovered the Raspberry Pi 5 Compute Module and paired it with Waveshare’s nano base board. This combination reduced the overall form factor by 3.5× while retaining most of the computational performance, allowing it to meet the size requirement." },
+          { type: "text", content: "To meet the size requirements, I explored single-board computer (SBC) options to pair with the camera. At the time, the most performant option in the typical SBC form factor was the Orange Pi 6. However, when paired with the camera, the combined size exceeded the requirement. Instead, I discovered the Raspberry Pi 5 Compute Module and paired it with Waveshare’s nano base board. This combination exceeded the size requirement while retaining most of the computational performance." },
         ],
       },
       {
@@ -225,7 +225,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "The first part of the program selects a region of interest (ROI) in the image to the desired real-world size. Implementing this proved challenging because 3D cameras operate according to the pinhole camera principle in which the point-to-point distance increases with depth. Consequently, each quadrant of the ROI can consist of a different number of points." },
           { type: "text", content: "To address this, I implemented a function that iterates upward, downward, leftward, and rightward from the center row and column to determine the pixel dimensions of the ROI for each frame. To improve robustness, the function iterates along the entire row or column with the median distance used. My application has a maximum operating distance of 1.5 meters, which provides a lower bound on the ROI’s dimensions. I leveraged this constraint to optimize the iteration process by initializing each search at this minimum dimension rather than starting from the center. This reduces the number of iterations required, helping meet the 90 Hz sampling requirement." },
-          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Example of iteration procedure used to determine the dimensions, in pixels, of the desired region of interest", displayWidthPercent: 40, framePaddingPx: 8 } },
+          { type: "image", image: { src: cameraRegionOfInterest, width: 536, height: 644, alt: "Example of iteration procedure used to determine the dimensions, in pixels, of a rectangular region of interest", displayWidthPercent: 40, framePaddingPx: 8 } },
         ],
       },
       {
@@ -239,10 +239,10 @@ export const artworks: Artwork[] = [
       {
         title: "Normal Vectors",
         blocks: [
-          { type: "text", content: "I chose the principal component analysis (PCA) plane-fit approach to determine the normal vectors. I initially considered more robust methods; however, they were not feasible given the required sampling rate and I did not want to pursue approaches that relied on randomization. PCA provides a least-squares fit by calculating the orthogonal eigenvectors of the covariance matrix. In other words, it identifies the directions of variance with the direction of least variance used as the normal vector to the fitted plane." },
+          { type: "text", content: "I chose the principal component analysis (PCA) plane-fit approach to determine the normal vectors. I initially considered more robust methods; however, they were not feasible given the required sampling rate and I did not want to pursue approaches that relied on randomization. PCA provides a least-squares fit by calculating the orthogonal eigenvectors of the covariance matrix. In other words, it identifies the directions of variance with the direction of least variance used as the normal vector." },
           { type: "text", content: "A critical optimization I incorporated to achieve the 90 Hz requirement was the use of summed-area tables to compute the normal vectors for each subregion. To implement this, an array of cumulative sums is precomputed where each element contains the sum of all values above and to the left of it. Example below." },
           { type: "image", image: { src: cameraNormalEstimation, width: 1395, height: 749, alt: "Example of the construction of a summed-area table", displayWidthPercent: 50 } },
-          { type: "text", content: "Using a summed-area table, the sum of any rectangular region — or square in this case — can be computed using only addition and subtraction of the four corner elements. This eliminates the need to iterate over every pixel within the region each time a sum is required. In my implementation, I created nine separate summed-area tables to substantially accelerate the computation of the covariance matrices for the subregions. The summation breakdown of a covariance matrix is shown below. When processing the entire depth image (848 × 480 pixels), this optimization reduces the number of required operations by approximately 10× when using 7 × 7 pixel subregions." },
+          { type: "text", content: "Using a summed-area table, the sum of any rectangular region can be computed using only addition and subtraction of the four corner elements. This eliminates the need to iterate over every pixel within the region each time a sum is required. In my implementation, I created nine separate summed-area tables to substantially accelerate the computation of the covariance matrices for the subregions. The summation breakdown of a covariance matrix is shown below. When processing the entire depth image (848 × 480 pixels), this optimization reduces the number of required operations by approximately 10× when using 7×7 pixel subregions." },
           { type: "image", image: { src: cameraNormalField, width: 1690, height: 931, alt: "Covariance matrix for optimization of subregion computations with summed-area tables", displayWidthPercent: 70 } },
         ],
       },
@@ -260,7 +260,7 @@ export const artworks: Artwork[] = [
         blocks: [
           { type: "text", content: "I was now left with a set of scattered subregions that needed to be combined to form the majority plane. Initially, I selected a subregion as a seed and expanded outward, adding neighboring subregions whose normal vectors fell within an angular threshold. I soon realized that finding the largest possible set would require considering every subregion as a potential seed. This was computationally infeasible given the 90 Hz requirement." },
           { type: "text", content: "Instead, I implemented histograms to substantially reduce the number of computations. Early on, I converted the Cartesian vectors into spherical coordinates thinking this would simplify the process. Nope. When the measured plane is parallel to the camera, the measurement noise causes the normal vectors to disperse randomly around the azimuth direction. Using cosine direction angles instead resolved this issue." },
-          { type: "text", content: "The cosine direction angle histogram is dimensioned so that each voxel spans 1°x1°x1°. Each voxel contains an array storing the normal vector’s subregion index, defined by its center point, along with its projected height. Once all normal vectors have been added, each occupied voxel is expanded to its neighbors within the angular threshold to form clusters. The voxel arrays within each cluster are then concatenated and a histogram of projected heights is formed. For each cluster, a sliding window is applied to the projected height histogram to identify the largest set of coplanar subregions oriented in the same direction. PCA is then reapplied to this set of points to obtain a robust normal vector which is used to calculate the sensor’s height and orientation." },
+          { type: "text", content: "The cosine direction angle histogram is dimensioned so that each voxel spans 1°x1°x1°. Each voxel contains an array storing the normal vector’s subregion index, defined by its center point, along with its projected height. Once all normal vectors have been added, each occupied voxel is expanded to its neighbors within an angular threshold to form clusters. The voxel arrays within each cluster are then concatenated and a histogram of projected heights is formed. For each cluster, a sliding window is applied to the projected height histogram to identify the largest set of coplanar subregions oriented in the same direction. PCA is then reapplied to this set of points to obtain a robust normal vector which is used to calculate the sensor’s height and orientation." },
           { type: "text", content: "A number of optimizations were needed for this method to be successful. First, not all voxels are expanded to form clusters, and not all clusters generate projected height histograms. Only those containing enough vectors proceed to the next stage. Additionally, when clusters are formed, a new array containing all of the voxel data is not created. Instead, each cluster maintains an array of pointers to the existing voxel arrays, avoiding the need to copy the data. Lastly, memory arenas were implemented to enable fast runtime allocation." },
         ],
       },
@@ -273,12 +273,12 @@ export const artworks: Artwork[] = [
             "Least Trimmed Squares (LTS): Computes the best-fitting least squares solution among a subset of the data. Up to 50% breakdown point.",
             "Theil–Sen: Computes the median of each coefficient by fitting every possible pair of points. 29.3% breakdown point.",
           ] },
-          { type: "text", content: "I was particularly intrigued by methods with high breakdown points. These methods are rarely used in practice, primarily because of the computational workload they require. My application uses such a small sample size — around 30 points — that implementing them was feasible, or so I thought. Despite the small number of points, the LTS method would require an exhaustive search of all subsets of 15 points for a total of 155 million computations. Not going to happen. The top-of-the-line algorithm for LMedS is much faster but uses a complex branch and bound algorithm to achieve it. I believe this approach could have been successful, but I soon learned about the tradeoff of high breakdown methods. Essentially, these methods are only beneficial if outliers actually exist in the data. Far fewer outliers will exist in my data, making these methods a poor choice." },
-          { type: "text", content: "To achieve a lower breakdown point, I could simply sample a larger subset using LTS. However, even a subset of 22 points requires approximately 6 million computations. The Theil–Sen method achieves the same breakdown point while using subsets of only 3 points, requiring just 4,096 computations. I proceeded with the Theil-Sen approach. This was still computationally challenging, as it required finding the median of three arrays, each containing 4,096 elements. To reduce this computational cost, I implemented each array as a histogram. The median is then found by computing the median only among the data contained within the histogram’s median bin." },
+          { type: "text", content: "I was particularly intrigued by methods with high breakdown points. These methods are rarely used in practice, primarily because of the computational workload they require. My application uses such a small sample size — around 30 points — that implementing them was feasible, or so I thought. Despite the small number of points, the LTS method would require an exhaustive search of all subsets of 15 points for a total of 155 million computations. Not going to happen. The top-of-the-line algorithm for LMedS is much faster but uses a complex branch and bound algorithm to achieve it. I believe this approach could have been successful, but I soon learned about the tradeoff of high breakdown methods. Essentially, these methods are only beneficial if outliers actually exist in the data. Far fewer will exist in my data, making these methods a poor choice." },
+          { type: "text", content: "To achieve a lower breakdown point, I could simply sample a larger subset using LTS. However, even a subset of 22 points requires approximately 6 million computations. The Theil–Sen method achieves the same breakdown point while using subsets of only 3 points, requiring just 4,096 computations. I proceeded with the Theil-Sen approach. This was still computationally challenging, as it required finding the median of three arrays, each containing 4,096 elements. To reduce this cost, I implemented each array as a histogram. The median is then found by identifying the histogram bin that contains it and sorting the elements within that bin." },
         ],
       },
       {
-        title: "Optimizing Camera",
+        title: "Optimizing the Camera",
         blocks: [
           { type: "text", content: "Where possible, I like to tailor equipment to the project at hand to maximize performance. Even when additional performance is not necessary, I find that doing so provides valuable insight into the underlying operation of the hardware. In this case, the options were extensive." },
         ],
@@ -293,17 +293,17 @@ export const artworks: Artwork[] = [
           { 
             title: "Configuration Presets",
             text: "Intel provides a set of configuration files that adjust various settings in the stereo-matching algorithm. These settings can also be modified manually — I have experimented with doing so — but Intel provides no documentation describing their individual functions. Some of the available presets include high accuracy, high density, and hand tracking. I use the high accuracy preset for whatever additional robustness it may provide.",
-            additionalParagraphs: ["Another parameter, called the A-factor, is used to tune the linearity of the depth measurements. Without this adjustment, Intel demonstrates in a whitepaper that the measured distance oscillates about the true distance by approximately 0.5–1%, depending on the preset. Selecting the appropriate value for this parameter is reported to reduce this oscillation by up to a factor of 4. I implemented the value advised for the high accuracy preset."] 
+            additionalParagraphs: ["Another parameter, called the A-factor, is used to tune the linearity of the depth measurements. Without proper adjustment, Intel demonstrates in a whitepaper that the measured distance will oscillate about the true distance by approximately 0.5–1%, depending on the preset. Selecting the appropriate value for this parameter is reported to reduce this oscillation by up to a factor of 4. I implemented the value advised for the high accuracy preset."] 
           },
           { title: "Optical Filters", text: "My interest in applying an optical filter was to increase the contrast of the dot projector. Intel demonstrated a reduction in depth noise by up to a factor of 3. I briefly tested a long-pass filter, but further testing would be needed to conclusively determine its impact. Ultimately, after achieving sufficient results through the other optimizations, I abandoned this approach." },
         ],
       },
     ],
-    results: "All in all, I achieved height and orientation measurements to a semi-planar surface at angles of incidence up to 40°. By leveraging summed-area tables, histograms, and dynamic resolution, the 90 Hz requirement was successfully met. Millimeter-level accuracy was achieved by detecting and removing obstacles that did not belong to the main surface with a contamination tolerance up to 50%. And the total system form factor is 1.8 times smaller than required with a total cost way under budget at $206.",
+    results: "All in all, I achieved height and orientation measurements to a semi-planar surface at angles of incidence up to 40°. By leveraging summed-area tables, histograms, and dynamic resolution, the 90 Hz requirement was successfully met. Millimeter-level accuracy was achieved by detecting and removing obstacles that did not belong to the main surface with a contamination tolerance up to 50%. And the total system form factor is 2 times smaller than required with a total cost way under budget at $206.",
     resultsExtra:
     [
-      "The techniques used to meet these requirements do have some limitations. Distinguishing subregions belonging to different planes using projected height has limited resolving power, as noise and surface variation inflate the measurements. Likewise, sorting normal vectors with a histogram is similarly constrained by its substantial memory requirement. The current implementation, using 1°×1°×1° voxels, consumes nearly 8 GB. In contrast, filtering non-planar subregions based on their variance introduced no significant limitations and was both simple to implement and highly effective.",
-      "The methodology I applied is sound, but I could make improvements to the current design. Despite the reasonable depth resolution of the D435 camera (848x480), a small ROI quickly becomes sparse past around 1.5 meters. In retrospect, a higher-resolution camera would have been preferable. In addition, changing the code to configure the ROI is also a bit time-consuming and could be refined. Possible improvements aside, I am very satisfied with the final performance. Success or failure, what really matters to me is that I learn something in the process. This project was a wonderful excuse to hone my linear algebra and programming skills."
+      "The techniques used to meet these requirements do have some limitations. Distinguishing subregions belonging to different planes using projected height has limited resolving power, as noise and surface variation inflate the measurements. Likewise, sorting normal vectors with a histogram is constrained by its substantial memory requirement. The current implementation, using 1°×1°×1° voxels, consumes nearly 8 GB. In contrast, filtering non-planar subregions based on their variance introduced no significant limitations and was both simple to implement and highly effective.",
+      "The overall methodology I applied is sound, but I could make improvements to the current design. Despite the reasonable depth resolution of the D435 camera (848x480), a small ROI quickly becomes sparse past around 1.5 meters. In retrospect, a higher-resolution camera would have been preferable. In addition, altering the code to configure the ROI is also a bit time-consuming and could be refined. Possible improvements aside, I am very satisfied with the final performance. Success or failure, what really matters to me is that I learn something in the process. This project was a wonderful excuse to hone my linear algebra and programming skills."
     ],
   },
   {
@@ -319,7 +319,6 @@ export const artworks: Artwork[] = [
       "Steering gain of 1 and 2",
       "Reverse steering mode",
       "Every combination of steering mode must be configurable and quick to toggle",
-      "Robust to damage",
       "Prioritize straight-line driving",
       "Cost not to exceed $500"
     ],
@@ -335,7 +334,7 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Expanding pulley - Gain",
-        text: "A series of cams expands or contracts the pulley segments, changing the pulley ratio.",
+        text: "A series of cams expands or contracts pulley segments, changing the pulley ratio.",
         subPoints: [
           "Key advantage: Continuous gain adjustments",
           "Main concern: Manufacturing complexity",
@@ -351,15 +350,15 @@ export const artworks: Artwork[] = [
       },
       {
         title: "Hydraulic - Reversing",
-        text: "Use a series of solenoid valves with hydraulic actuators to reverse flow direction. Connect actuators to pinions.",
+        text: "Uses a series of solenoid valves with hydraulic actuators to reverse flow direction. Actuators are connected to gears, converting linear motion into rotary motion.",
         subPoints: [
           "Key advantage: Instantaneous adjustment",
           "Main concern: Cost",
         ],
       },
       {
-        title: "Idler gears - Reversing",
-        text: "Add the ability to toggle an additional idler gear into the gear train to reverse the output rotation.",
+        title: "Idler gear - Reversing",
+        text: "Add the ability to toggle an additional gear into the gear train, reversing the output rotation.",
         subPoints: [
           "Key advantage: Simplicity",
           "Main concern: Consistent gear meshing when toggling",
@@ -374,8 +373,8 @@ export const artworks: Artwork[] = [
         ],
       },
     ],
-    researchConclusion: "Initially, I chose the sprocket and chain method paired with the idler gears method because the math was very unique and challenging. I am proud of the idea for its relative mechanical simplicity, and it is something I really wanted to realize. But is it the right approach? As I delved deeper into analyzing the forces, it became clear that many additional components would be required to guarantee success. And any mistakes in the design or manufacture would be costly and potentially cause the project to exceed its budget. As a result, I transitioned to the steer-by-wire system which trades much of the mechanical complexity for software complexity.",
-    finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was economically viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn mountain bike handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia, these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life.",
+    researchConclusion: "Initially, I chose the sprocket and chain method paired with the idler gear because the math was very unique and challenging. I am proud of the idea for its relative mechanical simplicity, and it is something I really wanted to realize. But is it the right approach? As I delved deeper into analyzing the forces, it became clear that many additional components would be required to guarantee success. And any mistakes in the design or manufacture would be costly and potentially cause the project to exceed its budget. As a result, I transitioned to the steer-by-wire system which trades much of the mechanical complexity for software complexity.",
+    finalApproach: "Among the various motor types considered — stepper, servo, and brushless DC (BLDC) — a cursory cost analysis indicated that only a stepper motor was viable. To determine the required motor size, I reviewed research papers to establish the torque required to turn handlebars. These studies reported a maximum steering torque of 2 N·m. I then used published values for maximum human hand speed and acceleration to estimate the corresponding maximum handlebar angular velocity and acceleration. Combined with the measured fork and wheel inertia, these values were used to calculate the torque required to achieve the desired steering performance. Additional research and calculations were also used to establish design requirements for latency and battery life. All together, I had the following additional requirements to consider.",
     bicycleFinalApproachDetails: {
       summaryPoints: [
         "Torque greater than or equal to 5 N·m",
@@ -388,10 +387,10 @@ export const artworks: Artwork[] = [
         steps: [
           "Additional Head Tube: Attachment point kept as long as possible in case removal and reattachment were required.",
           "Encoder Shaft: Press fit with three ten-thousandths of an inch interference for easy repositioning and removal. Both shaft lengths were made longer to account for any changes in encoder mounting position.",
-          "Encoder Mount: Slot implemented for back-and-forth variability in the final encoder shaft location.",
+          "Encoder Mount: Mounting slot implemented for back-and-forth variability in the final encoder shaft location.",
           "Encoder Mount Extender: Width toleranced for encoder mount side-to-side movement to account for misalignment of the weld.",
-          "Fork Shaft: Plug welded to forks for easier removal. Both shaft lengths were made longer for changes in the position or bevel gear ratio.",
-          "Motor Mounts: Utilized the full slot width of the motor brackets to allow gearbox or bevel gear ratio changes.",
+          "Fork Shaft: Plug welded to the forks for easier removal. Both shaft lengths were made longer for changes in the motor position or bevel gear ratio.",
+          "Motor Mounts: Utilized the full slot width of the motor brackets for changes in the gearbox or bevel gear ratio.",
         ],
         image: { src: bicycleMechanicalOverview, width: 1980, height: 1407, alt: "Major mechanical components designed and fabricated", displayWidthPercent: 100 },
         topics: [
@@ -432,7 +431,7 @@ export const artworks: Artwork[] = [
               "Zeros the encoder position.",
             ],
           },
-          { title: "Safety", text: "The power supply was selected for its maximum output of 60 VDC, generally recognized as the maximum considered safe. Additionally, the Arduino power button (#6 above) was positioned for easy access, allowing it to double as an emergency stop." },
+          { title: "Safety", text: "A maximum planned drive voltage was selected to be 60 VDC as it is generally recognized as the maximum considered safe. Additionally, the Arduino power button (#6 above) was positioned for easy access, allowing it to double as an emergency stop." },
         ],
       },
       software: {
@@ -452,12 +451,12 @@ export const artworks: Artwork[] = [
             "LOESS is easier to implement",
           ],
           textBeforeThirdImage: "With these findings, I ultimately preferred the LOESS approach, but I later discovered it requires double precision which Arduino does not support. Thus, the Savitzky-Golay filter was used in the final program. The following graphs depict the results when measuring the maximum expected user steering velocity and acceleration.",
-          thirdImage: { src: bicycleSoftwareValidation, width: 2037, height: 708, alt: "Maximum input steering velocity and acceleration measured with a rotary encoder and using the Savitzky-Golay filter", displayWidthPercent: 100 },
+          thirdImage: { src: bicycleSoftwareValidation, width: 2127, height: 739, alt: "Maximum input steering velocity and acceleration measured with a rotary encoder and using the Savitzky-Golay filter", displayWidthPercent: 100 },
           closingText: "A drawback of this filter is that it introduces some latency due to sampling at the midpoint. The sampling point can be changed to the most recent data point, but if a sudden input change occurs the quantities will be overestimated. Configuring the sampling spacing and number of points was tricky. The least latency possible was desired but acceleration required a sizable window to capture enough detail. After much trial and error, a sampling interval of 2.8 ms was selected with a 19-point window, resulting in a latency of 12 ms — far below the requirement.",
         },
         tuning: {
           title: "Safety",
-          text: "To guard against calculation errors and faulty encoder measurements, the commanded behavior is closely monitored to ensure it remains within acceptable limits. Specifically, input measurements are thresholded based on positional change, velocity, and acceleration. If any threshold is exceeded, the measurement is rejected and an error code is sent to the display. To guard against small errors accumulating over time, the motor driver monitors the motor’s position error and cuts power if it becomes excessive. Lastly, the encoder’s checksum is used to help detect corrupted measurements.",
+          text: "To guard against calculation errors and faulty encoder measurements, the commanded motor behavior is closely monitored to ensure it remains within acceptable limits. Specifically, input measurements are thresholded based on positional change, velocity, and acceleration. If any threshold is exceeded, the measurement is rejected and an error code is sent to the display. To guard against small errors accumulating over time, the motor driver monitors the motor’s position error and cuts power if it becomes excessive. Lastly, the encoder’s checksum is used to help detect corrupted measurements.",
         },
         integration: {
           title: "Complete Picture",
@@ -469,14 +468,15 @@ export const artworks: Artwork[] = [
       challenges: {
         intro: "In the early testing phase, I noticed plastic deformation at the roots of many gear teeth and excessive wear of the faces. The wear pattern, shown below, indicated the gears were meshing at too shallow an angle. This was peculiar as I had confirmed the shafts to be at the required 90 degrees. Analyzing further, I was able to determine that the gears themselves were improperly manufactured and meshed at around 85 degrees. The gears were replaced with a set having a 2 mm module to better withstand misalignment.",
         image: { src: bicycleChallenges, width: 685, height: 504, alt: "Effect of a shallow meshing angle on bevel gears", displayWidthPercent: 60 },
-        closingText: "Towards completion I installed the motor driver, revealing that its ABS side panel acted as an amplifier for the motor’s vibrations. The amplification was substantial, easily doubling the volume. At this point, available funds were dwindling, so I limited the solutions to those that required no additional cost. I first tried stiffening the panel by gluing pieces of scrap ABS between the internal ribs, providing a modest improvement. I also considered longer pulse widths and microstepping, with the latter reducing the sound to an acceptable level.",
+        closingText: "Towards completion, I installed the motor driver revealing that its ABS side panel acted as an amplifier for the motor’s vibrations. The amplification was substantial, easily doubling the volume. At this point, available funds were dwindling, so I limited the solutions to those that required no additional cost. I first tried stiffening the panel by gluing pieces of scrap ABS between the internal ribs, providing a modest improvement. I also considered longer pulse widths and microstepping, with the latter reducing the sound to an acceptable level.",
       },
     },
-    results: "The input delay requirement was met with a total delay of 15 ms, and using O-rings to provide steering resistance was highly successful. That said, the combination of low steering inertia and input delay made the steering feel unnatural. However, after a few minutes of driving, people quickly adapt to the steering response and it feels normal.",
+    results: "Quickly configurable steering gain from 1 to 2 in increments of 0.1, along with reverse steering, was successfully achieved. The motor and gearbox were correctly specified to meet the requirements, but the SG filter revealed that the researched velocity was inaccurate and should have been at least 95 RPM. This resulted in noticeable wheel lag during large, sharp turns. Correcting this would be straightforward by changing the bevel gear ratio, but the budget had already been exceeded by about $75. More importantly, the design was intended for straight-line driving, where the lag was not noticeable. The input delay requirement was met with a total delay of 15 ms, and using O-rings to provide steering resistance was highly successful. That said, the combination of low steering inertia and input delay made the steering feel unnatural. However, after a few minutes of driving, people quickly adapt to the steering response and it feels normal.",
     resultsExtra: 
     [
-      "The adaptable design decisions were very successful in addressing problems that arose during development. Careful tolerancing of the encoder mounts enabled accurate positioning, while the fork shaft and motor mount design allowed easy gear upsizing and the LCD display proved useful for error messages. Adding the ability to zero the encoder was difficult and caused it to output some bad data. The SG filter was successful in catching this and prevented damage to the bike and user. Using the filtered positional data also eliminated measurement noise, permitting smaller motor increments. This, combined with microstepping, reduced vibrations to an acceptable level.",
-      "In the end, the mechatronics approach was the best choice with the given budget. I underestimated the time I needed to spend designing, tolerancing, and fabricating the mechanical components. The purely mechanical approaches would have been far more time-consuming, difficult to repair, and likely to exceed the budget. If I were to improve the current design, I would reduce the gear ratio for successful operation under all conditions and use a higher-resolution encoder to further reduce vibrations. Or, with more money, I would love to implement force feedback to the steering and use a BLDC motor with belt drive for silent operation."
+      "The adaptable design decisions were very successful in addressing problems that arose during development. Tolerancing the encoder mounts for accurate positioning was critical, the fork shaft and motor mount designs allowed the gears to be easily upsized, and the LCD display was useful for displaying error messages. Adding the ability to zero the encoder was difficult and would occasionally output some bad data. The SG filter was successful in catching this and prevented damage to the bike and user. Using the filtered positional data also eliminated measurement noise, permitting smaller motor increments. This, combined with microstepping, reduced vibrations to an acceptable level.",
+      "Overconfidence was common when others and I attempted to ride the bike in reverse steering mode. In reality, nobody progressed beyond walking the bike with their feet. I theorize that even simple turns require numerous micro-adjustments that cannot be made through conscious thought. During straight-line driving, the continuous vibrations of the motor demonstrate how frequently these adjustments occur. Given enough time, I am sure reverse steering could be learned, although I am unsure whether prior bike riding experience is advantageous. Steering gain was more successful and I was surprised by how variable the initial reactions were. With a gain of 2, some people were completely unfazed, while others steered wildly and nearly crashed. Some would even oversteer once, after which it seemed to immediately click. Even those who initially struggled were able to adjust after a few attempts. I was also surprised to find that I enjoyed a gain of 2 far more than conventional steering. Having to move the handlebars so little made for a far more relaxing riding experience.",
+      ""
     ],
   },
   {
