@@ -7,7 +7,7 @@ import ImageReveal from "@/components/ImageReveal";
 const ARTIST_EMAIL = "nmercierjobs@gmail.com";
 
 // Adjust the portrait photo size here (percentage of its column width)
-const PORTRAIT_WIDTH_PERCENT = 100;
+const PORTRAIT_WIDTH_PERCENT = 60;
 
 const clients = [
   "Galerie Perrotin",
