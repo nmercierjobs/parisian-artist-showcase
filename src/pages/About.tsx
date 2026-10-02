@@ -50,7 +50,7 @@ const About = () => {
             style={{
               ["--about-cols" as string]:
                 `${(1.2 * PORTRAIT_WIDTH_PERCENT) / 100}fr 1fr`
-            } as React.CSSProperties}
+            } as CSSProperties}
           >
             {/* Portrait */}
             <div 
